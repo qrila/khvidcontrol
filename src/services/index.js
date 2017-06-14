@@ -1,5 +1,5 @@
-const pantilt = require('./pantilt/pantilt.service.js');
+const movecam = require('./movecam/movecam.service.js');
 module.exports = function () {
   const app = this; // eslint-disable-line no-unused-vars
-  app.configure(pantilt);
+  app.configure(movecam);
 };

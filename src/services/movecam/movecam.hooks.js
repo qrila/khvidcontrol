@@ -1,5 +1,6 @@
-var exec = require('child_process').exec;
-var path = './python/movecam.py';
+const exec = require('child_process').exec;
+const logger = require('winston');
+const path = './python/movecam.py';
 
 module.exports = {
   before: {
@@ -7,10 +8,11 @@ module.exports = {
     find: [],
     get: [
       function(hook){
-        console.log("id: " + hook.id);
         var cmd = 'python ' + path + ' ' + hook.id;
         exec(cmd, function(err,stdout,stderr) {
-          if( err ) console.log(err);
+          if( err ) { logger.debug(err); }
+          if( stdout ) { logger.info(stdout); }
+          if( stderr ) { logger.debug(stderr); }
         });
       }
     ],

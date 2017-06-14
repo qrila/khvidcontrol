@@ -1,35 +1,35 @@
 $(".up-button").mousedown(function(){
-  $.get("/pantilt/moveUp");
+  $.get("/movecam/moveUp");
 }).mouseup(function(){
-  $.get("/pantilt/moveStop");
+  $.get("/movecam/moveStop");
 });
 
 $(".left-button").mousedown(function(){
-  $.get("/pantilt/moveLeft");
+  $.get("/movecam/moveLeft");
 }).mouseup(function(){
-  $.get("/pantilt/moveStop");
+  $.get("/movecam/moveStop");
 });
 
 $(".right-button").mousedown(function(){
-  $.get("/pantilt/moveRight");
+  $.get("/movecam/moveRight");
 }).mouseup(function(){
-  $.get("/pantilt/moveStop");
+  $.get("/movecam/moveStop");
 });
 
 $(".down-button").mousedown(function(){
-  $.get("/pantilt/moveDown");
+  $.get("/movecam/moveDown");
 }).mouseup(function(){
-  $.get("/pantilt/moveStop");
+  $.get("/movecam/moveStop");
 });
 
 $(".zoom-tele").mousedown(function(){
-  $.get("/pantilt/zoomTeleStd");
+  $.get("/movecam/zoomTeleStd");
 }).mouseup(function(){
-  $.get("/pantilt/zoomStop");
+  $.get("/movecam/zoomStop");
 });
 
 $(".zoom-wide").mousedown(function(){
-  $.get("/pantilt/zoomWideStd");
+  $.get("/movecam/zoomWideStd");
 }).mouseup(function(){
-  $.get("/pantilt/zoomStop");
+  $.get("/movecam/zoomStop");
 });

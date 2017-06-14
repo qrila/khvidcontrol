@@ -1,22 +1,22 @@
-// Initializes the `pantilt` service on path `/pantilt`
-const createService = require('./pantilt.class.js');
-const hooks = require('./pantilt.hooks');
-const filters = require('./pantilt.filters');
+// Initializes the `movecam` service on path `/movecam`
+const createService = require('./movecam.class.js');
+const hooks = require('./movecam.hooks');
+const filters = require('./movecam.filters');
 
 module.exports = function () {
   const app = this;
   const paginate = app.get('paginate');
 
   const options = {
-    name: 'pantilt',
+    name: 'movecam',
     paginate
   };
 
   // Initialize our service with any options it requires
-  app.use('/pantilt', createService(options));
+  app.use('/movecam', createService(options));
 
   // Get our initialized service so that we can register hooks and filters
-  const service = app.service('pantilt');
+  const service = app.service('movecam');
 
   service.hooks(hooks);
 
