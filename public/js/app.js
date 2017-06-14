@@ -1,37 +1,35 @@
 $(".up-button").mousedown(function(){
-  $.get("/moveup", function(data){
-    console.log("Data: " + data);
-  });
+  $.get("/pantilt/moveUp");
 }).mouseup(function(){
-  console.log("Released up button");
+  $.get("/pantilt/moveStop");
 });
 
 $(".left-button").mousedown(function(){
-  console.log("Pushed left button");
+  $.get("/pantilt/moveLeft");
 }).mouseup(function(){
-  console.log("Released left button");
+  $.get("/pantilt/moveStop");
 });
 
 $(".right-button").mousedown(function(){
-  console.log("Pushed right button");
+  $.get("/pantilt/moveRight");
 }).mouseup(function(){
-  console.log("Released right button");
+  $.get("/pantilt/moveStop");
 });
 
 $(".down-button").mousedown(function(){
-  console.log("Pushed down button");
+  $.get("/pantilt/moveDown");
 }).mouseup(function(){
-  console.log("Released down button");
+  $.get("/pantilt/moveStop");
 });
 
 $(".zoom-tele").mousedown(function(){
-  console.log("Pushed zoom-tele button");
+  $.get("/pantilt/zoomTeleStd");
 }).mouseup(function(){
-  console.log("Released zoom-tele button");
+  $.get("/pantilt/zoomStop");
 });
 
 $(".zoom-wide").mousedown(function(){
-  console.log("Pushed zoom-wide button");
+  $.get("/pantilt/zoomWideStd");
 }).mouseup(function(){
-  console.log("Released zoom-wide button");
+  $.get("/pantilt/zoomStop");
 });
