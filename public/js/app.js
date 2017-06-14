@@ -1,35 +1,35 @@
-$(".up-button").mousedown(function(){
+$(".up-button").bind("mousedown touchstart", function(){
   $.get("/movecam/moveUp");
-}).mouseup(function(){
+}).bind("mouseup touchend", function(){
   $.get("/movecam/moveStop");
 });
 
-$(".left-button").mousedown(function(){
+$(".left-button").bind("mousedown touchstart", function(){
   $.get("/movecam/moveLeft");
-}).mouseup(function(){
+}).bind("mouseup touchend", function(){
   $.get("/movecam/moveStop");
 });
 
-$(".right-button").mousedown(function(){
+$(".right-button").bind("mousedown touchstart", function(){
   $.get("/movecam/moveRight");
-}).mouseup(function(){
+}).bind("mouseup touchend", function(){
   $.get("/movecam/moveStop");
 });
 
-$(".down-button").mousedown(function(){
+$(".down-button").bind("mousedown touchstart", function(){
   $.get("/movecam/moveDown");
-}).mouseup(function(){
+}).bind("mouseup touchend", function(){
   $.get("/movecam/moveStop");
 });
 
-$(".zoom-tele").mousedown(function(){
+$(".zoom-tele").bind("mousedown touchstart", function(){
   $.get("/movecam/zoomTeleStd");
-}).mouseup(function(){
+}).bind("mouseup touchend", function(){
   $.get("/movecam/zoomStop");
 });
 
-$(".zoom-wide").mousedown(function(){
+$(".zoom-wide").bind("mousedown touchstart", function(){
   $.get("/movecam/zoomWideStd");
-}).mouseup(function(){
+}).bind("mouseup touchend", function(){
   $.get("/movecam/zoomStop");
 });
