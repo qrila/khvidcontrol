@@ -14,15 +14,8 @@ html, body {
   margin-top: 50px;
 }
 
-.up-button {
-
-}
-.down-button {
-
-}
-.left-button {
-
-}
-.right-button {
-
+button {
+  margin: 15px;
+  height: 60px;
+  width: 60px;
 }
