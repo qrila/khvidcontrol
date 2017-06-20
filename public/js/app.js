@@ -46,8 +46,8 @@ $(".zoom-wide button").bind("mousedown touchstart", function(){
 function addCameraPosition(position) {
   const camPos = document.querySelector('.memoutput');
   camPos.insertAdjacentHTML('beforeend', `<span>camera: ${position.name}</span><br>
-    <span style="padding-left:5px">pantilt: ${position.cameraPosition.pantilt}</span><br>
-    <span style="padding-left:5px">zoom: ${position.cameraPosition.zoom}</span><br>`);
+    <span style="padding-left:5px">pantilt: ${position.pantilt}</span><br>
+    <span style="padding-left:5px">zoom: ${position.zoom}</span><br>`);
 }
 
 positions.find().then(page => page.data.forEach(addCameraPosition));

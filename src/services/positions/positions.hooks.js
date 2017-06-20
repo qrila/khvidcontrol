@@ -15,7 +15,19 @@ module.exports = {
             if( err ) { return reject(err) }
             if( stderr ) { return reject(stderr); }
 
-            hook.data.cameraPosition = JSON.parse(stdout);
+            var cameraID = ("8" + hook.data.camera).toString('hex');
+            var pantilt = JSON.parse(stdout)["pantilt"].slice(2,10).map(function(item){
+              item = parseInt(item.replace(/^0x/, ''), 16);
+              return (0 + item.toString(16)).substr(-2).toString('hex');
+            });
+            var zoom = JSON.parse(stdout)["zoom"].slice(2,6).map(function(item){
+              item = parseInt(item.replace(/^0x/, ''), 16);
+              return (0 + item.toString(16)).substr(-2).toString('hex');
+            });
+            hook.data.pantilt = pantilt.toString();
+            hook.data.zoom = zoom.toString();
+
+            console.log("camera id: " + hook.data.camera + "\npantilt: " + hook.data.pantilt + "\nzoom: " + hook.data.zoom);
             resolve(hook);
           });
         });
