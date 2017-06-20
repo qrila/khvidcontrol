@@ -33,3 +33,8 @@ $(".zoom-wide button").bind("mousedown touchstart", function(){
 }).bind("mouseup touchend", function(){
   $.get("/movecam/zoomStop");
 });
+
+$(".mem-button button").click(function() {
+  // $.get(("/position"));
+  $("#memoutput").text("testing");
+});
