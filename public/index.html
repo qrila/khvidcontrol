@@ -7,65 +7,72 @@
     <title>khvidcontrol</title>
   </head>
   <body>
-    <main>
-      <div class="container">
-        <div class="row">
-          <div id="camera-control" class="col-sm-4">
-            <div class="position-control row">
-              <div class="up-button col-sm-2 col-sm-offset-3">
-                <button type="button" name="up-button" class="btn btn-primary">
-                  <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
-                </button>
+    <div id="app">
+      <main>
+        <div class="container">
+          <div class="row">
+            <div id="camera-control" class="col-sm-4">
+              <div class="position-control row">
+                <div class="up-button col-sm-2 col-sm-offset-3">
+                  <button type="button" name="up-button" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
+              <div class="position-control row">
+                <div class="left-button col-sm-2">
+                  <button type="button" name="left-button" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                  </button>
+                </div>
+                <div class="right-button col-sm-2 col-sm-offset-4">
+                  <button type="button" name="right-button" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
+              <div class="position-control row">
+                <div class="down-button col-sm-2 col-sm-offset-3">
+                  <button type="button" name="down-button" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
+              <div id="zoom-control" class="row">
+                <div class="zoom-tele col-sm-2 col-sm-offset-1">
+                  <button type="zoom-button" name="zoom-tele" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                  </button>
+                </div>
+                <div class="zoom-wide col-sm-2 col-sm-offset-2">
+                  <button type="zoom-button" name="zoom-wide" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                  </button>
+                </div>
               </div>
             </div>
-            <div class="position-control row">
-              <div class="left-button col-sm-2">
-                <button type="button" name="left-button" class="btn btn-primary">
-                  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+            <div class="col-sm-8">
+              <form id="position-mem">
+                <button type="submit" name="show-position" class="btn btn-primary">
+                  <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                 </button>
-              </div>
-              <div class="right-button col-sm-2 col-sm-offset-4">
-                <button type="button" name="right-button" class="btn btn-primary">
-                  <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-                </button>
-              </div>
-            </div>
-            <div class="position-control row">
-              <div class="down-button col-sm-2 col-sm-offset-3">
-                <button type="button" name="down-button" class="btn btn-primary">
-                  <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
-                </button>
-              </div>
-            </div>
-            <div id="zoom-control" class="row">
-              <div class="zoom-tele col-sm-2 col-sm-offset-1">
-                <button type="zoom-button" name="zoom-tele" class="btn btn-primary">
-                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                </button>
-              </div>
-              <div class="zoom-wide col-sm-2 col-sm-offset-2">
-                <button type="zoom-button" name="zoom-wide" class="btn btn-primary">
-                  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div id="position-mem" class="col-sm-8">
-            <div class="mem-button">
-              <button type="mem-button" name="show-position" class="btn btn-primary">
-                <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-              </button>
+                <select name="camera">
+                  <option value="1">1</option>
+                </select>
+                <input type="text" name="name" placeholder="Kamera nimi">
+                <div class="memoutput">
+
+                </div>
+              </form>
             </div>
 
-          </div>
-          <div id="memoutput">
 
           </div>
-
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
     <script src="js/feathers.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>
