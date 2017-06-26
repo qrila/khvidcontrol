@@ -7,6 +7,18 @@ client.configure(feathers.socketio(socket));
 // Get the service for our `positions` endpoint
 const positions = client.service('positions');
 
+$(".menu-button button").click(function(){
+  $.get("/movecam/menuToggle");
+});
+
+$(".menu-ok button").click(function(){
+  $.get("/movecam/menuOK");
+});
+
+$(".menu-back button").click(function(){
+  $.get("/movecam/menuBack");
+});
+
 $(".up-button button").bind("mousedown touchstart", function(){
   $.get("/movecam/moveUp");
 }).bind("mouseup touchend", function(){
