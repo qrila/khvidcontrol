@@ -4,54 +4,20 @@
 
 ## About
 
-This project uses [Feathers](http://feathersjs.com). An open source web framework for building modern real-time applications.
+Project is created to enable video feed control in permanent installation.
 
-## Getting Started
+Main video feed is provided with HD video camera model V600 and ohter cameras and media content from PC is mixed using Blackmagicdesing [ATEM Televsion Studio HD](https://www.blackmagicdesign.com/products/atemtelevisionstudiohd). V600 PTZ is controlled via RS485 using VISCA control protocol. Video mixer is controlled via ethernet using [Skaarhoj](http://skaarhoj.com) open sourced [Open Engineering software](https://github.com/kasperskaarhoj/SKAARHOJ-Open-Engineering).
 
-Getting up and running is as easy as 1, 2, 3.
+This control software consists web server delivering UI and persisting desired camera positionings. Web server is build using Node.js framework [Feathers.js](https://feathersjs.com/) Hardware is controlled with python scripts utilising freely available libraries.
 
-1. Make sure you have [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
-2. Install your dependencies
+Target hardware is RaspberryPi.
 
-    ```
-    cd path/to/khvidcontrol; npm install
-    ```
+## Anything else
 
-3. Start your app
-
-    ```
-    npm start
-    ```
-
-## Testing
-
-Simply run `npm test` and all your tests in the `test/` directory will be run.
-
-## Scaffolding
-
-Feathers has a powerful command line interface. Here are a few things it can do:
-
-```
-$ npm install -g feathers-cli             # Install Feathers CLI
-
-$ feathers generate service               # Generate a new Service
-$ feathers generate hook                  # Generate a new Hook
-$ feathers generate model                 # Generate a new Model
-$ feathers help                           # Show all commands
-```
-
-## Help
-
-For more information on all the things you can do with Feathers visit [docs.feathersjs.com](http://docs.feathersjs.com).
-
-## Changelog
-
-__0.1.0__
-
-- Initial release
+TBD
 
 ## License
 
-Copyright (c) 2016
+Copyright (c) 2017
 
 Licensed under the [MIT license](LICENSE).
