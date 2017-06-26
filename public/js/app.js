@@ -7,6 +7,10 @@ client.configure(feathers.socketio(socket));
 // Get the service for our `positions` endpoint
 const positions = client.service('positions');
 
+$(".power-button button").click(function(){
+  $.get("/movecam/c?data=power");
+});
+
 $(".menu-button button").click(function(){
   $.get("/movecam/c?data=menuToggle");
 });

@@ -16,8 +16,18 @@ def runCommand(ser, command):
 
     return ack
 
+# Visca inquire replies with completion (3 bits)
+def queryPosition(ser, data):
+    ser.write(data[0])
+    dataReceive = map(hex,map(ord,ser.read(data[1])))
+
+    return(dataReceive)
+
 def setData(data):
     return {
+        "powerON": "\x81\x01\x04\x00\x02\xFF",
+        "powerOFF": "\x81\x01\x04\x00\x03\xFF",
+        "power": ["\x81\x09\x04\x00\xFF", 4], # Power query
         "moveStop": "\x81\x01\x06\x01\x18\x14\x03\x03\xFF",
         "moveUp": "\x81\x01\x06\x01\x01\x07\x03\x01\xFF",
         "moveLeft": "\x81\x01\x06\x01\x09\x01\x01\x03\xFF",
@@ -38,7 +48,13 @@ def main(argv):
 
     for opt, arg in opts:
         if opt == '-c':
-            runCommand(ser, setData(arg))
+            if arg == "power":
+                if queryPosition(ser, setData(arg)) == ['0x90', '0x50', '0x2', '0xff']:
+                    runCommand(ser, setData("powerOFF"))
+                else:
+                    runCommand(ser, setData("powerON"))
+            else:
+                runCommand(ser, setData(arg))
         elif opt == '-p':
             position = arg.split("::")
             pantilt = '\\x81\\x01\\x06\\x02\\x18\\x18\\x' + position[0].replace(',', '\\x') + '\\xFF'
