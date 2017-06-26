@@ -1,6 +1,6 @@
 const exec = require('child_process').exec;
 const logger = require('winston');
-const path = './python/movecam.py';
+const pycmd = 'python ./python/movecam.py';
 
 /* eslint-disable no-unused-vars */
 class Service {
@@ -9,8 +9,7 @@ class Service {
   }
 
   get (id, params) {
-    logger.info("id: " + id);
-    var cmd = 'python ' + path + ' ' + id;
+    var cmd = pycmd + ' -' + id + ' ' + params.query.data;
     exec(cmd, function(err,stdout,stderr) {
       if( err ) { logger.debug(err); }
       if( stdout ) { logger.info(stdout); }

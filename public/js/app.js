@@ -8,58 +8,58 @@ client.configure(feathers.socketio(socket));
 const positions = client.service('positions');
 
 $(".menu-button button").click(function(){
-  $.get("/movecam/menuToggle");
+  $.get("/movecam/c?data=menuToggle");
 });
 
 $(".menu-ok button").click(function(){
-  $.get("/movecam/menuOK");
+  $.get("/movecam/c?data=menuOK");
 });
 
 $(".menu-back button").click(function(){
-  $.get("/movecam/menuBack");
+  $.get("/movecam/c?data=menuBack");
 });
 
 $(".up-button button").bind("mousedown touchstart", function(){
-  $.get("/movecam/moveUp");
+  $.get("/movecam/c?data=moveUp");
 }).bind("mouseup touchend", function(){
-  $.get("/movecam/moveStop");
+  $.get("/movecam/c?data=moveStop");
 });
 
 $(".left-button button").bind("mousedown touchstart", function(){
-  $.get("/movecam/moveLeft");
+  $.get("/movecam/c?data=moveLeft");
 }).bind("mouseup touchend", function(){
-  $.get("/movecam/moveStop");
+  $.get("/movecam/c?data=moveStop");
 });
 
 $(".right-button button").bind("mousedown touchstart", function(){
-  $.get("/movecam/moveRight");
+  $.get("/movecam/c?data=moveRight");
 }).bind("mouseup touchend", function(){
-  $.get("/movecam/moveStop");
+  $.get("/movecam/c?data=moveStop");
 });
 
 $(".down-button button").bind("mousedown touchstart", function(){
-  $.get("/movecam/moveDown");
+  $.get("/movecam/c?data=moveDown");
 }).bind("mouseup touchend", function(){
-  $.get("/movecam/moveStop");
+  $.get("/movecam/c?data=moveStop");
 });
 
 $(".zoom-tele button").bind("mousedown touchstart", function(){
-  $.get("/movecam/zoomTeleStd");
+  $.get("/movecam/c?data=zoomTeleStd");
 }).bind("mouseup touchend", function(){
-  $.get("/movecam/zoomStop");
+  $.get("/movecam/c?data=zoomStop");
 });
 
 $(".zoom-wide button").bind("mousedown touchstart", function(){
-  $.get("/movecam/zoomWideStd");
+  $.get("/movecam/c?data=zoomWideStd");
 }).bind("mouseup touchend", function(){
-  $.get("/movecam/zoomStop");
+  $.get("/movecam/c?data=zoomStop");
 });
 
 function addCameraPosition(position) {
   const camPos = document.querySelector('.memoutput');
   camPos.insertAdjacentHTML('beforeend', `
     <div class="col-sm-3"><span>${position.name}</span><br>
-      <button type="memory-button" name="${position.name}" class="btn btn-primary">
+      <button type="memory-button" value="${position.pantilt}::${position.zoom}" class="btn btn-primary">
         <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
       </button>
     </div>
@@ -82,6 +82,7 @@ document.getElementById('position-mem').addEventListener('submit', function(ev) 
   ev.preventDefault();
 });
 
-// `<span>camera: ${position.name}</span><br>
-//   <span style="padding-left:5px">pantilt: ${position.pantilt}</span><br>
-//   <span style="padding-left:5px">zoom: ${position.zoom}</span><br>`
+$(document).on('click', 'button[type=memory-button]', function() {
+  console.log(this.value);
+  $.get("/movecam/p?data=\"" + this.value + "\"");
+});

@@ -2,7 +2,7 @@
 
 import serial
 import time
-import sys
+import sys, getopt
 
 ser = serial.Serial (
     "/dev/ttyUSB0",
@@ -13,6 +13,7 @@ ser = serial.Serial (
 def runCommand(ser, command):
     ser.write(command)
     ack = map(hex,map(ord,ser.read(6)))
+
     return ack
 
 def setData(data):
@@ -31,6 +32,21 @@ def setData(data):
         "neutral": "\x81\x01\x06\x02\x18\x18\x00\x00\x00\x00\x00\x00\x00\x00\xFF",
     }.get(data, "notfound")
 
-runCommand(ser, setData(sys.argv[1]))
 
-ser.close()
+def main(argv):
+    opts, args = getopt.getopt(argv,"hc:p:")
+
+    for opt, arg in opts:
+        if opt == '-c':
+            runCommand(ser, setData(arg))
+        elif opt == '-p':
+            position = arg.split("::")
+            pantilt = '\\x81\\x01\\x06\\x02\\x18\\x18\\x' + position[0].replace(',', '\\x') + '\\xFF'
+            zoom = '\\x81\\x01\\x04\\x47\\x' + position[1].replace(',', '\\x') + '\\xFF'
+            runCommand(ser, pantilt.decode('string-escape'))
+            runCommand(ser, zoom.decode('string-escape'))
+
+    ser.close()
+
+if __name__ == "__main__":
+   main(sys.argv[1:])
