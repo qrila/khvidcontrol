@@ -37,12 +37,12 @@
                 </div>
               </div>
               <div class="position-control row">
-                <div class="left-button col-sm-2">
+                <div class="left-button col-sm-2 col-sm-offset-1">
                   <button type="button" name="left-button" class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                   </button>
                 </div>
-                <div class="right-button col-sm-2 col-sm-offset-4">
+                <div class="right-button col-sm-2 col-sm-offset-2">
                   <button type="button" name="right-button" class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
                   </button>
@@ -69,16 +69,23 @@
               </div>
             </div>
             <div class="col-sm-8">
-              <form id="position-mem">
-                <button type="submit" name="show-position" class="btn btn-primary">
-                  <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                </button>
-                <select name="camera">
-                  <option value="1">1</option>
-                </select>
-                <input type="text" name="name" placeholder="Kamera nimi">
-
-              </form>
+              <div class="row">
+                <form id="position-mem">
+                  <div class="col-sm-offset-2 col-sm-1">
+                    <select name="camera">
+                      <option value="1">1</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-4">
+                    <input type="text" name="name" placeholder="Kamera nimi" style="width:100%">
+                  </div>
+                  <div class="col-sm-2">
+                    <button type="submit" name="save-position" class="btn">
+                      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                </form>
+              </div>
               <div class="row">
                 <div class="memoutput col-sm-10">
                 </div>

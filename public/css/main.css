@@ -10,7 +10,8 @@ html, body {
 }
 
 #camera-control,
-#zoom-control {
+#zoom-control,
+#position-mem  {
   margin-top: 50px;
 }
 
@@ -24,4 +25,19 @@ button {
   margin: 15px;
   height: 40px;
   width: 40px;
+}
+
+#position-mem select,
+#position-mem input {
+  margin-top: 25px;
+
+}
+
+.memoutput {
+  padding: 30px;
+}
+
+.memory-button {
+  margin-top: 15px;
+  height: 120px;
 }

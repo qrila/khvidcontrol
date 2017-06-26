@@ -58,7 +58,7 @@ $(".zoom-wide button").bind("mousedown touchstart", function(){
 function addCameraPosition(position) {
   const camPos = document.querySelector('.memoutput');
   camPos.insertAdjacentHTML('beforeend', `
-    <div class="col-sm-3"><span>${position.name}</span><br>
+    <div class="col-sm-3 memory-button"><span>${position.name}</span><br>
       <button type="memory-button" value="${position.pantilt}::${position.zoom}" class="btn btn-primary">
         <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
       </button>
@@ -78,7 +78,7 @@ document.getElementById('position-mem').addEventListener('submit', function(ev) 
     name: camName.value
   });
 
-
+  camName.value = "";
   ev.preventDefault();
 });
 
