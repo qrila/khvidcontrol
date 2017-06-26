@@ -1,6 +1,6 @@
 const exec = require('child_process').exec;
 const logger = require('winston');
-const pycmd = 'python ./python/movecam.py';
+const pycmd = 'python ./python/viscactrl.py';
 
 /* eslint-disable no-unused-vars */
 class Service {

@@ -8,7 +8,7 @@ client.configure(feathers.socketio(socket));
 const positions = client.service('positions');
 
 $(".power-button button").click(function(){
-  $.get("/movecam/c?data=power");
+  $.get("/movecam/q?data=power");
 });
 
 $(".menu-button button").click(function(){

@@ -1,6 +1,6 @@
 const exec = require('child_process').exec;
 const logger = require('winston');
-const pycmd = 'python ./python/querypos.py';
+const pycmd = 'python ./python/viscactrl.py -q saveposition';
 
 module.exports = {
   before: {
