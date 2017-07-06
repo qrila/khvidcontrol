@@ -51,7 +51,7 @@ def main(argv):
             runCommand(ser, setData(arg))
         elif opt == '-p':
             position = arg.split("::")
-            pantilt = '\\x81\\x01\\x06\\x02\\x18\\x18\\x' + position[0].replace(',', '\\x') + '\\xFF'
+            pantilt = '\\x81\\x01\\x06\\x02\\x18\\x14\\x' + position[0].replace(',', '\\x') + '\\xFF'
             zoom = '\\x81\\x01\\x04\\x47\\x' + position[1].replace(',', '\\x') + '\\xFF'
             runCommand(ser, pantilt.decode('string-escape'))
             runCommand(ser, zoom.decode('string-escape'))
