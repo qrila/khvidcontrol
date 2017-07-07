@@ -5,7 +5,7 @@ import serial, sys, getopt, json
 ser = serial.Serial (
     "/dev/ttyUSB0",
     9600,
-    timeout = 5
+    timeout = 1
  )
 
 def runCommand(ser, command):
