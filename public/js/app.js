@@ -87,10 +87,7 @@ document.getElementById('position-mem').addEventListener('submit', function(ev) 
 });
 
 $(document).on('click', 'button[type=memory-button]', function() {
-  console.log(this.value);
-  console.log(this.value.split("::"));
   if (this.value.split("::")[2] === "0") {
-    console.log("kamera 0");
     $.get("/tbd/p?data=0"); // this needs own service to call atom switcher
   } else {
     $.get("/movecam/p?data=\"" + this.value + "\"");
