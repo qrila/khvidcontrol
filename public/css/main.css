@@ -21,14 +21,18 @@ button {
   width: 60px;
 }
 
-.menu-control button {
+.menu-control button,
+#position-mem button,
+#videoinput-mem button {
   margin: 15px;
   height: 40px;
   width: 40px;
 }
 
 #position-mem select,
-#position-mem input {
+#position-mem input,
+#videoinput-mem select,
+#videoinput-mem input {
   margin-top: 25px;
 
 }
@@ -40,4 +44,8 @@ button {
 .memory-button {
   margin-top: 15px;
   height: 120px;
+}
+
+input {
+  width: 100%;
 }
