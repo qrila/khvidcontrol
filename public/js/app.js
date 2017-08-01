@@ -63,7 +63,7 @@ function addCameraPosition(position) {
   const camPos = document.querySelector('.memoutput');
   camPos.insertAdjacentHTML('beforeend', `
     <div class="col-sm-3 memory-button"><span>${position.name}</span><br>
-      <button type="memory-button" value="${position.pantilt}::${position.zoom}::${position.camera}" class="btn btn-primary">
+      <button type="memory-button" value="${position.pantilt}::${position.zoom}::${position.videoSource}" class="btn btn-primary">
         <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
       </button>
     </div>
@@ -74,12 +74,12 @@ positions.find().then(page => page.data.forEach(addCameraPosition));
 positions.on('created', addCameraPosition);
 
 document.getElementById('position-mem').addEventListener('submit', function(ev) {
-  const camInput = document.querySelector('[name="camera"]');
-  const camName = document.querySelector('[name="name"]');
+  const videoSource = document.querySelector('[name="videoSource"]');
+  const sourceName = document.querySelector('[name="name"]');
 
   client.service('positions').create({
-    camera: camInput.value,
-    name: camName.value
+    videoSource: videoSource.value,
+    name: sourceName.value
   });
 
   camName.value = "";
