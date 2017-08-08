@@ -1,27 +1,30 @@
 # Query answer is 11 bits plus Ack 3 bits and completion 3 bits
 
-import serial, sys, getopt, json
+import sys
+import getopt
+import json
+import serial
 
-ser = serial.Serial (
+SER = serial.Serial(
     "/dev/ttyUSB0",
     9600,
-    timeout = 1
- )
+    timeout=1
+)
 
-def runCommand(ser, command):
+def run_command(ser, command):
     ser.write(command)
-    ack = map(hex,map(ord,ser.read(6)))
+    ack = map(hex, map(ord, ser.read(6)))
 
     return ack
 
 # Visca inquire replies with completion (3 bits)
-def queryStatus(ser, query, bits):
+def query_status(ser, query, bits):
     ser.write(query)
-    dataReceive = map(hex,map(ord,ser.read(bits)))
+    data_receive = map(hex, map(ord, ser.read(bits)))
 
-    return(dataReceive)
+    return data_receive
 
-def setData(data, camera):
+def set_data(data, camera):
     return {
         "powerON": "\\x8" + camera + "\\x01\\x04\\x00\\x02\\xFF",
         "powerOFF": "\\x8" + camera + "\\x01\\x04\\x00\\x03\\xFF",
@@ -36,7 +39,8 @@ def setData(data, camera):
         "menuToggle": "\\x8" + camera + "\\x01\\x06\\x06\\x10\\xFF",
         "menuOK": "\\x8" + camera + "\\x01\\x7E\\x01\\x02\\x00\\x01\\xFF",
         "menuBack": "\\x8" + camera + "\\x01\\x06\\x06\\x03\\xFF",
-        "neutral": "\\x8" + camera + "\\x01\\x06\\x02\\x18\\x18\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\xFF",
+        "neutral": "\\x8" + camera +\
+                   "\\x01\\x06\\x02\\x18\\x18\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\xFF",
         "power": ["\\x8" + camera + "\\x09\\x04\\x00\\xFF", 4], # Power query
         "pantilt": ["\\x8" + camera + "\\x09\\x06\\x12\\xFF", 11], # Receive 11bit
         "zoom": ["\\x8" + camera + "\\x09\\x04\\x47\\xFF", 7] # Receive 7bit
@@ -44,36 +48,39 @@ def setData(data, camera):
 
 
 def main(argv):
-    opts, args = getopt.getopt(argv,"hc:p:q:")
+    opts, args = getopt.getopt(argv, "hc:p:q:")
 
     for opt, arg in opts:
         if opt == '-c':
             arg = arg.split("::")
-            runCommand(ser, setData(arg[0], arg[1]).decode('string-escape'))
+            run_command(SER, set_data(arg[0], arg[1]).decode('string-escape'))
         elif opt == '-p':
             arg = arg.split("::")
-            pantilt = '\\x8' + arg[2] + '\\x01\\x06\\x02\\x18\\x14\\x' + arg[0].replace(',', '\\x') + '\\xFF'
+            pantilt = '\\x8' + arg[2] +\
+                      '\\x01\\x06\\x02\\x18\\x14\\x' + arg[0].replace(',', '\\x') + '\\xFF'
             zoom = '\\x8' + arg[2] + '\\x01\\x04\\x47\\x' + arg[1].replace(',', '\\x') + '\\xFF'
-            runCommand(ser, pantilt.decode('string-escape'))
-            runCommand(ser, zoom.decode('string-escape'))
+            run_command(SER, pantilt.decode('string-escape'))
+            run_command(SER, zoom.decode('string-escape'))
         elif opt == '-q':
             arg = arg.split("::")
             if arg[0] == "power":
                 camera_id = str(89 + int(arg[1]))
-                querybits = setData(arg[0], arg[1])
-                if queryStatus(ser, querybits[0].decode('string-escape'), querybits[1]) == ['0x' + camera_id, '0x50', '0x2', '0xff']:
-                    runCommand(ser, setData("powerOFF", arg[1]).decode('string-escape'))
+                query_bits = set_data(arg[0], arg[1])
+                if query_status(SER, query_bits[0].decode('string-escape'),\
+                                query_bits[1]) == ['0x' + camera_id, '0x50', '0x2', '0xff']:
+                    run_command(SER, set_data("powerOFF", arg[1]).decode('string-escape'))
                 else:
-                    runCommand(ser, setData("powerON", arg[1]).decode('string-escape'))
+                    run_command(SER, set_data("powerON", arg[1]).decode('string-escape'))
             elif arg[0] == "saveposition":
-                ptquerybits = setData("pantilt", arg[1])
-                zquerybits = setData("zoom", arg[1])
-                pantilt = queryStatus(ser, ptquerybits[0].decode('string-escape'), ptquerybits[1])
-                zoom = queryStatus(ser, zquerybits[0].decode('string-escape'), zquerybits[1])
+                ptquery_bits = set_data("pantilt", arg[1])
+                zquery_bits = set_data("zoom", arg[1])
+                pantilt = query_status(SER, ptquery_bits[0].decode('string-escape'),
+                                       ptquery_bits[1])
+                zoom = query_status(SER, zquery_bits[0].decode('string-escape'), zquery_bits[1])
                 output = {"pantilt": pantilt, "zoom": zoom}
                 print json.dumps(output)
 
-    ser.close()
+    SER.close()
 
 if __name__ == "__main__":
-   main(sys.argv[1:])
+    main(sys.argv[1:])
