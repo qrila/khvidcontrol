@@ -11,7 +11,9 @@
       <main>
         <div class="container">
           <div class="col-xs-4">
+
             <div id="camera-control">
+
               <div class="menu-control row">
                 <div class="power-button col-xs-2">
                   <button type="button" name="menu" class="btn">
@@ -34,6 +36,7 @@
                   </button>
                 </div>
               </div>
+
               <div class="position-control row">
                 <div class="up-button col-xs-2 col-xs-offset-3">
                   <button type="button" name="up-button" class="btn btn-primary">
@@ -72,7 +75,9 @@
                   </button>
                 </div>
               </div>
-              <div class="row">
+
+
+              <div class="position-set-mem row">
                 <form id="position-mem">
                   <div class="col-xs-2">
                     <select name="videoSource" id="videoinput">
@@ -89,50 +94,51 @@
                   </div>
                 </form>
               </div>
+
+
             </div>
 
-            <div id="ateminputs">
-              <div class="row">
-                <form id="videoinput-mem">
-                  <div class="row">
-                    <div class="col-xs-4">
-                      <input type="text" name="sourcename" placeholder="Lähteen nimi">
-                    </div>
-                    <div class="col-xs-4">
-                      <input type="text" name="mixerip" placeholder="192.168.x.x">
-                    </div>
-                    <div class="col-xs-2">
-                      <select class="inputlist" name="inputlist">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                      </select>
-                    </div>
+            <div class="ateminputs row">
+              <form id="videoinput-mem">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <input type="text" name="sourcename" placeholder="Lähteen nimi">
                   </div>
-                  <div class="row">
-                    <div class="col-xs-4">
-                      <select class="sourcetype">
-                        <option value="media">Media</option>
-                        <option value="camera">Kamera</option>
-                      </select>
-                    </div>
-                    <div class="col-xs-2">
-                      <input type="text" name="cameranbr" placeholder="0">
-                    </div>
-                    <div class="col-xs-2 col-xs-offset-3">
-                      <button type="submit" name="save-videoinput" class="btn">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                      </button>
-                    </div>
+                  <div class="col-xs-4">
+                    <input type="text" name="mixerip" placeholder="192.168.x.x">
                   </div>
-                </form>
-              </div>
-            </div> 
+                  <div class="col-xs-2">
+                    <select class="inputlist" name="inputlist">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-4">
+                    <select class="sourcetype">
+                      <option value="media">Media</option>
+                      <option value="camera">Kamera</option>
+                    </select>
+                  </div>
+                  <div class="col-xs-2">
+                    <input type="text" name="cameranbr" placeholder="0">
+                  </div>
+                  <div class="col-xs-2 col-xs-offset-3">
+                    <button type="submit" name="save-videoinput" class="btn">
+                      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
           </div>
 
 
@@ -141,11 +147,14 @@
               <div class="memoutput col-xs-10">
               </div>
             </div>
+
             <div class="row">
               <div class="mediaoutput col-xs-10">
               </div>
             </div>
           </div>
+
+
         </div>
       </main>
     </div>
