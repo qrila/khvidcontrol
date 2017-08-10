@@ -74,15 +74,38 @@ positions.find().then(page => page.data.forEach(addCameraPosition));
 positions.on('created', addCameraPosition);
 
 document.getElementById('position-mem').addEventListener('submit', function(ev) {
-  const videoSource = document.querySelector('[name="videoSource"]');
-  const sourceName = document.querySelector('[name="name"]');
+  const videoSource = document.querySelector('[name="videosource"]');
+  const subjectName = document.querySelector('[name="subjectname"]');
 
   client.service('positions').create({
     videoSource: videoSource.value,
-    name: sourceName.value
+    subjectName: subjectName.value
+  });
+
+  subjectName.value = '';
+  ev.preventDefault();
+});
+
+document.getElementById('videoinput-mem').addEventListener('submit', function(ev) {
+  const sourceName = document.querySelector('[name="sourcename"]');
+  const mixerIP = document.querySelector('[name="mixerip"]');
+  const sourceInput = document.querySelector('[name="sourceinput"]');
+  const sourceType = document.querySelector('[name="sourcetype"]');
+  const cameraNumber = document.querySelector('[name="cameranumber"]');
+
+  client.service('positions').create({
+    sourceName: sourceName.value,
+    mixerIP: mixerIP.value,
+    sourceInput: sourceInput.value,
+    sourceType: sourceType.value,
+    cameraNumber: cameraNumber.value
   });
 
   sourceName.value = '';
+  mixerIP.value = '';
+  sourceInput.value = '';
+  sourceType.value = '';
+  cameraNumber.value = '';
   ev.preventDefault();
 });
 
