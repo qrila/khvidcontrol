@@ -64,7 +64,7 @@ function addCameraPosition(position) {
   const camPos = document.querySelector('.memoutput');
   camPos.insertAdjacentHTML('beforeend', `
     <div class="col-sm-3 memory-button"><span>${position.subjectName}</span><br>
-      <button type="memory-button" value="${position.pantilt}::${position.zoom}::${position.videoSource}" class="btn btn-primary">
+      <button type="memory-button" value="${position.pantilt}::${position.zoom}::${position.cameraNumber}" class="btn btn-primary">
         <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
       </button>
     </div>
@@ -76,11 +76,11 @@ positions.on('created', addCameraPosition);
 
 document.getElementById('position-mem').addEventListener('submit', function(ev) {
   ev.preventDefault();
-  var videoSource = this.videosource.value;
+  var cameraNumber = this.videosource.value;
   var subjectName = this.subjectname.value;
 
   positions.create({
-    videoSource: videoSource,
+    cameraNumber: cameraNumber,
     subjectName: subjectName
   });
 
@@ -129,10 +129,23 @@ document.getElementById('videoinput-mem').addEventListener('submit', function(ev
   $('#videoinput-mem').find('input[type=text]').val('');
 });
 
+// TODO: suitable service
+function getSourceInput(input) {
+  $.get(`/tbd/p?data=${input.mixerIP}::${input.sourceInput}`);
+}
+
 $(document).on('click', 'button[type=memory-button]', function() {
   if (this.value.split('::')[0] === 'media') {
-    $.get('/tbd/p?data="' + this.value + '"'); // this needs own service to call atom switcher
+    getSourceInput(this.value)
   } else {
-    $.get('/movecam/p?data="' + this.value + '"');
+    $.get(`/movecam/p?data=${this.value}`);
+    
+    videoinputs.find({
+      query: {
+        $limit: 1,
+        sourceType: 'camera',
+        cameraNumber: this.value.split('::')[2]
+      }
+    }).then(page => page.data.forEach(getSourceInput));
   }
 });
