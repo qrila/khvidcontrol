@@ -10,7 +10,7 @@
     <div id="app">
       <main>
         <div class="container">
-          <div class="col-sm-4">
+          <div class="col-xs-4">
             <div id="camera-control">
               <div class="menu-control row">
                 <div class="power-button col-xs-2">
@@ -35,38 +35,38 @@
                 </div>
               </div>
               <div class="position-control row">
-                <div class="up-button col-sm-2 col-sm-offset-3">
+                <div class="up-button col-xs-2 col-xs-offset-3">
                   <button type="button" name="up-button" class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
                   </button>
                 </div>
               </div>
               <div class="position-control row">
-                <div class="left-button col-sm-2 col-sm-offset-1">
+                <div class="left-button col-xs-2 col-xs-offset-1">
                   <button type="button" name="left-button" class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                   </button>
                 </div>
-                <div class="right-button col-sm-2 col-sm-offset-2">
+                <div class="right-button col-xs-2 col-xs-offset-2">
                   <button type="button" name="right-button" class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
                   </button>
                 </div>
               </div>
               <div class="position-control row">
-                <div class="down-button col-sm-2 col-sm-offset-3">
+                <div class="down-button col-xs-2 col-xs-offset-3">
                   <button type="button" name="down-button" class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
                   </button>
                 </div>
               </div>
               <div id="zoom-control" class="row">
-                <div class="zoom-tele col-sm-2 col-sm-offset-1">
+                <div class="zoom-tele col-xs-2 col-xs-offset-1">
                   <button type="zoom-button" name="zoom-tele" class="btn btn-primary">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                   </button>
                 </div>
-                <div class="zoom-wide col-sm-2 col-sm-offset-2">
+                <div class="zoom-wide col-xs-2 col-xs-offset-2">
                   <button type="zoom-button" name="zoom-wide" class="btn btn-primary">
                     <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                   </button>
@@ -74,15 +74,15 @@
               </div>
               <div class="row">
                 <form id="position-mem">
-                  <div class="col-sm-2">
+                  <div class="col-xs-2">
                     <select name="videoSource" id="videoinput">
                       <option value="1">1</option>
                     </select>
                   </div>
-                  <div class="col-sm-5">
-                    <input type="text" name="name" placeholder="Videolähteen nimi" style="width:100%">
+                  <div class="col-xs-5">
+                    <input type="text" name="name" placeholder="Kameran kohde" style="width:100%">
                   </div>
-                  <div class="col-sm-2">
+                  <div class="col-xs-2 col-xs-offset-2">
                     <button type="submit" name="save-position" class="btn">
                       <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     </button>
@@ -94,44 +94,55 @@
             <div id="ateminputs">
               <div class="row">
                 <form id="videoinput-mem">
-                  <div class="col-sm-4">
-                    <input type="text" name="mixerip" placeholder="192.168.x.x">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <input type="text" name="sourcename" placeholder="Lähteen nimi">
+                    </div>
+                    <div class="col-xs-4">
+                      <input type="text" name="mixerip" placeholder="192.168.x.x">
+                    </div>
+                    <div class="col-xs-2">
+                      <select class="inputlist" name="inputlist">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                      </select>
+                    </div>
                   </div>
-                  <div class="col-sm-2">
-                    <select class="inputlist" name="inputlist">
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                    </select>
-                  </div>
-                  <div class="col-xs-4">
-                    <select class="sourcetype">
-                      <option value="media">Media</option>
-                      <option value="camera">Kamera</option>
-                    </select>
-                  </div>
-                  <div class="col-xs-2">
-                    <input type="text" name="cameranbr" placeholder="0">
-                  </div>
-                  <div class="col-sm-2">
-                    <button type="submit" name="save-videoinput" class="btn">
-                      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    </button>
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <select class="sourcetype">
+                        <option value="media">Media</option>
+                        <option value="camera">Kamera</option>
+                      </select>
+                    </div>
+                    <div class="col-xs-2">
+                      <input type="text" name="cameranbr" placeholder="0">
+                    </div>
+                    <div class="col-xs-2 col-xs-offset-3">
+                      <button type="submit" name="save-videoinput" class="btn">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                      </button>
+                    </div>
                   </div>
                 </form>
               </div>
             </div> 
           </div>
 
-          
-          <div class="col-sm-8">
+
+          <div class="col-xs-8">
             <div class="row">
-              <div class="memoutput col-sm-10">
+              <div class="memoutput col-xs-10">
+              </div>
+            </div>
+            <div class="row">
+              <div class="mediaoutput col-xs-10">
               </div>
             </div>
           </div>
