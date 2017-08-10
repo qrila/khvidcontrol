@@ -8,55 +8,55 @@ client.configure(feathers.socketio(socket));
 const positions = client.service('positions');
 
 $('.power-button button').click(function(){
-  $.get('/movecam/q?data=power::' + document.getElementById('videoinput').value);
+  $.get('/movecam/q?data=power::' + document.getElementById('videosource').value);
 });
 
 $('.menu-button button').click(function(){
-  $.get('/movecam/c?data=menuToggle::' + document.getElementById('videoinput').value);
+  $.get('/movecam/c?data=menuToggle::' + document.getElementById('videosource').value);
 });
 
 $(".menu-ok button").click(function(){
-  $.get('/movecam/c?data=menuOK::' + document.getElementById('videoinput').value);
+  $.get('/movecam/c?data=menuOK::' + document.getElementById('videosource').value);
 });
 
 $(".menu-back button").click(function(){
-  $.get('/movecam/c?data=menuBack::' + document.getElementById('videoinput').value);
+  $.get('/movecam/c?data=menuBack::' + document.getElementById('videosource').value);
 });
 
 $('.up-button button').bind('mousedown touchstart', function(){
-  $.get('/movecam/c?data=moveUp::' + document.getElementById('videoinput').value);
+  $.get('/movecam/c?data=moveUp::' + document.getElementById('videosource').value);
 }).bind('mouseup touchend', function(){
-  $.get('/movecam/c?data=moveStop::' + document.getElementById('videoinput').value);
+  $.get('/movecam/c?data=moveStop::' + document.getElementById('videosource').value);
 });
 
 $('.left-button button').bind('mousedown touchstart', function(){
-  $.get('/movecam/c?data=moveLeft::' + document.getElementById('videoinput').value);
+  $.get('/movecam/c?data=moveLeft::' + document.getElementById('videosource').value);
 }).bind('mouseup touchend', function(){
-  $.get('/movecam/c?data=moveStop::' + document.getElementById('videoinput').value);
+  $.get('/movecam/c?data=moveStop::' + document.getElementById('videosource').value);
 });
 
 $('.right-button button').bind('mousedown touchstart', function(){
-  $.get('/movecam/c?data=moveRight::' + document.getElementById('videoinput').value);
+  $.get('/movecam/c?data=moveRight::' + document.getElementById('videosource').value);
 }).bind('mouseup touchend', function(){
-  $.get('/movecam/c?data=moveStop::' + document.getElementById('videoinput').value);
+  $.get('/movecam/c?data=moveStop::' + document.getElementById('videosource').value);
 });
 
 $('.down-button button').bind('mousedown touchstart', function(){
-  $.get('/movecam/c?data=moveDown::' + document.getElementById('videoinput').value);
+  $.get('/movecam/c?data=moveDown::' + document.getElementById('videosource').value);
 }).bind('mouseup touchend', function(){
-  $.get('/movecam/c?data=moveStop::' + document.getElementById('videoinput').value);
+  $.get('/movecam/c?data=moveStop::' + document.getElementById('videosource').value);
 });
 
 $('.zoom-tele button').bind('mousedown touchstart', function(){
-  $.get('/movecam/c?data=zoomTeleStd::' + document.getElementById('videoinput').value);
+  $.get('/movecam/c?data=zoomTeleStd::' + document.getElementById('videosource').value);
 }).bind('mouseup touchend', function(){
-  $.get('/movecam/c?data=zoomStop::' + document.getElementById('videoinput').value);
+  $.get('/movecam/c?data=zoomStop::' + document.getElementById('videosource').value);
 });
 
 $('.zoom-wide button').bind('mousedown touchstart', function(){
-  $.get('/movecam/c?data=zoomWideStd::' + document.getElementById('videoinput').value);
+  $.get('/movecam/c?data=zoomWideStd::' + document.getElementById('videosource').value);
 }).bind('mouseup touchend', function(){
-  $.get('/movecam/c?data=zoomStop::' + document.getElementById('videoinput').value);
+  $.get('/movecam/c?data=zoomStop::' + document.getElementById('videosource').value);
 });
 
 function addCameraPosition(position) {
