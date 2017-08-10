@@ -92,7 +92,7 @@ function addMediaSources(media) {
   mediaSource.insertAdjacentHTML('beforeend',`
     <div class="col-sm-3 memory-button"<span>${media.sourceName}</span><br>
       <button type="memory-button" value="media::${media.mixerIP}::${media.sourceInput}" class="btn btn-primary">
-        <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
       </button>
     </div>
   `);
