@@ -63,7 +63,7 @@ $('.zoom-wide button').bind('mousedown touchstart', function(){
 function addCameraPosition(position) {
   const camPos = document.querySelector('.memoutput');
   camPos.insertAdjacentHTML('beforeend', `
-    <div class="col-sm-3 memory-button"><span>${position.name}</span><br>
+    <div class="col-sm-3 memory-button"><span>${position.subjectName}</span><br>
       <button type="memory-button" value="${position.pantilt}::${position.zoom}::${position.videoSource}" class="btn btn-primary">
         <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
       </button>
@@ -87,6 +87,29 @@ document.getElementById('position-mem').addEventListener('submit', function(ev) 
   $('#position-mem').find('input[type=text]').val('');
 });
 
+function addMediaSources(media) {
+  const mediaSource = document.querySelector('.mediaoutput');
+  mediaSource.insertAdjacentHTML('beforeend',`
+    <div class="col-sm-3 memory-button"<span>${media.sourceName}</span><br>
+      <button type="memory-button" value="media::${media.mixerIP}::${media.sourceInput}" class="btn btn-primary">
+        <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
+      </button>
+    </div>
+  `);
+}
+
+videoinputs.find({
+  query: {
+    sourceType: 'media'
+  }
+}).then(page => page.data.forEach(addMediaSources));
+
+videoinputs.on('created', function(source){
+  if (source.sourceType === 'media') {
+    addMediaSources(source);
+  }
+});
+
 document.getElementById('videoinput-mem').addEventListener('submit', function(ev) {
   ev.preventDefault();
   var sourceName = this.sourcename.value;
@@ -107,8 +130,8 @@ document.getElementById('videoinput-mem').addEventListener('submit', function(ev
 });
 
 $(document).on('click', 'button[type=memory-button]', function() {
-  if (this.value.split('::')[2] === '0') {
-    $.get('/tbd/p?data=0'); // this needs own service to call atom switcher
+  if (this.value.split('::')[0] === 'media') {
+    $.get('/tbd/p?data="' + this.value + '"'); // this needs own service to call atom switcher
   } else {
     $.get('/movecam/p?data="' + this.value + '"');
   }
