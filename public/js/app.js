@@ -4,8 +4,9 @@ const client = feathers();
 // Create the Feathers application with a `socketio` connection
 client.configure(feathers.socketio(socket));
 
-// Get the service for our `positions` endpoint
+// Get the services for our endpoints
 const positions = client.service('positions');
+const videoinputs = client.service('videoinputs');
 
 $('.power-button button').click(function(){
   $.get('/movecam/q?data=power::' + document.getElementById('videosource').value);
@@ -74,39 +75,35 @@ positions.find().then(page => page.data.forEach(addCameraPosition));
 positions.on('created', addCameraPosition);
 
 document.getElementById('position-mem').addEventListener('submit', function(ev) {
-  const videoSource = document.querySelector('[name="videosource"]');
-  const subjectName = document.querySelector('[name="subjectname"]');
+  ev.preventDefault();
+  var videoSource = this.videosource.value;
+  var subjectName = this.subjectname.value;
 
-  client.service('positions').create({
-    videoSource: videoSource.value,
-    subjectName: subjectName.value
+  positions.create({
+    videoSource: videoSource,
+    subjectName: subjectName
   });
 
-  subjectName.value = '';
-  ev.preventDefault();
+  $('#position-mem').find('input[type=text]').val('');
 });
 
 document.getElementById('videoinput-mem').addEventListener('submit', function(ev) {
-  const sourceName = document.querySelector('[name="sourcename"]');
-  const mixerIP = document.querySelector('[name="mixerip"]');
-  const sourceInput = document.querySelector('[name="sourceinput"]');
-  const sourceType = document.querySelector('[name="sourcetype"]');
-  const cameraNumber = document.querySelector('[name="cameranumber"]');
+  ev.preventDefault();
+  var sourceName = this.sourcename.value;
+  var mixerIP = this.mixerip.value;
+  var sourceInput = this.sourceinput.value;
+  var sourceType = this.sourcetype.value;
+  var cameraNumber = this.cameranumber.value;
 
-  client.service('positions').create({
-    sourceName: sourceName.value,
-    mixerIP: mixerIP.value,
-    sourceInput: sourceInput.value,
-    sourceType: sourceType.value,
-    cameraNumber: cameraNumber.value
+  videoinputs.create({
+    sourceName: sourceName,
+    mixerIP: mixerIP,
+    sourceInput: sourceInput,
+    sourceType: sourceType,
+    cameraNumber: cameraNumber
   });
 
-  sourceName.value = '';
-  mixerIP.value = '';
-  sourceInput.value = '';
-  sourceType.value = '';
-  cameraNumber.value = '';
-  ev.preventDefault();
+  $('#videoinput-mem').find('input[type=text]').val('');
 });
 
 $(document).on('click', 'button[type=memory-button]', function() {
