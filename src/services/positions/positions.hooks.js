@@ -10,7 +10,7 @@ module.exports = {
     create: [
       function(hook) {
         return new Promise((resolve, reject) => {
-          var cmd = pycmd + '::' + hook.data.videoSource;
+          var cmd = pycmd + '::' + hook.data.cameraNumber;
           exec(cmd, function(err,stdout,stderr) {
             if( err ) { return reject(err); }
             if( stderr ) { return reject(stderr); }
@@ -26,7 +26,7 @@ module.exports = {
             hook.data.pantilt = pantilt.toString();
             hook.data.zoom = zoom.toString();
 
-            console.log('source id: ' + hook.data.videoSource + '\npantilt: ' + hook.data.pantilt + '\nzoom: ' + hook.data.zoom);
+            console.log(hook.data);
             resolve(hook);
           });
         });
