@@ -129,17 +129,20 @@ document.getElementById('videoinput-mem').addEventListener('submit', function(ev
   $('#videoinput-mem').find('input[type=text]').val('');
 });
 
-// TODO: suitable service
 function getSourceInput(input) {
-  $.get(`/tbd/p?data=${input.mixerIP}::${input.sourceInput}`);
+  $.get(`/mixerinputs/${input.mixerIP}::${input.sourceInput}`);
 }
 
 $(document).on('click', 'button[type=memory-button]', function() {
   if (this.value.split('::')[0] === 'media') {
-    getSourceInput(this.value)
+    const getmixerinput = {
+      "mixerIP": this.value.split('::')[1],
+      "sourceInput": this.value.split('::')[2]
+    }
+    getSourceInput(getmixerinput);
   } else {
     $.get(`/movecam/p?data=${this.value}`);
-    
+
     videoinputs.find({
       query: {
         $limit: 1,

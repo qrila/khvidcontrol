@@ -17,7 +17,7 @@ def main(argv):
         ATEM.runLoop()
         if time.time() > time_set:
             ATEM.setProgramInputVideoSource(0, int(argv[1]))
-            ATEM.setPreviewInputVideoSource(0, int(argv[2]))
+            ATEM.setPreviewInputVideoSource(0, int(argv[1]))
             run_cmd = 0
 
 if __name__ == "__main__":

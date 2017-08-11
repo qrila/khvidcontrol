@@ -1,37 +1,27 @@
+const exec = require('child_process').exec;
+const logger = require('winston');
+const pycmd = 'python ./python/atemctrl.py';
+
 /* eslint-disable no-unused-vars */
 class Service {
   constructor (options) {
     this.options = options || {};
   }
 
-  find (params) {
-    return Promise.resolve([]);
-  }
+  get (params) {
+    const mixerip = params.split('::')[0];
+    const inputsource = params.split('::')[1];
 
-  get (id, params) {
-    return Promise.resolve({
-      id, text: `A new message with ID: ${id}!`
+    var cmd = pycmd + ' ' + mixerip + ' ' + inputsource;
+    exec(cmd, function(err,stdout,stderr) {
+      if( err ) { logger.debug(err); }
+      if( stdout ) { logger.info(stdout); }
+      if( stderr ) { logger.debug(stderr); }
     });
-  }
 
-  create (data, params) {
-    if (Array.isArray(data)) {
-      return Promise.all(data.map(current => this.create(current)));
-    }
+    return Promise.resolve({
 
-    return Promise.resolve(data);
-  }
-
-  update (id, data, params) {
-    return Promise.resolve(data);
-  }
-
-  patch (id, data, params) {
-    return Promise.resolve(data);
-  }
-
-  remove (id, params) {
-    return Promise.resolve({ id });
+    });
   }
 }
 
