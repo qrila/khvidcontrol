@@ -43,7 +43,8 @@ def set_data(data, camera):
                    "\\x01\\x06\\x02\\x18\\x18\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\xFF",
         "power": ["\\x8" + camera + "\\x09\\x04\\x00\\xFF", 4], # Power query
         "pantilt": ["\\x8" + camera + "\\x09\\x06\\x12\\xFF", 11], # Receive 11bit
-        "zoom": ["\\x8" + camera + "\\x09\\x04\\x47\\xFF", 7] # Receive 7bit
+        "zoom": ["\\x8" + camera + "\\x09\\x04\\x47\\xFF", 7], # Receive 7bit
+        "focus": ["\\x8x" + camera + "\\x04\\x18\\x01\\xFF"]
     }.get(data, "notfound")
 
 
