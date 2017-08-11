@@ -152,3 +152,13 @@ $(document).on('click', 'button[type=memory-button]', function() {
     }).then(page => page.data.forEach(getSourceInput));
   }
 });
+
+$('select[name="cameranumber"]').prop("disabled", true);
+$('select[name="sourcetype"]').change(function() {
+  if($('select[name="sourcetype"]').val() === 'camera') {
+    $('select[name="cameranumber"]').prop("disabled", false);
+  } else {
+    $('select[name="cameranumber"]').val("");
+    $('select[name="cameranumber"]').prop("disabled", true);
+  }
+});

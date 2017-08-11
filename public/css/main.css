@@ -49,3 +49,7 @@ button {
 input {
   width: 100%;
 }
+
+select[disabled] {
+  color: #DCDAD1;
+}
