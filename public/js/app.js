@@ -71,7 +71,7 @@ function addCameraPosition(position) {
   `);
 }
 
-positions.find().then(page => page.data.forEach(addCameraPosition));
+positions.find().then(camerabuttons => camerabuttons.data.forEach(addCameraPosition));
 positions.on('created', addCameraPosition);
 
 document.getElementById('position-mem').addEventListener('submit', function(ev) {
@@ -90,7 +90,7 @@ document.getElementById('position-mem').addEventListener('submit', function(ev) 
 function addMediaSources(media) {
   const mediaSource = document.querySelector('.mediaoutput');
   mediaSource.insertAdjacentHTML('beforeend',`
-    <div class="col-sm-3 memory-button"<span>${media.sourceName}</span><br>
+    <div class="col-sm-3 memory-button"><span>${media.sourceName}</span><br>
       <button type="memory-button" value="media::${media.mixerIP}::${media.sourceInput}" class="btn btn-primary">
         <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
       </button>
@@ -102,13 +102,35 @@ videoinputs.find({
   query: {
     sourceType: 'media'
   }
-}).then(page => page.data.forEach(addMediaSources));
+}).then(mediabuttons => mediabuttons.data.forEach(addMediaSources));
 
 videoinputs.on('created', function(source){
   if (source.sourceType === 'media') {
     addMediaSources(source);
   }
 });
+
+function addAUXSource(auxsource) {
+  const mediaSource = document.querySelector('#auxsource');
+  mediaSource.insertAdjacentHTML('beforeend',`
+    <div class="col-xs-offset-1 col-xs-5">
+      <button type="memory-button" value="auxsource::deaf::${auxsource.mixerIP}" class="aux-button btn btn-primary">
+        <span aria-hidden="true">Kuurot</span>
+      </button>
+    </div>
+    <div class="col-xs-offset-1 col-xs-5">
+      <button type="memory-button" value="auxsource::hearing::${auxsource.mixerIP}"" class="aux-button btn btn-primary">
+        <span aria-hidden="true">Kuulevat</span>
+      </button>
+    </div>
+  `);
+}
+
+videoinputs.find({
+  query: {
+    $limit: 1
+  }
+}).then(auxbuttons => addAUXSource(auxbuttons.data[0]))
 
 document.getElementById('videoinput-mem').addEventListener('submit', function(ev) {
   ev.preventDefault();
@@ -130,26 +152,40 @@ document.getElementById('videoinput-mem').addEventListener('submit', function(ev
 });
 
 function getSourceInput(input) {
-  $.get(`/mixerinputs/${input.mixerIP}::${input.sourceInput}`);
+  if(input.mixerAUX){
+    $.get(`/mixerinputs/${input.mixerIP}::${input.mixerAUX}`);
+  } else {
+    $.get(`/mixerinputs/${input.mixerIP}::${input.sourceInput}`);
+  }
 }
 
 $(document).on('click', 'button[type=memory-button]', function() {
+  const buttonValue = this.value.split('::');
   if (this.value.split('::')[0] === 'media') {
-    const getmixerinput = {
-      "mixerIP": this.value.split('::')[1],
-      "sourceInput": this.value.split('::')[2]
-    }
-    getSourceInput(getmixerinput);
+    getSourceInput({
+      mixerIP: buttonValue[1],
+      sourceInput: buttonValue[2]
+    });
+  } else if (buttonValue[0] === 'auxsource') {
+    getSourceInput({
+      mixerAUX: buttonValue[1] == 'deaf' ? 'program' : 'source',
+      mixerIP: buttonValue[2],
+      sourceInput: null // Hearing media connection set to input source 1 in atemctrl.py
+    });
   } else {
     $.get(`/movecam/p?data=${this.value}`);
-
     videoinputs.find({
       query: {
         $limit: 1,
         sourceType: 'camera',
         cameraNumber: this.value.split('::')[2]
       }
-    }).then(page => page.data.forEach(getSourceInput));
+    }).then(page =>
+      getSourceInput({
+        mixerIP: page.data[0].mixerIP,
+        sourceInput: page.data[0].sourceInput
+      })
+    );
   }
 });
 

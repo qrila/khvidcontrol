@@ -9,10 +9,12 @@ class Service {
   }
 
   get (params) {
-    const mixerip = params.split('::')[0];
-    const inputsource = params.split('::')[1];
 
-    var cmd = pycmd + ' ' + mixerip + ' ' + inputsource;
+    const mixerip = params.split('::')[0];
+    const param_2 = params.split('::')[1];
+    // param_2 is either progmam input or selection of AUX output source selection.
+
+    var cmd = pycmd + ' ' + mixerip + ' ' + param_2;
     exec(cmd, function(err,stdout,stderr) {
       if( err ) { logger.debug(err); }
       if( stdout ) { logger.info(stdout); }

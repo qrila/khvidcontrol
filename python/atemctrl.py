@@ -14,11 +14,24 @@ def main(argv):
     time_set = time.time() + 0.500
     while run_cmd == 1:
         time.sleep(0.05)
-        ATEM.runLoop()
-        if time.time() > time_set:
-            ATEM.setProgramInputVideoSource(0, int(argv[1]))
-            ATEM.setPreviewInputVideoSource(0, int(argv[1]))
-            run_cmd = 0
+
+        if argv[1] == 'program':
+            ATEM.runLoop()
+            if time.time() > time_set:
+                ATEM.setAuxSourceInput(0, !TBD!)
+
+        elif argv[1] != 'source':
+            ATEM.runLoop()
+            if time.time() > time_set:
+                ATEM.setAuxSourceInput(0, 1)
+
+        else:
+            ATEM.runLoop()
+            if time.time() > time_set:
+                ATEM.setProgramInputVideoSource(0, int(argv[2]))
+                ATEM.setPreviewInputVideoSource(0, int(argv[2]))
+
+        run_cmd = 0
 
 if __name__ == "__main__":
     main(sys.argv[1:])

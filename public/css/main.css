@@ -46,6 +46,11 @@ button {
   height: 120px;
 }
 
+.aux-button {
+  width: 100%;
+  margin-top: 30px;
+}
+
 input {
   width: 100%;
 }
