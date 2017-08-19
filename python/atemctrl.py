@@ -18,20 +18,23 @@ def main(argv):
         if argv[1] == 'program':
             ATEM.runLoop()
             if time.time() > time_set:
-                ATEM.setAuxSourceInput(0, !TBD!)
+                ATEM.setAuxSourceInput(0, 10010)
+                run_cmd = 0
 
-        elif argv[1] != 'source':
+        elif argv[1] == 'source':
             ATEM.runLoop()
             if time.time() > time_set:
                 ATEM.setAuxSourceInput(0, 1)
+                run_cmd = 0
 
         else:
             ATEM.runLoop()
             if time.time() > time_set:
                 ATEM.setProgramInputVideoSource(0, int(argv[2]))
                 ATEM.setPreviewInputVideoSource(0, int(argv[2]))
+                run_cmd = 0
 
-        run_cmd = 0
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])
