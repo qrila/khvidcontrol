@@ -9,56 +9,46 @@ client.configure(feathers.socketio(socket));
 const positions = client.service('positions');
 const videoinputs = client.service('videoinputs');
 
-$('.power-button button').click(function(){
-  $.get('/movecam/q?data=power::' + document.getElementById('videosource').value);
+const camButton = (data) => {
+    $.get(`/movecam/c?data=${data}::${document.getElementById('videosource').value}`);
+}
+
+const camMenuButton = (button, data) => {
+    $(`.${button} button`).click(function(){
+        camButton(data);
+    });
+}
+
+const camArrowButton = (button, data) => {
+    $(`.${button} button`).bind('mousedown touchstart', function(){
+        camButton(data);
+    }).bind('mouseup touchend', function(){
+        camButton('moveStop');
+    });
+}
+
+const menuButtons = {
+    'power-button'  :   'power',
+    'menu-button'   :   'menuToggle',
+    'menu-ok'       :   'menuOK',
+    'menu-back'     :   'menuBack'
+};
+
+$.each(menuButtons, function(button, action) {
+    camMenuButton(button, action);
 });
 
-$('.menu-button button').click(function(){
-  $.get('/movecam/c?data=menuToggle::' + document.getElementById('videosource').value);
-});
+const arrowButtons = {
+    'up-button'     :   'moveUp',
+    'left-button'   :   'moveLeft',
+    'right-button'  :   'moveRight',
+    'down-button'   :   'moveDown',
+    'zoom-tele'     :   'zoomTeleStd',
+    'zoom-wide'     :   'zoomWideStd'
+};
 
-$(".menu-ok button").click(function(){
-  $.get('/movecam/c?data=menuOK::' + document.getElementById('videosource').value);
-});
-
-$(".menu-back button").click(function(){
-  $.get('/movecam/c?data=menuBack::' + document.getElementById('videosource').value);
-});
-
-$('.up-button button').bind('mousedown touchstart', function(){
-  $.get('/movecam/c?data=moveUp::' + document.getElementById('videosource').value);
-}).bind('mouseup touchend', function(){
-  $.get('/movecam/c?data=moveStop::' + document.getElementById('videosource').value);
-});
-
-$('.left-button button').bind('mousedown touchstart', function(){
-  $.get('/movecam/c?data=moveLeft::' + document.getElementById('videosource').value);
-}).bind('mouseup touchend', function(){
-  $.get('/movecam/c?data=moveStop::' + document.getElementById('videosource').value);
-});
-
-$('.right-button button').bind('mousedown touchstart', function(){
-  $.get('/movecam/c?data=moveRight::' + document.getElementById('videosource').value);
-}).bind('mouseup touchend', function(){
-  $.get('/movecam/c?data=moveStop::' + document.getElementById('videosource').value);
-});
-
-$('.down-button button').bind('mousedown touchstart', function(){
-  $.get('/movecam/c?data=moveDown::' + document.getElementById('videosource').value);
-}).bind('mouseup touchend', function(){
-  $.get('/movecam/c?data=moveStop::' + document.getElementById('videosource').value);
-});
-
-$('.zoom-tele button').bind('mousedown touchstart', function(){
-  $.get('/movecam/c?data=zoomTeleStd::' + document.getElementById('videosource').value);
-}).bind('mouseup touchend', function(){
-  $.get('/movecam/c?data=zoomStop::' + document.getElementById('videosource').value);
-});
-
-$('.zoom-wide button').bind('mousedown touchstart', function(){
-  $.get('/movecam/c?data=zoomWideStd::' + document.getElementById('videosource').value);
-}).bind('mouseup touchend', function(){
-  $.get('/movecam/c?data=zoomStop::' + document.getElementById('videosource').value);
+$.each(arrowButtons, function(button, action) {
+    camArrowButton(button, action);
 });
 
 function addCameraPosition(position) {
@@ -162,7 +152,7 @@ function getSourceInput(input) {
 
 $(document).on('click', 'button[type=memory-button]', function() {
   const buttonValue = this.value.split('::');
-  if (this.value.split('::')[0] === 'media') {
+  if (buttonValue[0] === 'media') {
     getSourceInput({
       mixerIP: buttonValue[1],
       sourceInput: buttonValue[2]
@@ -179,7 +169,7 @@ $(document).on('click', 'button[type=memory-button]', function() {
       query: {
         $limit: 1,
         sourceType: 'camera',
-        cameraNumber: this.value.split('::')[2]
+        cameraNumber: buttonValue[2]
       }
     }).then(page =>
       getSourceInput({
