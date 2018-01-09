@@ -1,7 +1,6 @@
 // Initializes the `movecam` service on path `/movecam`
 const createService = require('./movecam.class.js');
 const hooks = require('./movecam.hooks');
-const filters = require('./movecam.filters');
 
 module.exports = function () {
   const app = this;
@@ -19,8 +18,4 @@ module.exports = function () {
   const service = app.service('movecam');
 
   service.hooks(hooks);
-
-  if (service.filter) {
-    service.filter(filters);
-  }
 };

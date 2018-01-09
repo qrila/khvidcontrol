@@ -1,4 +1,5 @@
-const socket = io();
+const appPath = `${window.location}`;
+const socket = io(appPath);
 const client = feathers();
 
 // Create the Feathers application with a `socketio` connection
