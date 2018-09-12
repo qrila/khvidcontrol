@@ -41,9 +41,8 @@ button {
   padding: 30px;
 }
 
-.memory-button {
-  margin-top: 15px;
-  height: 120px;
+.mem-button {
+  width: 100%;
 }
 
 .aux-button {
@@ -57,4 +56,11 @@ input {
 
 select[disabled] {
   color: #DCDAD1;
+}
+
+
+@media (max-width: 992px) {
+  .hidden-xs {
+    display: none;
+  }
 }

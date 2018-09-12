@@ -10,45 +10,45 @@ const positions = client.service('positions');
 const videoinputs = client.service('videoinputs');
 
 const camButton = (data) => {
-    $.get(`/movecam/c?data=${data}::${document.getElementById('videosource').value}`);
+  $.get(`/movecam/c?data=${data}::${document.getElementById('videosource').value}`);
 }
 
 const camMenuButton = (button, data) => {
-    $(`.${button} button`).click(function(){
-        camButton(data);
-    });
-}
+  $(`.${button} button`).click(function(){
+    camButton(data);
+  });
+};
 
 const camArrowButton = (button, data) => {
-    $(`.${button} button`).bind('mousedown touchstart', function(){
-        camButton(data);
-    }).bind('mouseup touchend', function(){
-        camButton('moveStop');
-    });
-}
+  $(`.${button} button`).bind('mousedown touchstart', function(){
+    camButton(data);
+  }).bind('mouseup touchend', function(){
+    camButton('moveStop');
+  });
+};
 
 const menuButtons = {
-    'power-button'  :   'power',
-    'menu-button'   :   'menuToggle',
-    'menu-ok'       :   'menuOK',
-    'menu-back'     :   'menuBack'
+  'power-button'  :   'power',
+  'menu-button'   :   'menuToggle',
+  'menu-ok'       :   'menuOK',
+  'menu-back'     :   'menuBack'
 };
 
 $.each(menuButtons, function(button, action) {
-    camMenuButton(button, action);
+  camMenuButton(button, action);
 });
 
 const arrowButtons = {
-    'up-button'     :   'moveUp',
-    'left-button'   :   'moveLeft',
-    'right-button'  :   'moveRight',
-    'down-button'   :   'moveDown',
-    'zoom-tele'     :   'zoomTeleStd',
-    'zoom-wide'     :   'zoomWideStd'
+  'up-button'     :   'moveUp',
+  'left-button'   :   'moveLeft',
+  'right-button'  :   'moveRight',
+  'down-button'   :   'moveDown',
+  'zoom-tele'     :   'zoomTeleStd',
+  'zoom-wide'     :   'zoomWideStd'
 };
 
 $.each(arrowButtons, function(button, action) {
-    camArrowButton(button, action);
+  camArrowButton(button, action);
 });
 
 function addCameraPosition(position) {
@@ -81,9 +81,9 @@ document.getElementById('position-mem').addEventListener('submit', function(ev) 
 function addMediaSources(media) {
   const mediaSource = document.querySelector('.mediaoutput');
   mediaSource.insertAdjacentHTML('beforeend',`
-    <div class="col-sm-3 memory-button"><span>${media.sourceName}</span><br>
-      <button type="memory-button" value="media::${media.mixerIP}::${media.sourceInput}" class="btn btn-primary">
-        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+    <div class="col-sm-5 col-md-4 col-xl-3">
+      <button type="memory-button" value="media::${media.mixerIP}::${media.sourceInput}" class="mem-button btn btn-primary">
+        <span aria-hidden="true">${media.sourceName}</span>
       </button>
     </div>
   `);
@@ -180,12 +180,12 @@ $(document).on('click', 'button[type=memory-button]', function() {
   }
 });
 
-$('select[name="cameranumber"]').prop("disabled", true);
+$('select[name="cameranumber"]').prop('disabled', true);
 $('select[name="sourcetype"]').change(function() {
   if($('select[name="sourcetype"]').val() === 'camera') {
-    $('select[name="cameranumber"]').prop("disabled", false);
+    $('select[name="cameranumber"]').prop('disabled', false);
   } else {
-    $('select[name="cameranumber"]').val("");
-    $('select[name="cameranumber"]').prop("disabled", true);
+    $('select[name="cameranumber"]').val('');
+    $('select[name="cameranumber"]').prop('disabled', true);
   }
 });
