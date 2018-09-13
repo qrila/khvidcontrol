@@ -62,7 +62,9 @@ function addCameraPosition(position) {
   `);
 }
 
-positions.find().then(camerabuttons => camerabuttons.data.forEach(addCameraPosition));
+positions.find().then(camerabuttons => {
+  _.sortBy(camerabuttons.data, ['sortNumber']).forEach(addCameraPosition);
+});
 positions.on('created', addCameraPosition);
 
 document.getElementById('position-mem').addEventListener('submit', function(ev) {
