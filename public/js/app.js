@@ -67,12 +67,17 @@ positions.on('created', addCameraPosition);
 
 document.getElementById('position-mem').addEventListener('submit', function(ev) {
   ev.preventDefault();
-  var cameraNumber = this.videosource.value;
-  var subjectName = this.subjectname.value;
+  const cameraNumber = this.videosource.value;
+  const subjectName = this.subjectname.value;
 
-  positions.create({
-    cameraNumber: cameraNumber,
-    subjectName: subjectName
+  positions.find().then(newPosition => {
+    const sortNumber = newPosition.data.length + 1;
+
+    positions.create({
+      sortNumber: sortNumber,
+      cameraNumber: cameraNumber,
+      subjectName: subjectName
+    });
   });
 
   $('#position-mem').find('input[type=text]').val('');
