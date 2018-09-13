@@ -54,9 +54,9 @@ $.each(arrowButtons, function(button, action) {
 function addCameraPosition(position) {
   const camPos = document.querySelector('.memoutput');
   camPos.insertAdjacentHTML('beforeend', `
-    <div class="col-sm-3 memory-button"><span>${position.subjectName}</span><br>
-      <button type="memory-button" value="${position.pantilt}::${position.zoom}::${position.cameraNumber}" class="btn btn-primary">
-        <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>
+    <div class="col-sm-5 col-md-4 col-xl-3">
+      <button type="memory-button" value="${position.pantilt}::${position.zoom}::${position.cameraNumber}" class="mem-button btn btn-primary">
+        <span aria-hidden="true">${position.subjectName}</span>
       </button>
     </div>
   `);
@@ -121,7 +121,7 @@ videoinputs.find({
   query: {
     $limit: 1
   }
-}).then(auxbuttons => addAUXSource(auxbuttons.data[0]))
+}).then(auxbuttons => addAUXSource(auxbuttons.data[0]));
 
 document.getElementById('videoinput-mem').addEventListener('submit', function(ev) {
   ev.preventDefault();

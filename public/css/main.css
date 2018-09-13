@@ -37,10 +37,6 @@ button {
 
 }
 
-.memoutput {
-  padding: 30px;
-}
-
 .mem-button {
   width: 100%;
 }
@@ -48,6 +44,12 @@ button {
 .aux-button {
   width: 100%;
   margin-top: 30px;
+}
+
+#auxsource,
+.memoutput {
+  padding-bottom: 30px;
+  border-bottom: rgb(100, 100, 100) 1px solid;
 }
 
 input {
