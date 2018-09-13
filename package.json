@@ -28,24 +28,24 @@
   },
   "dependencies": {
     "@feathersjs/configuration": "^1.0.2",
-    "@feathersjs/errors": "^3.3.0",
-    "@feathersjs/express": "^1.2.3",
-    "@feathersjs/feathers": "^3.1.7",
-    "@feathersjs/socketio": "^3.2.2",
+    "@feathersjs/errors": "^3.3.2",
+    "@feathersjs/express": "^1.2.5",
+    "@feathersjs/feathers": "^3.2.1",
+    "@feathersjs/socketio": "^3.2.4",
     "body-parser": "^1.18.3",
-    "compression": "^1.7.2",
+    "compression": "^1.7.3",
     "cors": "^2.8.4",
     "feathers-hooks-common": "^3.10.0",
     "feathers-nedb": "^3.1.0",
-    "helmet": "^3.12.1",
+    "helmet": "^3.13.0",
     "nedb": "^1.8.0",
     "serve-favicon": "^2.5.0",
-    "winston": "^2.4.3"
+    "winston": "^2.4.4"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
     "mocha": "^4.1.0",
-    "request": "^2.87.0",
+    "request": "^2.88.0",
     "request-promise": "^4.2.2"
   }
 }
