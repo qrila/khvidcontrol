@@ -52,6 +52,12 @@ button {
   border-bottom: rgb(100, 100, 100) 1px solid;
 }
 
+#auxsource,
+.memoutput,
+.mediaoutput {
+  padding-top: 15px;
+}
+
 input {
   width: 100%;
 }

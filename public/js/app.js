@@ -54,7 +54,7 @@ $.each(arrowButtons, function(button, action) {
 function addCameraPosition(position) {
   const camPos = document.querySelector('.memoutput');
   camPos.insertAdjacentHTML('beforeend', `
-    <div class="col-sm-5 col-md-4 col-xl-3">
+    <div class="col-sm-4 col-md-4 col-xl-3">
       <button type="memory-button" value="${position.pantilt}::${position.zoom}::${position.cameraNumber}" class="mem-button btn btn-primary">
         <span aria-hidden="true">${position.subjectName}</span>
       </button>
@@ -88,7 +88,7 @@ document.getElementById('position-mem').addEventListener('submit', function(ev) 
 function addMediaSources(media) {
   const mediaSource = document.querySelector('.mediaoutput');
   mediaSource.insertAdjacentHTML('beforeend',`
-    <div class="col-sm-5 col-md-4 col-xl-3">
+    <div class="col-sm-4 col-md-4 col-xl-3">
       <button type="memory-button" value="media::${media.mixerIP}::${media.sourceInput}" class="mem-button btn btn-primary">
         <span aria-hidden="true">${media.sourceName}</span>
       </button>
@@ -111,12 +111,12 @@ videoinputs.on('created', function(source){
 function addAUXSource(auxsource) {
   const mediaSource = document.querySelector('#auxsource');
   mediaSource.insertAdjacentHTML('beforeend',`
-    <div class="col-xs-offset-1 col-xs-5">
+    <div class="col-xs-5">
       <button type="memory-button" value="auxsource::deaf::${auxsource.mixerIP}" class="aux-button btn btn-primary">
         <span aria-hidden="true">Kuurot</span>
       </button>
     </div>
-    <div class="col-xs-offset-1 col-xs-5">
+    <div class="col-xs-offset-2 col-xs-5">
       <button type="memory-button" value="auxsource::hearing::${auxsource.mixerIP}"" class="aux-button btn btn-primary">
         <span aria-hidden="true">Kuulevat</span>
       </button>
