@@ -23,7 +23,7 @@ const camArrowButton = (button, data) => {
   $(`.${button} button`).bind('mousedown touchstart', function(){
     camButton(data);
   }).bind('mouseup touchend', function(){
-    camButton('moveStop');
+    camButton(data.startsWith('zoom') ? 'zoomStop' : 'moveStop');
   });
 };
 
