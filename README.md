@@ -20,13 +20,14 @@ To enable starting forever.js after boot command is needed to add 'root' user's 
 
 ## Development todo
 
-- Replace Skaarjhoj code and wrapper with node package (e.g. [node-appletest-atem](https://github.com/applest/node-applest-atem) or similar)
+- Replace Skaarhoj code and wrapper with node package (e.g. [node-appletest-atem](https://github.com/applest/node-applest-atem) or similar)
 - Add fade to black to hide camera movement when changing between positions on same camera
 - Refactor arrow button implementation as bootstrap 3 solution is not good
 - Create functionality to edit camera positions and order of buttons
 - Build settings UI for adding information of mixer and camera(s)
 - Refactor main control UI to follow proper practises so that data is not stored in frontend and build UI using frontend framework (react/vue)
 - Create user profiles with desired button configuration and basic settings
+- Replace serial call python implementation with node one
 
 ## Installing Atem control
 
