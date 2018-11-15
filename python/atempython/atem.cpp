@@ -2143,7 +2143,7 @@ static PyObject *performFadeToBlackME(PyObject *self, PyObject *args) {
 
 	AtemSwitcher.getFadeToBlackStateFullyBlack(mE);
 	Py_INCREF(Py_None);
-	return atemFadeToBlackStateFullyBlack[mE];
+	return AtemSwitcher.atemFadeToBlackStateFullyBlack[mE];
 }
 
 static PyObject *setColorGeneratorHue(PyObject *self, PyObject *args) {
