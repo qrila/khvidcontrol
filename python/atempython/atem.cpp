@@ -2127,7 +2127,6 @@ static PyObject *setFadeToBlackRate(PyObject *self, PyObject *args) {
   
 static PyObject *performFadeToBlackME(PyObject *self, PyObject *args) {
 	uint8_t mE;
-	uint8_t rate;
 
 
 	AtemSwitcher.performFadeToBlackME(mE);
@@ -2135,15 +2134,10 @@ static PyObject *performFadeToBlackME(PyObject *self, PyObject *args) {
 	return Py_None;
 }
   
-  
- static PyObject *getFadeToBlackStateFullyBlack(PyObject *self, PyObject *args) {
+
+static PyObject *getFadeToBlackStateFullyBlack(PyObject *self, PyObject *args) {
 	uint8_t mE;
-	uint8_t rate;
-
-
-	AtemSwitcher.getFadeToBlackStateFullyBlack(mE);
-	Py_INCREF(Py_None);
-	return AtemSwitcher.atemFadeToBlackStateFullyBlack[mE];
+	return PyLong_FromLong(AtemSwitcher.getFadeToBlackStateFullyBlack(mE));
 }
 
 static PyObject *setColorGeneratorHue(PyObject *self, PyObject *args) {
@@ -3229,3 +3223,4 @@ static PyObject *setResetAudioMixerPeaksMaster(PyObject *self, PyObject *args) {
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+f
