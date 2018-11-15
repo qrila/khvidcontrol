@@ -129,6 +129,7 @@ static PyObject *setDownstreamKeyerRight(PyObject *self, PyObject *args);
 static PyObject *setDownstreamKeyerOnAir(PyObject *self, PyObject *args);
 static PyObject *setFadeToBlackRate(PyObject *self, PyObject *args);
 static PyObject *performFadeToBlackME(PyObject *self, PyObject *args);
+static PyObject *getFadeToBlackStateFullyBlack(PyObject *self, PyObject *args);
 static PyObject *setColorGeneratorHue(PyObject *self, PyObject *args);
 static PyObject *setColorGeneratorSaturation(PyObject *self, PyObject *args);
 static PyObject *setColorGeneratorLuma(PyObject *self, PyObject *args);
@@ -341,7 +342,8 @@ static PyMethodDef module_methods[] = {
 	{"setDownstreamKeyerRight", setDownstreamKeyerRight, METH_VARARGS, "desc"},
 	{"setDownstreamKeyerOnAir", setDownstreamKeyerOnAir, METH_VARARGS, "desc"},
 	{"setFadeToBlackRate", setFadeToBlackRate, METH_VARARGS, "desc"},
-    {"performFadeToBlackME", performFadeToBlackME, METH_VARARGS, "desc"},
+  {"performFadeToBlackME", performFadeToBlackME, METH_VARARGS, "desc"},
+  {"getFadeToBlackStateFullyBlack", getFadeToBlackStateFullyBlack, METH_VARARGS, "desc"},
 	{"setColorGeneratorHue", setColorGeneratorHue, METH_VARARGS, "desc"},
 	{"setColorGeneratorSaturation", setColorGeneratorSaturation, METH_VARARGS, "desc"},
 	{"setColorGeneratorLuma", setColorGeneratorLuma, METH_VARARGS, "desc"},
@@ -2131,6 +2133,17 @@ static PyObject *performFadeToBlackME(PyObject *self, PyObject *args) {
 	AtemSwitcher.performFadeToBlackME(mE);
 	Py_INCREF(Py_None);
 	return Py_None;
+}
+  
+  
+ static PyObject *getFadeToBlackStateFullyBlack(PyObject *self, PyObject *args) {
+	uint8_t mE;
+	uint8_t rate;
+
+
+	AtemSwitcher.getFadeToBlackStateFullyBlack(mE);
+	Py_INCREF(Py_None);
+	return atemFadeToBlackStateFullyBlack[mE];
 }
 
 static PyObject *setColorGeneratorHue(PyObject *self, PyObject *args) {
