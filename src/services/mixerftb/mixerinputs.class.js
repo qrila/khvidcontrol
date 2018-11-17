@@ -1,6 +1,6 @@
 const exec = require('child_process').exec;
 const logger = require('winston');
-const pycmd = 'python ./python/atemctrl.py';
+const pyftb = 'python ./python/atemftb.py';
 
 /* eslint-disable no-unused-vars */
 class Service {
@@ -11,10 +11,8 @@ class Service {
   get (params) {
 
     const mixerip = params.split('::')[0];
-    const param_2 = params.split('::')[1];
-    // param_2 is either progmam input or selection of AUX output source selection.
 
-    var cmd = pycmd + ' ' + mixerip + ' ' + param_2;
+    var cmd = pyftb + ' ' + mixerip;
     exec(cmd, function(err,stdout,stderr) {
       if( err ) { logger.debug(err); }
       if( stdout ) { logger.info(stdout); }
