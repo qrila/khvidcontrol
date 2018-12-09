@@ -1,6 +1,5 @@
-const exec = require('child_process').exec;
 const logger = require('winston');
-const pycmd = 'python ./python/viscactrl.py';
+const moveCam = require('../../camctrl/visca').moveCam;
 
 /* eslint-disable no-unused-vars */
 class Service {
@@ -9,16 +8,9 @@ class Service {
   }
 
   get (id, params) {
-    var cmd = pycmd + ' -' + id + ' ' + params.query.data;
-    exec(cmd, function(err,stdout,stderr) {
-      if( err ) { logger.debug(err); }
-      if( stdout ) { logger.info(stdout); }
-      if( stderr ) { logger.debug(stderr); }
-    });
-
-    return Promise.resolve({
-
-    });
+    logger.info(`${id} :: ${params.query.data}`);
+    moveCam(id, params.query.data);
+    return Promise.resolve({});
   }
 }
 

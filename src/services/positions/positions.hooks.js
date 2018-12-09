@@ -1,6 +1,5 @@
-const exec = require('child_process').exec;
 const logger = require('winston');
-const pycmd = 'python ./python/viscactrl.py -q saveposition';
+const queryPosition = require('../../camctrl/visca').queryPosition;
 
 module.exports = {
   before: {
@@ -10,25 +9,17 @@ module.exports = {
     create: [
       function(hook) {
         return new Promise((resolve, reject) => {
-          var cmd = pycmd + '::' + hook.data.cameraNumber;
-          exec(cmd, function(err,stdout,stderr) {
-            if( err ) { return reject(err); }
-            if( stderr ) { return reject(stderr); }
-
-            var pantilt = JSON.parse(stdout)['pantilt'].slice(2,10).map(function(item){
-              item = parseInt(item.replace(/^0x/, ''), 16);
-              return (0 + item.toString(16)).substr(-2).toString('hex');
-            });
-            var zoom = JSON.parse(stdout)['zoom'].slice(2,6).map(function(item){
-              item = parseInt(item.replace(/^0x/, ''), 16);
-              return (0 + item.toString(16)).substr(-2).toString('hex');
-            });
-            hook.data.pantilt = pantilt.toString();
-            hook.data.zoom = zoom.toString();
-
-            console.log(hook.data);
-            resolve(hook);
+          const newHook = new Promise((resolve, reject) => {
+           resolve(queryPosition());
+           reject('no new position');
+          }).then((newPosition) => {
+            logger.info('Got new position: ', newPosition);
+            hook.data.pantilt = newPosition[0];
+            hook.data.zoom = newPosition[1];
+            return hook;
           });
+          resolve(newHook);
+          reject('error');
         });
       }
     ],
