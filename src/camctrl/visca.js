@@ -1,4 +1,4 @@
-const logger = require('winston');
+// const logger = require('winston');
 const dgram = require('dgram');
 
 const commandList = {
@@ -19,13 +19,15 @@ const commandList = {
   'power': [0x81, 0x09, 0x04, 0x00, 0xFF], // query
   'pantilt': [0x81, 0x09, 0x06, 0x12, 0xFF], // query
   'zoom': [0x81, 0x09, 0x04, 0x47, 0xFF], // query
-  'focus': [0x81, 0x04, 0x18, 0x01, 0xFF]
+  'focus': [0x81, 0x04, 0x18, 0x01, 0xFF],
+  'ptPreset': [0x81, 0x01, 0x06, 0x02, 0x18, 0x14],
+  'zPreset': [0x81, 0x01, 0x04, 0x47]
 };
 
-function viscaCmd (command) {
+function viscaCmd (command, cameraIP, preset) {
   return new Promise ((resolve, error) => {
     const client = dgram.createSocket('udp4');
-    const bufferCommand = Buffer.from(commandList[command]);
+    const bufferCommand = Buffer.from(preset ? command : commandList[command]);
     let returnHex = '';
 
     client.on('error', (err) => {
@@ -45,30 +47,42 @@ function viscaCmd (command) {
       resolve(returnHex);
     });
 
-    client.send(bufferCommand, 0, bufferCommand.length, 1259, '192.168.1.4');
+    client.send(bufferCommand, 0, bufferCommand.length, 1259, cameraIP);
   });
 }
 
-function moveCam(id, command) {
-  command = command.split('::')[0];
-  viscaCmd(command);
+function moveCam(command, cameraIP) {
+  viscaCmd(command, cameraIP, false);
 }
 
-function queryPosition() {
-  return new Promise((resolve) => {
-    resolve(viscaCmd('pantilt'));
+function queryPosition(cameraIP) {
+  return new Promise( (resolve) => {
+    resolve(viscaCmd('pantilt', cameraIP, false));
   }).then((pantilt) => {
-     const result = new Promise((resolve) => {
-       resolve(viscaCmd('zoom'));
-     }).then((zoom) => {
-       return [pantilt, zoom];
-     });
-     return result;
+    const result = new Promise( (resolve) => {
+      resolve(viscaCmd('zoom', cameraIP, false));
+    }).then((zoom) => {
+      return ({pantilt: pantilt, zoom: zoom});
+    });
+    return result;
+  });
+}
+
+function preset(cameraIP, pantilt, zoom) {
+  return new Promise( (resolve) => {
+    const ptPreset = commandList['ptPreset'].concat(pantilt).concat([0xff]);
+    resolve(viscaCmd(ptPreset, cameraIP, true));
+  }).then(() => {
+    return new Promise ((resolve) => {
+      const zPreset = commandList['zPreset'].concat(zoom).concat([0xff]);
+      resolve(viscaCmd(zPreset, cameraIP, true));
+    });
   });
 }
 
 module.exports = {
   moveCam: moveCam,
   queryPosition: queryPosition,
+  preset: preset,
 };
 

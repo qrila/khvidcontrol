@@ -1,4 +1,4 @@
-
+const logger = require('winston');
 
 module.exports = {
   before: {
@@ -7,7 +7,7 @@ module.exports = {
     get: [],
     create: [
       function(hook) {
-        console.log(hook.data);
+        logger.info(hook.data);
       }
     ],
     update: [],

@@ -1,5 +1,5 @@
-const exec = require('child_process').exec;
 const logger = require('winston');
+// const exec = require('child_process').exec;
 const pycmd = 'python ./python/atemctrl.py';
 
 /* eslint-disable no-unused-vars */
@@ -8,23 +8,30 @@ class Service {
     this.options = options || {};
   }
 
-  get (params) {
+  get (data) {
+    return new Promise((resolve, reject) => {
+      const app = this.options.app;
+      const input = JSON.parse(data);
 
-    const mixerip = params.split('::')[0];
-    const param_2 = params.split('::')[1];
-    // param_2 is either progmam input or selection of AUX output source selection.
+      mixerIP(app).then( (mixerIP) => {
+        const cmd = pycmd + ' ' + mixerIP + ' ' + ('mixerAUX' in input ? input.mixerAUX : input.mixerInput);
+        logger.info(cmd);
+        // exec(cmd, function(err,stdout,stderr) {
+        //   if( err ) { logger.debug(err); }
+        //   if( stdout ) { logger.info(stdout); }
+        //   if( stderr ) { logger.debug(stderr); }
+        // });
 
-    var cmd = pycmd + ' ' + mixerip + ' ' + param_2;
-    exec(cmd, function(err,stdout,stderr) {
-      if( err ) { logger.debug(err); }
-      if( stdout ) { logger.info(stdout); }
-      if( stderr ) { logger.debug(stderr); }
-    });
-
-    return Promise.resolve({
-
+        resolve();
+        reject('no mixer');
+      });
     });
   }
+}
+
+async function mixerIP(app) {
+  const mixer = await app.service('videomixer').find();
+  return(mixer.data[0].videomixerIP);
 }
 
 module.exports = function (options) {

@@ -2,7 +2,10 @@
   "env": {
     "es6": true,
     "node": true,
-    "mocha": true
+    "mocha": true,
+    "browser": true,
+    "jquery": true,
+    "amd": true
   },
   "extends": "eslint:recommended",
   "rules": {
@@ -22,5 +25,18 @@
       "error",
       "always"
     ]
+  },
+  "overrides": [
+    {
+      "files": [ "public/js/*.js", "src/*.js" ]
+    }
+  ],
+  "parserOptions": {
+    "ecmaVersion": 8
+  },
+  "globals": {
+    "_": true,
+    "feathers": true,
+    "io": true
   }
 }

@@ -8,10 +8,12 @@ client.configure(feathers.socketio(socket));
 // Get the services for our endpoints
 const positions = client.service('positions');
 const videoinputs = client.service('videoinputs');
+const videomixer = client.service('videomixer');
+const cameras = client.service('cameras');
 
 const camButton = (data) => {
-  $.get(`/movecam/c?data=${data}::${document.getElementById('videosource').value}`);
-}
+  $.get(`/movecam/{"command":"cmd","action":"${data}","cameraID":"${document.getElementById('movecamera').value}"}`);
+};
 
 const camMenuButton = (button, data) => {
   $(`.${button} button`).click(function(){
@@ -55,7 +57,7 @@ function addCameraPosition(position) {
   const camPos = document.querySelector('.memoutput');
   camPos.insertAdjacentHTML('beforeend', `
     <div class="col-sm-4 col-md-4 col-xl-3">
-      <button type="memory-button" value="${position.pantilt}::${position.zoom}::${position.cameraNumber}" class="mem-button btn btn-primary">
+      <button type="memory-button" value="${position._id}" class="mem-button btn btn-primary">
         <span aria-hidden="true">${position.subjectName}</span>
       </button>
     </div>
@@ -69,18 +71,10 @@ positions.on('created', addCameraPosition);
 
 document.getElementById('position-mem').addEventListener('submit', function(ev) {
   ev.preventDefault();
-  const cameraNumber = this.videosource.value;
+  const cameraID = this.cameraid.value;
   const subjectName = this.subjectname.value;
 
-  positions.find().then(newPosition => {
-    const sortNumber = newPosition.data.length + 1;
-
-    positions.create({
-      sortNumber: sortNumber,
-      cameraNumber: cameraNumber,
-      subjectName: subjectName
-    });
-  });
+  $.get(`/movecam/{"command":"save","cameraID":"${cameraID}","subjectName":"${subjectName}"}`);
 
   $('#position-mem').find('input[type=text]').val('');
 });
@@ -108,28 +102,6 @@ videoinputs.on('created', function(source){
   }
 });
 
-function addAUXSource(auxsource) {
-  const mediaSource = document.querySelector('#auxsource');
-  mediaSource.insertAdjacentHTML('beforeend',`
-    <div class="col-xs-5">
-      <button type="memory-button" value="auxsource::deaf::${auxsource.mixerIP}" class="aux-button btn btn-primary">
-        <span aria-hidden="true">Kuurot</span>
-      </button>
-    </div>
-    <div class="col-xs-offset-2 col-xs-5">
-      <button type="memory-button" value="auxsource::hearing::${auxsource.mixerIP}"" class="aux-button btn btn-primary">
-        <span aria-hidden="true">Kuulevat</span>
-      </button>
-    </div>
-  `);
-}
-
-videoinputs.find({
-  query: {
-    $limit: 1
-  }
-}).then(auxbuttons => addAUXSource(auxbuttons.data[0]));
-
 document.getElementById('videoinput-mem').addEventListener('submit', function(ev) {
   ev.preventDefault();
   var sourceName = this.sourcename.value;
@@ -149,42 +121,67 @@ document.getElementById('videoinput-mem').addEventListener('submit', function(ev
   $('#videoinput-mem').find('input[type=text]').val('');
 });
 
-function getSourceInput(input) {
-  if(input.mixerAUX){
-    $.get(`/mixerinputs/${input.mixerIP}::${input.mixerAUX}`);
-  } else {
-    $.get(`/mixerinputs/${input.mixerIP}::${input.sourceInput}`);
+videomixer.find().then( mixers => {
+  if(mixers.total > 0) {
+    $('.add-video-mixer').addClass('hidden');
+    $('#auxsource').removeClass('hidden');
   }
-}
+});
 
+document.getElementById('video-mixer').addEventListener('submit', function(ev) {
+  ev.preventDefault();
+  const newMixerIP = this.videomixer.value;
+
+  videomixer.create({
+    videomixerIP: newMixerIP,
+  });
+
+  $('#video-mixer').find('input[type=text]').val('');
+  $('.add-video-mixer').addClass('hidden');
+  $('#auxsource').removeClass('hidden');
+});
+
+document.getElementById('add-camera').addEventListener('submit', function(ev) {
+  ev.preventDefault();
+  const cameraName = this.name.value;
+  const cameraIP = this.cameraip.value;
+  const mixerInput = this.mixerinput.value;
+
+  cameras.create({
+    cameraName: cameraName,
+    cameraIP: cameraIP,
+    mixerInput: mixerInput
+  });
+
+  $('#add-camera').find('input[type=text]').val('');
+  populateCameraList();
+});
+
+function populateCameraList() {
+  $('#movecamera option').remove();
+  $('#cameraid option').remove();
+  cameras.find().then( cameras => {
+    _.forEach(cameras.data, camera => {
+      $('#movecamera').append(`<option value=${camera._id}>${camera.cameraName}</option>`);
+      $('#cameraid').append(`<option value=${camera._id}>${camera.cameraName}</option>`);
+    });
+  });
+}
+populateCameraList();
+
+// Initialize aux source selection buttons
+$(document).on('click', 'button[type=mixeraux]', function() {
+  $.get(`/mixerinputs/{"mixerAUX": "${this.value}"}`);
+});
+
+// Initialize saved camera position buttons
 $(document).on('click', 'button[type=memory-button]', function() {
-  const buttonValue = this.value.split('::');
-  if (buttonValue[0] === 'media') {
-    getSourceInput({
-      mixerIP: buttonValue[1],
-      sourceInput: buttonValue[2]
+  $.get(`/movecam/{"command":"preset","positionID":"${this.value}"}`);
+  positions.get(this.value).then( (position) => {
+    cameras.get(position.cameraID).then( (camera) => {
+      $.get(`/mixerinputs/{"mixerInput":${camera.mixerInput}}`);
     });
-  } else if (buttonValue[0] === 'auxsource') {
-    getSourceInput({
-      mixerAUX: buttonValue[1] == 'deaf' ? 'program' : 'source',
-      mixerIP: buttonValue[2],
-      sourceInput: null // Hearing media connection set to input source 1 in atemctrl.py
-    });
-  } else {
-    $.get(`/movecam/p?data=${this.value}`);
-    videoinputs.find({
-      query: {
-        $limit: 1,
-        sourceType: 'camera',
-        cameraNumber: buttonValue[2]
-      }
-    }).then(page =>
-      getSourceInput({
-        mixerIP: page.data[0].mixerIP,
-        sourceInput: page.data[0].sourceInput
-      })
-    );
-  }
+  });
 });
 
 $('select[name="cameranumber"]').prop('disabled', true);

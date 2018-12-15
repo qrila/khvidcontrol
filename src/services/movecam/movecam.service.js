@@ -8,7 +8,8 @@ module.exports = function () {
 
   const options = {
     name: 'movecam',
-    paginate
+    paginate,
+    app
   };
 
   // Initialize our service with any options it requires

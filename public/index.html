@@ -76,22 +76,61 @@
                 </div>
               </div>
 
+              <div id="camera-selection" class="row">
+                Valitse hallittava kamera
+                <select name="movecamera" id="movecamera"></select>
+              </div>
 
-              <div class="position-set-mem row">
-                <form id="position-mem">
-                  <div class="col-xs-2">
-                    <select name="videosource" id="videosource">
+
+              <div class="add-video-mixer row">
+                <form id="video-mixer">
+                  <div class="col-xs-8">
+                    <span>Lisää videomixeri</span>
+                    <input type="text" name="videomixer" placeholder="192.168.x.x">
+                  </div>
+                  <div class="col-xs-2 col-xs-offset-2">
+                    <button type="submit" name="save-video-mixer" class="btn">
+                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="add-camera row">
+                <form id="add-camera">
+                  <div class="col-xs-10">
+                    <span>Lisää kamera</span>
+                    <input type="text" name="name" placeholder="sijainti">
+                    <input type="text" name="cameraip" placeholder="192.168.x.x">
+                    <select name="mixerinput" id="mixerinput">
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
                       <option value="4">4</option>
                       <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
                     </select>
                   </div>
-                  <div class="col-xs-5">
-                    <input type="text" name="subjectname" placeholder="Kameran kohde" style="width:100%">
+                  <div class="col-xs-2">
+                    <button type="submit" name="save-camera" class="btn">
+                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    </button>
                   </div>
-                  <div class="col-xs-2 col-xs-offset-2">
+                </form>
+              </div>
+
+              <div class="position-set-mem row">
+                <form id="position-mem">
+                  <div class="col-xs-10">
+                    Lisää kuvattava kohde
+                    <input type="text" name="subjectname" placeholder="Kameran kohde" style="width:100%">
+                    Valitse kamera
+                    <select name="cameraid" id="cameraid">
+                    </select>
+                  </div>
+                  <div class="col-xs-2">
                     <button type="submit" name="save-position" class="btn">
                       <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     </button>
@@ -108,7 +147,17 @@
 
           <div class="col-xs-12 col-sm-8">
             <div class="row">
-              <div id="auxsource" class="col-xs-12">
+              <div id="auxsource" class="col-xs-12 hidden">
+                <div class="col-xs-5">
+                    <button type="mixeraux" value="program" class="aux-button btn btn-primary">
+                      <span aria-hidden="true">Kuurot</span>
+                    </button>
+                  </div>
+                  <div class="col-xs-offset-2 col-xs-5">
+                    <button type="mixeraux" value="source" class="aux-button btn btn-primary">
+                      <span aria-hidden="true">Kuulevat</span>
+                    </button>
+                  </div>
               </div>
             </div>
 

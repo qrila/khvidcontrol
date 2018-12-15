@@ -11,7 +11,9 @@ html, body {
 
 #camera-control,
 #zoom-control,
-#position-mem  {
+.add-video-mixer,
+.add-camera,
+.position-set-mem  {
   margin-top: 50px;
 }
 
@@ -23,14 +25,14 @@ button {
 
 .menu-control button,
 #position-mem button,
+#video-mixer button,
+#add-camera button,
 #videoinput-mem button {
   margin: 15px;
   height: 40px;
   width: 40px;
 }
 
-#position-mem select,
-#position-mem input,
 #videoinput-mem select,
 #videoinput-mem input {
   margin-top: 25px;
@@ -52,6 +54,7 @@ button {
   border-bottom: rgb(100, 100, 100) 1px solid;
 }
 
+#camera-selection,
 #auxsource,
 .memoutput,
 .mediaoutput {
@@ -66,6 +69,10 @@ select[disabled] {
   color: #DCDAD1;
 }
 
+#cameraid,
+#movecamera {
+  width: 100%;
+}
 
 @media (max-width: 992px) {
   .hidden-xs {

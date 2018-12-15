@@ -57,10 +57,10 @@ module.exports = function(app) {
   // });
 
   app.service('positions').publish(() => {
-      return app.channel('anonymous');
+    return app.channel('anonymous');
   });
 
   app.service('videoinputs').publish(() => {
-      return app.channel('anonymous');
+    return app.channel('anonymous');
   });
 };
