@@ -42,3 +42,9 @@ atem.on('stateChanged', function(state) {
   var msgs = atem.state.video.ME[0].previewInput;
   console.log(msgs);
 });
+
+//Fade To Black tilan lukeminen
+atem.on('stateChanged', function(state) {
+  var msgs = atem.state.video.ME[0].fadeToBlack;
+  console.log(msgs);
+});
