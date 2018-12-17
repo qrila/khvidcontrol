@@ -1,0 +1,22 @@
+//Applest atem cheatsheet
+//require applest-atem
+var ATEM = require('applest-atem');
+
+//uusi atem ja ip sille
+var atem = new ATEM();
+atem.connect('tähän atemin ip');
+
+//Program vaihto
+atem.on('connect', function() {
+  atem.changeProgramInput('tähän uusi program numero'); // ME1(0)
+});
+
+//Preview vaihto
+atem.on('connect', function() {
+  atem.changePreviewInput('tähän uusi preview numero'); // ME1(0)
+});
+
+//auto mixaus preview ---> program
+atem.on('connect', function() {
+  atem.autoTransition();
+});
