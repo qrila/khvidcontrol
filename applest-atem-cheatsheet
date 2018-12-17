@@ -16,7 +16,12 @@ atem.on('connect', function() {
   atem.changePreviewInput('tähän uusi preview numero'); // ME1(0)
 });
 
-//auto mixaus preview ---> program
+//Auto mixaus preview ---> program
 atem.on('connect', function() {
   atem.autoTransition();
+});
+
+//Fade to black
+atem.on('connect', function() {
+  atem.fadeToBlack();
 });
