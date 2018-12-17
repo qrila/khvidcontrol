@@ -30,3 +30,15 @@ atem.on('connect', function() {
 atem.on('connect', function() {
   atem.cutTransition();
 });
+
+//Program inputin tilan lukeminen kun joku muuttuu atemissa (myös kun jostain muusta sovelluksesta ohjataan)
+atem.on('stateChanged', function(state) {
+  var msgs = atem.state.video.ME[0].programInput;
+  console.log(msgs);
+});
+
+//Preview inputin tilan lukeminen kun joku muuttuu atemissa (myös kun jostain muusta sovelluksesta ohjataan)
+atem.on('stateChanged', function(state) {
+  var msgs = atem.state.video.ME[0].previewInput;
+  console.log(msgs);
+});
