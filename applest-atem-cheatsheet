@@ -25,3 +25,8 @@ atem.on('connect', function() {
 atem.on('connect', function() {
   atem.fadeToBlack();
 });
+
+//Cut
+atem.on('connect', function() {
+  atem.cutTransition();
+});
