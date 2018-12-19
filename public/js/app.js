@@ -83,65 +83,53 @@ function addMediaSources(media) {
   const mediaSource = document.querySelector('.mediaoutput');
   mediaSource.insertAdjacentHTML('beforeend',`
     <div class="col-sm-4 col-md-4 col-xl-3">
-      <button type="memory-button" value="media::${media.mixerIP}::${media.sourceInput}" class="mem-button btn btn-primary">
+      <button type="media-button" value="${media._id}" class="mem-button btn btn-primary">
         <span aria-hidden="true">${media.sourceName}</span>
       </button>
     </div>
   `);
 }
 
-videoinputs.find({
-  query: {
-    sourceType: 'media'
-  }
-}).then(mediabuttons => mediabuttons.data.forEach(addMediaSources));
-
-videoinputs.on('created', function(source){
-  if (source.sourceType === 'media') {
-    addMediaSources(source);
-  }
+videoinputs.find().then(mediabuttons => {
+  mediabuttons.data.forEach(addMediaSources);
 });
+videoinputs.on('created', addMediaSources);
 
-document.getElementById('videoinput-mem').addEventListener('submit', function(ev) {
+document.getElementById('add-media').addEventListener('submit', function(ev) {
   ev.preventDefault();
-  var sourceName = this.sourcename.value;
-  var mixerIP = this.mixerip.value;
-  var sourceInput = this.sourceinput.value;
-  var sourceType = this.sourcetype.value;
-  var cameraNumber = this.cameranumber.value;
 
   videoinputs.create({
-    sourceName: sourceName,
-    mixerIP: mixerIP,
-    sourceInput: sourceInput,
-    sourceType: sourceType,
-    cameraNumber: cameraNumber
+    sourceName: this.mediainput.value,
+    mixerInput: this.mixerinputmedia.value,
   });
 
-  $('#videoinput-mem').find('input[type=text]').val('');
+  $('#add-media').find('input[type=text]').val('');
 });
 
-videomixer.find().then( mixers => {
-  if(mixers.total > 0) {
+videomixer.find().then( mixer => {
+  if(mixer.total > 0) {
     $('.add-video-mixer').addClass('hidden');
     $('#auxmode').removeClass('hidden');
-    $('#auxprogram').text(mixers.data[0].auxProgram);
-    $('#auxsource').text(mixers.data[0].auxSource);
-  }
+    $('#auxprogram span').text(mixer.data[0].auxProgram);
+    $('#auxsource span').text(mixer.data[0].auxSource);  }
 });
 
 document.getElementById('video-mixer').addEventListener('submit', function(ev) {
   ev.preventDefault();
+  const auxProgram = this.auxprogram.value;
+  const auxSource = this.auxsource.value;
 
   videomixer.create({
     videomixerIP: this.videomixer.value,
-    auxProgram: this.auxprogram.value,
-    auxSource: this.auxsource.value,
+    auxProgram: auxProgram,
+    auxSource: auxSource,
   });
 
   $('#video-mixer').find('input[type=text]').val('');
   $('.add-video-mixer').addClass('hidden');
-  $('#auxsource').removeClass('hidden');
+  $('#auxmode').removeClass('hidden');
+  $('#auxprogram span').text(auxProgram);
+  $('#auxsource span').text(auxSource);
 });
 
 document.getElementById('add-camera').addEventListener('submit', function(ev) {
@@ -184,6 +172,13 @@ $(document).on('click', 'button[type=memory-button]', function() {
     cameras.get(position.cameraID).then( (camera) => {
       $.get(`/mixerinputs/{"mixerInput":${camera.mixerInput}}`);
     });
+  });
+});
+
+// Initialize media input buttons
+$(document).on('click', 'button[type=media-button]', function() {
+  videoinputs.get(this.value).then( (media) => {
+    $.get(`/mixerinputs/{"mixerInput":${media.mixerInput}}`);
   });
 });
 
