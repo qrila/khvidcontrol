@@ -13,6 +13,7 @@ html, body {
 #zoom-control,
 .add-video-mixer,
 .add-camera,
+.add-media,
 .position-set-mem  {
   margin-top: 50px;
 }
@@ -27,10 +28,12 @@ button {
 #position-mem button,
 #video-mixer button,
 #add-camera button,
+#add-media button,
 #videoinput-mem button {
   margin: 15px;
   height: 40px;
   width: 40px;
+  background-color: rgb(200, 200, 200);
 }
 
 #videoinput-mem select,

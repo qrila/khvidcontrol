@@ -12,7 +12,7 @@ const videomixer = client.service('videomixer');
 const cameras = client.service('cameras');
 
 const camButton = (data) => {
-  $.get(`/movecam/{"command":"cmd","action":"${data}","cameraID":"${document.getElementById('movecamera').value}"}`);
+  $.get(`/movecam/{"command":"cmd","action":"${data}","cameraID":"${document.getElementById('cameraid').value}"}`);
 };
 
 const camMenuButton = (button, data) => {
@@ -148,7 +148,7 @@ document.getElementById('add-camera').addEventListener('submit', function(ev) {
   ev.preventDefault();
   const cameraName = this.name.value;
   const cameraIP = this.cameraip.value;
-  const mixerInput = this.mixerinput.value;
+  const mixerInput = this.mixerinputcamera.value;
 
   cameras.create({
     cameraName: cameraName,
