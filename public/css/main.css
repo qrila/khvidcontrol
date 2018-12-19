@@ -48,14 +48,14 @@ button {
   margin-top: 30px;
 }
 
-#auxsource,
+#auxmode,
 .memoutput {
   padding-bottom: 30px;
   border-bottom: rgb(100, 100, 100) 1px solid;
 }
 
 #camera-selection,
-#auxsource,
+#auxmode,
 .memoutput,
 .mediaoutput {
   padding-top: 15px;

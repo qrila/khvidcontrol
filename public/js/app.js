@@ -124,16 +124,19 @@ document.getElementById('videoinput-mem').addEventListener('submit', function(ev
 videomixer.find().then( mixers => {
   if(mixers.total > 0) {
     $('.add-video-mixer').addClass('hidden');
-    $('#auxsource').removeClass('hidden');
+    $('#auxmode').removeClass('hidden');
+    $('#auxprogram').text(mixers.data[0].auxProgram);
+    $('#auxsource').text(mixers.data[0].auxSource);
   }
 });
 
 document.getElementById('video-mixer').addEventListener('submit', function(ev) {
   ev.preventDefault();
-  const newMixerIP = this.videomixer.value;
 
   videomixer.create({
-    videomixerIP: newMixerIP,
+    videomixerIP: this.videomixer.value,
+    auxProgram: this.auxprogram.value,
+    auxSource: this.auxsource.value,
   });
 
   $('#video-mixer').find('input[type=text]').val('');

@@ -86,7 +86,10 @@
                 <form id="video-mixer">
                   <div class="col-xs-8">
                     <span>Lisää videomixeri</span>
-                    <input type="text" name="videomixer" placeholder="192.168.x.x">
+                    <input type="text" name="videomixer" placeholder="IP osoite 192.168.x.x">
+                    <span>Aux ulostulon tilojen nimet</span>
+                    <input type="text" name="auxprogram" placeholder="Program">
+                    <input type="text" name="auxsource" placeholder="Video 1 input">
                   </div>
                   <div class="col-xs-2 col-xs-offset-2">
                     <button type="submit" name="save-video-mixer" class="btn">
@@ -147,15 +150,15 @@
 
           <div class="col-xs-12 col-sm-8">
             <div class="row">
-              <div id="auxsource" class="col-xs-12 hidden">
+              <div id="auxmode" class="col-xs-12 hidden">
                 <div class="col-xs-5">
-                    <button type="mixeraux" value="program" class="aux-button btn btn-primary">
-                      <span aria-hidden="true">Kuurot</span>
+                    <button type="mixeraux" value="program" id="auxprogram" class="aux-button btn btn-primary">
+                      <span aria-hidden="true"></span>
                     </button>
                   </div>
                   <div class="col-xs-offset-2 col-xs-5">
-                    <button type="mixeraux" value="source" class="aux-button btn btn-primary">
-                      <span aria-hidden="true">Kuulevat</span>
+                    <button type="mixeraux" value="source" id="auxsource" class="aux-button btn btn-primary">
+                      <span aria-hidden="true"></span>
                     </button>
                   </div>
               </div>
