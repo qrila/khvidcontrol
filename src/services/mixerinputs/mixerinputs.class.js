@@ -1,5 +1,5 @@
 const logger = require('winston');
-// const exec = require('child_process').exec;
+const exec = require('child_process').exec;
 const pycmd = 'python ./python/atemctrl.py';
 
 /* eslint-disable no-unused-vars */
@@ -15,12 +15,12 @@ class Service {
 
       mixerIP(app).then( (mixerIP) => {
         const cmd = pycmd + ' ' + mixerIP + ' ' + ('mixerAUX' in input ? input.mixerAUX : input.mixerInput);
-        logger.info(cmd);
-        // exec(cmd, function(err,stdout,stderr) {
-        //   if( err ) { logger.debug(err); }
-        //   if( stdout ) { logger.info(stdout); }
-        //   if( stderr ) { logger.debug(stderr); }
-        // });
+        // logger.info(cmd);
+        exec(cmd, function(err,stdout,stderr) {
+          if( err ) { logger.debug(err); }
+          if( stdout ) { logger.info(stdout); }
+          if( stderr ) { logger.debug(stderr); }
+        });
 
         resolve();
         reject('no mixer');
