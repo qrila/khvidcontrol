@@ -40,7 +40,8 @@
     "helmet": "^3.13.0",
     "nedb": "^1.8.0",
     "serve-favicon": "^2.5.0",
-    "winston": "^2.4.4"
+    "winston": "^2.4.4",
+    "applest-atem": "^0.2.4"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
