@@ -12,7 +12,12 @@ const videomixer = client.service('videomixer');
 const cameras = client.service('cameras');
 
 const camButton = (data) => {
-  $.get(`/movecam/{"command":"cmd","action":"${data}","cameraID":"${document.getElementById('cameraid').value}"}`);
+  const call = JSON.stringify({
+    command: 'cmd',
+    action: data,
+    cameraID: document.getElementById('cameraid').value
+  });
+  $.get(`/movecam/${call}`);
 };
 
 const camMenuButton = (button, data) => {
@@ -71,10 +76,12 @@ positions.on('created', addCameraPosition);
 
 document.getElementById('position-mem').addEventListener('submit', function(ev) {
   ev.preventDefault();
-  const cameraID = this.cameraid.value;
-  const subjectName = this.subjectname.value;
-
-  $.get(`/movecam/{"command":"save","cameraID":"${cameraID}","subjectName":"${subjectName}"}`);
+  const call = JSON.stringify({
+    command: 'save',
+    cameraID: this.cameraid.value,
+    subjectName: this.subjectname.value
+  });
+  $.get(`/movecam/${call}`);
 
   $('#position-mem').find('input[type=text]').val('');
 });
@@ -162,15 +169,26 @@ populateCameraList();
 
 // Initialize aux source selection buttons
 $(document).on('click', 'button[type=mixeraux]', function() {
-  $.get(`/mixerinputs/{"mixerAUX": "${this.value}"}`);
+  const call = JSON.stringify({
+    mixerAUX: this.value
+  });
+  $.get(`/mixerinputs/${call}`);
 });
 
 // Initialize saved camera position buttons
 $(document).on('click', 'button[type=memory-button]', function() {
-  $.get(`/movecam/{"command":"preset","positionID":"${this.value}"}`);
+  const callCam = JSON.stringify({
+    command: 'preset',
+    positionID: this.value
+  });
+  $.get(`/movecam/${callCam}`);
   positions.get(this.value).then( (position) => {
     cameras.get(position.cameraID).then( (camera) => {
-      $.get(`/mixerinputs/{"mixerInput":${camera.mixerInput}}`);
+      const callMixer = JSON.stringify({
+        mixerAUX: false,
+        mixerInput: camera.mixerInput
+      });
+      $.get(`/mixerinputs/${callMixer}`);
     });
   });
 });
@@ -178,7 +196,11 @@ $(document).on('click', 'button[type=memory-button]', function() {
 // Initialize media input buttons
 $(document).on('click', 'button[type=media-button]', function() {
   videoinputs.get(this.value).then( (media) => {
-    $.get(`/mixerinputs/{"mixerInput":${media.mixerInput}}`);
+    const callMixer = JSON.stringify({
+      mixerAUX: false,
+      mixerInput: media.mixerInput
+    });
+    $.get(`/mixerinputs/${callMixer}`);
   });
 });
 
