@@ -1,6 +1,6 @@
 const logger = require('winston');
 const exec = require('child_process').exec;
-const pycmd = 'python ./python/atemctrl.py';
+const atemi = require('applest-atem');
 
 /* eslint-disable no-unused-vars */
 class Service {
@@ -14,16 +14,16 @@ class Service {
       const input = JSON.parse(data);
 
       mixerIP(app).then( (mixerIP) => {
-        const cmd = pycmd + ' ' + mixerIP + ' ' + ('mixerAUX' in input ? input.mixerAUX : input.mixerInput);
-        // logger.info(cmd);
-        exec(cmd, function(err,stdout,stderr) {
-          if( err ) { logger.debug(err); }
-          if( stdout ) { logger.info(stdout); }
-          if( stderr ) { logger.debug(stderr); }
-        });
-
-        resolve();
-        reject('no mixer');
+        
+      
+      var atem = new atemi();
+	  atem.connect(mixerIP);
+      atem.on('connect', function() {
+      	atem.changeProgramInput('mixerAUX' in input ? input.mixerAUX : input.mixerInput); // ME1(0)
+      });
+      resolve();
+      reject('no mixer');
+      
       });
     });
   }
