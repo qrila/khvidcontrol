@@ -9,13 +9,71 @@ html, body {
   text-align: center;
 }
 
-#camera-control,
-#zoom-control,
+#camera-control {
+  margin-top: 30px;
+}
+
 .add-video-mixer,
 .add-camera,
 .add-media,
 .position-set-mem  {
   margin-top: 50px;
+}
+
+.position-control {
+  height: 180px;
+}
+
+#dpad {
+  height: 180px;
+}
+
+.zoom-control {
+  margin-top: 20px;
+  height: 60px;
+}
+
+#zpad {
+  height: 60px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+[name=up-button],
+[name=left-button],
+[name=right-button],
+[name=down-button],
+[name=zoom-tele],
+[name=zoom-wide] {
+  position: absolute;
+  margin: 0;
+}
+
+[name=up-button] {
+  left: 75px;
+}
+
+[name=left-button] {
+  left: 15;
+  top: 60px;
+}
+
+[name=right-button] {
+  left: 135px;
+  top: 60px;
+}
+
+[name=down-button] {
+  left: 75px;
+  top: 120px;
+}
+
+[name=zoom-tele] {
+  left: 15px;
+}
+
+[name=zoom-wide] {
+  left: 136px;
 }
 
 button {
@@ -33,7 +91,7 @@ button {
   margin: 15px;
   height: 40px;
   width: 40px;
-  background-color: rgb(200, 200, 200);
+  background-color: #c8c8c8;
 }
 
 #videoinput-mem select,
@@ -54,7 +112,7 @@ button {
 #auxmode,
 .memoutput {
   padding-bottom: 30px;
-  border-bottom: rgb(100, 100, 100) 1px solid;
+  border-bottom: #646464 1px solid;
 }
 
 #camera-selection,

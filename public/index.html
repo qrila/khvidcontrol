@@ -37,73 +37,67 @@
                 </div>
               </div>
 
-              <div class="position-control row">
-                <div class="up-button col-xs-2 col-xs-offset-3">
-                  <button type="button" name="up-button" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
-                  </button>
+              <div>
+                <div class="position-control row">
+                  <div id="dpad" class="col-xs-8 col-xs-offset-1">
+                    <button type="button" name="up-button" class="btn btn-primary">
+                      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" name="left-button" class="btn btn-primary">
+                      <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" name="right-button" class="btn btn-primary">
+                      <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" name="down-button" class="btn btn-primary">
+                      <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div class="position-control row">
-                <div class="left-button col-xs-2 col-xs-offset-1">
-                  <button type="button" name="left-button" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                  </button>
-                </div>
-                <div class="right-button col-xs-2 col-xs-offset-2">
-                  <button type="button" name="right-button" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-                  </button>
-                </div>
-              </div>
-              <div class="position-control row">
-                <div class="down-button col-xs-2 col-xs-offset-3">
-                  <button type="button" name="down-button" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
-                  </button>
-                </div>
-              </div>
-              <div id="zoom-control" class="row">
-                <div class="zoom-tele col-xs-2 col-xs-offset-1">
-                  <button type="zoom-button" name="zoom-tele" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                  </button>
-                </div>
-                <div class="zoom-wide col-xs-2 col-xs-offset-2">
-                  <button type="zoom-button" name="zoom-wide" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                  </button>
+                <div class="zoom-control row">
+                  <dir id="zpad" class="col-xs-8 col-xs-offset-1">
+                    <button type="zoom-button" name="zoom-tele" class="btn btn-primary">
+                      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
+                    <button type="zoom-button" name="zoom-wide" class="btn btn-primary">
+                      <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                    </button>
+                  </dir>
                 </div>
               </div>
 
-              <div id="camera-selection" class="row">
+              <div id="camera-selection">
                 <form id="position-mem">
-                  <div class="col-xs-10">
-                    <span>Valitse hallittava kamera</span>
-                    <select name="cameraid" id="cameraid"></select>
+                  <div class="row">
+                    <div class="col-xs-9">
+                      <span>Valitse hallittava kamera</span>
+                      <select name="cameraid" id="cameraid"></select>
+                    </div>
                   </div>
-                  <div class="col-xs-10">
-                    <span>Lisää kuvattava kohde</span>
-                    <input type="text" name="subjectname" placeholder="Kameran kohde" style="width:100%">
-                  </div>
-                  <div class="col-xs-2">
-                    <button type="submit" name="save-position" class="btn">
-                      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                    </button>
+                  <div class="row">
+                    <div class="col-xs-9">
+                      <span>Lisää kuvattava kohde</span>
+                      <input type="text" name="subjectname" placeholder="Kameran kohde">
+                    </div>
+                    <div class="col-xs-3">
+                      <button type="submit" name="save-position" class="btn">
+                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                      </button>
+                    </div>
                   </div>
                 </form>
               </div>
 
               <div class="add-video-mixer row">
                 <form id="video-mixer">
-                  <div class="col-xs-8">
+                  <div class="col-xs-9">
                     <span>Lisää videomixeri</span>
                     <input type="text" name="videomixer" placeholder="IP osoite 192.168.x.x">
                     <span>Aux ulostulon tilojen nimet</span>
                     <input type="text" name="auxprogram" placeholder="Program">
                     <input type="text" name="auxsource" placeholder="Video 1 input">
                   </div>
-                  <div class="col-xs-2 col-xs-offset-2">
+                  <div class="col-xs-3">
                     <button type="submit" name="save-video-mixer" class="btn">
                       <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     </button>
@@ -113,7 +107,7 @@
 
               <div class="add-camera row">
                 <form id="add-camera">
-                  <div class="col-xs-10">
+                  <div class="col-xs-9">
                     <span>Lisää kamera</span>
                     <input type="text" name="name" placeholder="sijainti">
                     <input type="text" name="cameraip" placeholder="192.168.x.x">
@@ -129,7 +123,7 @@
                       <option value="8">8</option>
                     </select>
                   </div>
-                  <div class="col-xs-2">
+                  <div class="col-xs-3">
                     <button type="submit" name="save-camera" class="btn">
                       <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     </button>
@@ -139,7 +133,7 @@
 
               <div class="add-media row">
                 <form id="add-media">
-                  <div class="col-xs-10">
+                  <div class="col-xs-9">
                     <span>Lisää mediasisääntulo</span>
                     <input type="text" name="mediainput" placeholder="Nimi">
                     <span>Video sisääntulo</span>
@@ -154,7 +148,7 @@
                       <option value="8">8</option>
                     </select>
                   </div>
-                  <div class="col-xs-2">
+                  <div class="col-xs-3">
                     <button type="submit" name="save-media" class="btn">
                       <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     </button>
