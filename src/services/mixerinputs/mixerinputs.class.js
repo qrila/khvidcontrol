@@ -18,11 +18,16 @@ class Service {
       
       var atem = new atemi();
 	  atem.connect(mixerIP);
-      atem.on('connect', function() {
-      	atem.changeProgramInput('mixerAUX' in input ? input.mixerAUX : input.mixerInput); // ME1(0)
+      atem.once('connect', function() {
+      	if (('mixerAUX' in input ? input.mixerAUX : input.mixerInput) === 'program') {
+      		atem.changeProgramInput(10010); // ME1(0)
+        	logger.info('program testi');
+        } else {
+        	atem.changeProgramInput(1); // ME1(0)
+        	logger.info('source testi');
+        }
       });
       resolve();
-      reject('no mixer');
       
       });
     });
