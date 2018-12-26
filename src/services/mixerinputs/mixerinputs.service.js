@@ -1,15 +1,18 @@
 // Initializes the `mixerinputs` service on path `/mixerinputs`
 const createService = require('./mixerinputs.class.js');
 const hooks = require('./mixerinputs.hooks');
+const ATEM = require('applest-atem');
 
 module.exports = function () {
   const app = this;
   const paginate = app.get('paginate');
+  const atem = new ATEM();
 
   const options = {
     name: 'mixerinputs',
     paginate,
-    app
+    app,
+    atem
   };
 
   // Initialize our service with any options it requires

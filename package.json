@@ -32,6 +32,7 @@
     "@feathersjs/express": "^1.2.5",
     "@feathersjs/feathers": "^3.2.1",
     "@feathersjs/socketio": "^3.2.4",
+    "applest-atem": "^0.2.4",
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",
     "cors": "^2.8.4",
