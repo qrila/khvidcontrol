@@ -66,7 +66,7 @@ $.each(arrowButtons, function(button, action) {
 function addCameraPosition(position) {
   const camPos = document.querySelector('.memoutput');
   camPos.insertAdjacentHTML('beforeend', `
-    <div class="col-sm-4 col-md-4 col-xl-3">
+    <div class="col-xs-6 col-sm-4 col-md-3 col-xl-3">
       <button type="memory-button" value="${position._id}" class="mem-button btn btn-primary">
         <span aria-hidden="true">${position.subjectName}</span>
       </button>
