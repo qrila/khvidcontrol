@@ -9,10 +9,7 @@ html, body {
   text-align: center;
 }
 
-#camera-control {
-  margin-top: 30px;
-}
-
+#camera-control,
 .add-video-mixer,
 .add-camera,
 .add-media,
@@ -35,10 +32,9 @@ html, body {
 
 #zpad {
   height: 60px;
-  margin-top: 0;
-  margin-bottom: 0;
 }
 
+[name=settings-button],
 [name=up-button],
 [name=left-button],
 [name=right-button],
@@ -82,6 +78,7 @@ button {
   width: 60px;
 }
 
+[name=settings-button],
 .menu-control button,
 #position-mem button,
 #video-mixer button,
@@ -139,4 +136,42 @@ select[disabled] {
   .hidden-xs {
     display: none;
   }
+}
+
+#main-settings {
+  position: absolute;
+  top: 20px;
+  left: 20%;
+  width: 60%;
+}
+
+.body-under-settings {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #64646491;
+}
+
+.main-settings {
+  background-color: white;
+  border: #c8c8c8 1px solid;
+  box-shadow: 5px 10px #d8d8d8c2;
+  border-radius: 10px;
+  padding: 20px;
+  padding-bottom: 60px;
+}
+
+.open-popup {
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.close-popup {
+  top: 0;
+  right: 0;
+  background-color: white;
+  transform: rotate(45deg);
 }

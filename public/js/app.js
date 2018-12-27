@@ -11,6 +11,11 @@ const videoinputs = client.service('videoinputs');
 const videomixer = client.service('videomixer');
 const cameras = client.service('cameras');
 
+$(document).on('click', 'button[name=settings-button]', () => {
+  $('.body-under-settings').toggleClass('hidden');
+  $('#main-settings').toggleClass('hidden');
+});
+
 const camButton = (data) => {
   const call = JSON.stringify({
     command: 'cmd',
