@@ -1,4 +1,4 @@
-// const logger = require('winston');
+const logger = require('winston');
 const visca = require('../../camctrl/visca');
 
 /* eslint-disable no-unused-vars */
@@ -48,9 +48,9 @@ async function camera(app, id) {
 }
 
 async function savePosition(app, cameraID, subjectName, pantilt, zoom) {
-  const sortNumber = await app.service('positions').find().total;
+  const sortNumber = await app.service('positions').find();
   const position = await app.service('positions').create({
-    sortNumber: sortNumber,
+    sortNumber: sortNumber.total,
     cameraID: cameraID,
     subjectName: subjectName,
     pantilt: pantilt.slice(4,20).match(/.{1,2}/g).map(y => { return('0x' + y); }),
