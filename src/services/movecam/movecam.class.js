@@ -17,8 +17,8 @@ class Service {
           camera(app, presetPosition.cameraID).then( (cameraIP) => {
             visca.preset(cameraIP, presetPosition.pantilt, presetPosition.zoom);
           });
-        }).then( result => {
-          resolve(result);
+        }).then( () => {
+          resolve('200');
           reject('preset error');
         });
       } else if(camData.command === 'save') {
@@ -26,15 +26,15 @@ class Service {
           visca.queryPosition(cameraIP).then( (result) => {
             savePosition(app, camData.cameraID, camData.subjectName, result.pantilt, result.zoom);
           });
-        }).then( result => {
-          resolve(result);
-          reject('saave position error');
+        }).then( () => {
+          resolve('200');
+          reject('save position error');
         });
       } else {
         camera(app, camData.cameraID).then( cameraIP => {
           visca.moveCam(camData.action, cameraIP);
-        }).then( result => {
-          resolve(result);
+        }).then( () => {
+          resolve('200');
           reject('move error');
         });
       }

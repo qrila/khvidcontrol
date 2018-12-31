@@ -1,4 +1,4 @@
-const logger = require('winston');
+// const logger = require('winston');
 
 /* eslint-disable no-unused-vars */
 class Service {
@@ -12,8 +12,6 @@ class Service {
       const input = JSON.parse(data);
       const atem = this.options.atem;
 
-      // logger.info(atem);
-
       mixerIP(app).then( (mixerIP) => {
         if(atem.state.model) {
           atemCmd(input, atem);
@@ -24,7 +22,7 @@ class Service {
           });
         }
 
-        resolve(atem.state);
+        resolve('200');
         reject('no mixer');
       });
     });
@@ -39,12 +37,10 @@ async function mixerIP(app) {
 async function atemCmd(input, atem) {
   if(input.mixerAUX) {
     // set aux to program output or input number 1
-    logger.info(mixerIP, `aux setting: ${input.mixerAUX}`);
     const auxMode = input.mixerAUX === 'program' ? 10010 : 1;
-    return atem.changeAuxInput(1, auxMode);
+    return atem.changeAuxInput(0, auxMode);
   } else {
     // set program output to given input number
-    logger.info(mixerIP, `input setting: ${input.mixerInput}`);
     return atem.changeProgramInput(input.mixerInput);
   }
 }
