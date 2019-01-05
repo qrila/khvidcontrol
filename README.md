@@ -33,6 +33,14 @@ To enable starting forever.js after boot command is needed to add 'root' user's 
 
 Run commands found in `python/atempython/README.md`
 
+## Installing webrtc-streamer for Embedded Video in Web Page
+
+- Go to [releases page of webrtc-streamer](https://github.com/mpromonet/webrtc-streamer/releases). (Tested with v0.1.1)
+- Get latest version of the Windows-AMD64-Release package.
+- Extract it to a temporary location and find `webrtc-streamer.exe`
+- Copy the `webrtc-streamer.exe` to `khvidcontrol/bin/webrtc-streamer.exe`
+- When you start khvidcontrol using `npm start`, also webrtc-streamer is automatically started if the executable is in place
+
 ## License
 
 Copyright (c) 2017 Kalle Kuurila
