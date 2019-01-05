@@ -112,6 +112,9 @@ button {
   border-bottom: #646464 1px solid;
 }
 
+.row {
+}
+
 #camera-selection,
 #auxmode,
 .memoutput,
@@ -130,6 +133,28 @@ select[disabled] {
 #cameraid,
 #movecamera {
   width: 100%;
+}
+
+#camvideo-container {
+  display: inline-block;
+  position: relative;
+}
+
+.video-overlay {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  margin: 0px;
+  padding: 0px 0px;
+  font-size: 20px;
+  color: #FFF;
+  z-index: 2;
+  //background-color: rgba(0, 0, 0, 0.3);
+}
+
+video {
+  width: 100%;
+  z-index: 1;
 }
 
 @media (max-width: 992px) {
