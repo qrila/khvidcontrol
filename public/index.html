@@ -119,19 +119,35 @@
               </div>
             </div>
 
-            <div class="row">
-              <div class="memoutput col-xs-12">
-              </div>
-              <div id="camvideo-container">
-                <video id="camvideo"></video>
-                <div class="video-overlay">
-					test overlay
+                <div class="row">
+                    <div class="memoutput col-xs-12"></div>
+                    <div id="camvideo-container">
+                        <video id="camvideo" class="camvideo"></video>
+                        <div class="video-overlay">
+                        <!--  test overlay -->
+                            <div class="svg-container">
+                                <svg id="overlay" viewBox="0 0 1920 1080">
+	                                <polygon points="10,10 40,198 90,178 110,78" 
+	                                	vector-effect="non-scaling-stroke" 
+	                                	id="ob1"
+	                                />
+	                                <polygon points="110,10 140,198 190,178 110,178" 
+	                                	vector-effect="non-scaling-stroke" 
+	                                	id="ob2"
+	                                />
+	                                <polygon points="100,100 140,98 190,78 1110,78" 
+	                                	vector-effect="non-scaling-stroke" 
+	                                	id=""
+	                                />
+                                </svg>
+                            </div>
+                        </div>
+                        <button type="button" id="camvideo-start"
+                            class="btn btn-warning col-xs-4">Open Camera Video</button>
+                    </div>
                 </div>
-                <button type="button" id="camvideo-start" class="btn btn-warning col-xs-4">Open Camera Video</button>
-              </div>
-            </div>
 
-            <div class="row">
+                <div class="row">
               <div class="mediaoutput col-xs-12">
               </div>
             </div>

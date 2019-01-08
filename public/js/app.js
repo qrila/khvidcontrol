@@ -10,6 +10,7 @@ const positions = client.service('positions');
 const videoinputs = client.service('videoinputs');
 const videomixer = client.service('videomixer');
 const cameras = client.service('cameras');
+const overlay = client.service('overlay');
 
 $(document).on('click', 'button[name=settings-button]', () => {
   $('.body-under-settings').toggleClass('hidden');
@@ -217,4 +218,45 @@ $('select[name="sourcetype"]').change(function() {
     $('select[name="cameranumber"]').val('');
     $('select[name="cameranumber"]').prop('disabled', true);
   }
+});
+
+//Initialize video overlay buttons
+$('#camvideo-start').on('click' , function() {
+    positions.find({ query :{ sortNumber: 0 }  }).then( (position) => {
+        if (!Array.isArray(position.data)) {
+            console.error("No default camera position defined! (positions.find did not return array, positions will need one entry with sortNumber 0)");
+        } else {
+            //console.log("ASDF!:", Array.isArray(position), Array.isArray(position.data), position);
+            //console.log("ASDF!!:", position.data[0]._id);
+            //console.log("ASDF:", overlay);
+            overlay.find({ query :{ positionId : position.data[0]._id } }).then( (overlayElements) => {
+                //console.log("ASD!F!:", overlayElements);
+                overlayElements.data.forEach(elementData => {
+                    //console.log("A!SD!F!:", elementData);
+                    var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+                    polygon.setAttribute("points", elementData.points);
+                    polygon.setAttribute("id", elementData.subjectName );
+                    document.getElementById("overlay").appendChild(polygon);
+                });
+            });
+        }
+      });
+    
+    var polygon = document.createElement("polygon");	
+    polygon.setAttribute("id", overlay );
+    polygon.setAttribute("points", "120,100 140,98 190,78 150,38");
+    polygon.setAttribute("vector-effect", "non-scaling-stroke");
+    /*
+            "<polygon points=\"1000,100 140,98 190,78 1110,78\" \r\n" + 
+            "	                                	vector-effect=\"non-scaling-stroke\" \r\n" + 
+            "	                                	id=\"\"\r\n" + 
+            "	                                />");*/
+    //$("#overlay").append(polygon);
+    document.getElementById("overlay").appendChild(polygon);
+    document.getElementById("ob1").onclick = function () {
+        document.getElementById("ob1").style.visibility = "hidden";
+    }
+    document.getElementById("ob2").onclick = function () {
+        document.getElementById("ob2").style.visibility = "hidden";
+    }
 });

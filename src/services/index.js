@@ -4,6 +4,7 @@ const videoinputs = require('./videoinputs/videoinputs.service.js');
 const mixerinputs = require('./mixerinputs/mixerinputs.service.js');
 const videomixer = require('./videomixer/videomixer.service.js');
 const cameras = require('./cameras/cameras.service.js');
+const overlay = require('./overlay/overlay.service.js');
 module.exports = function () {
   const app = this; // eslint-disable-line no-unused-vars
   app.configure(movecam);
@@ -12,4 +13,5 @@ module.exports = function () {
   app.configure(mixerinputs);
   app.configure(videomixer);
   app.configure(cameras);
+  app.configure(overlay);
 };
