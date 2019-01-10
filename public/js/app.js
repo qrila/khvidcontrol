@@ -220,43 +220,49 @@ $('select[name="sourcetype"]').change(function() {
   }
 });
 
-//Initialize video overlay buttons
+function addOverlay(camPosId){
+  overlay.find({ query :{ positionId : camPosId } }).then( (overlayElements) => {
+    var group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    group.setAttribute("id", camPosId);
+    overlayElements.data.forEach(elementData => {
+      var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+      polygon.setAttribute("id", elementData.idName);
+      polygon.setAttribute("points", elementData.points);
+      // polygon.setAttribute("campos-next", elementData.nextPosition);
+      polygon.addEventListener('click', function() { changeCamPos(elementData.nextPosition, camPosId) });
+      group.appendChild(polygon);
+    });
+    document.getElementById("overlay").appendChild(group);
+    });
+}
+
+function changeCamPos(targetPos, currentPos){
+  // console.log("AAF!:", targetPos + " " + currentPos);
+  if(targetPos !== 'undefined'){
+    if(currentPos !== 'undefined'){
+      if(document.getElementById(currentPos) && document.getElementById(currentPos).tagName === "g"){
+        document.getElementById(currentPos).style.visibility = "hidden";
+      }
+    }
+    if(document.getElementById(targetPos) && document.getElementById(targetPos).tagName === "g"){
+      document.getElementById(targetPos).style.visibility = "visible";
+    }else{
+        addOverlay(targetPos);
+    }
+  }
+}
+
+// Initialize video overlay buttons
 $('#camvideo-start').on('click' , function() {
-    positions.find({ query :{ sortNumber: 0 }  }).then( (position) => {
-        if (!Array.isArray(position.data)) {
-            console.error("No default camera position defined! (positions.find did not return array, positions will need one entry with sortNumber 0)");
-        } else {
-            //console.log("ASDF!:", Array.isArray(position), Array.isArray(position.data), position);
-            //console.log("ASDF!!:", position.data[0]._id);
-            //console.log("ASDF:", overlay);
-            overlay.find({ query :{ positionId : position.data[0]._id } }).then( (overlayElements) => {
-                //console.log("ASD!F!:", overlayElements);
-                overlayElements.data.forEach(elementData => {
-                    //console.log("A!SD!F!:", elementData);
-                    var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-                    polygon.setAttribute("points", elementData.points);
-                    polygon.setAttribute("id", elementData.subjectName );
-                    document.getElementById("overlay").appendChild(polygon);
-                });
-            });
-        }
-      });
-    
-    var polygon = document.createElement("polygon");	
-    polygon.setAttribute("id", overlay );
-    polygon.setAttribute("points", "120,100 140,98 190,78 150,38");
-    polygon.setAttribute("vector-effect", "non-scaling-stroke");
-    /*
-            "<polygon points=\"1000,100 140,98 190,78 1110,78\" \r\n" + 
-            "	                                	vector-effect=\"non-scaling-stroke\" \r\n" + 
-            "	                                	id=\"\"\r\n" + 
-            "	                                />");*/
-    //$("#overlay").append(polygon);
-    document.getElementById("overlay").appendChild(polygon);
-    document.getElementById("ob1").onclick = function () {
-        document.getElementById("ob1").style.visibility = "hidden";
+    positions
+        .find({  query :{ sortNumber: 0 }  })
+            .then((position) => 
+    {
+    if (!Array.isArray(position.data)) {
+      console.error("No default camera position defined! (positions.find did not return array, positions will need one entry with sortNumber 0)");
+    } else {
+      // console.log("ASDF!!:", position.data[0]._id);
+        addOverlay(position.data[0]._id);
     }
-    document.getElementById("ob2").onclick = function () {
-        document.getElementById("ob2").style.visibility = "hidden";
-    }
+  });
 });
