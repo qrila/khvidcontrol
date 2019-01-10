@@ -223,7 +223,7 @@ WebRtcStreamer.prototype.onAddStream = function(event) {
 		playPromise.then(function() {
 			console.log("Playback started");
 		}).catch(function(error) {
-			console.log("Playback can't start");
+			console.error("Playback can't start: ", error);
 		});
 	}
 }

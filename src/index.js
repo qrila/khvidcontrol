@@ -11,7 +11,7 @@ const { spawn } = require('child_process');
 const webrtc_path = './bin/webrtc-streamer.exe'; // TODO: mac/linux binary support
 if (fs.existsSync(webrtc_path))
 {
-    const webrtc_silent = false; // set to false if you want to see webrtc-streamer stdout,err
+    const webrtc_silent = true; // set to false if you want to see webrtc-streamer stdout,err
 
     const webrtc_port = 3038; // TODO: take from settings
     const opts = {}

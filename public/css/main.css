@@ -164,13 +164,24 @@ video {
 
 .svg-container {
   position: relative;
+  width: 100%;
+  height: 100%;
 
   > svg {
     position: absolute;
+    top: 0px;
+    left: 0px;
     display: block;
-    width: 100%;
-    height: 100%;
   }
+}
+
+#svg-polymaker {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 polygon {
@@ -181,6 +192,12 @@ polygon {
     stroke: #ffd42a;
     fill-opacity: 0.5;
     fill: #f2f2f2;
+}
+
+.polymaker-poly {
+  stroke: #2ad4FF;
+  fill-opacity: 0.5;
+  fill: #4499f2;
 }
 
 @media (max-width: 992px) {

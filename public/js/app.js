@@ -266,3 +266,10 @@ $('#camvideo-start').on('click' , function() {
     }
   });
 });
+
+// see polymaker.js
+function polymakerResult(points) {
+	alert("New polygon points: " + points);
+}
+
+initPolymaker(polymakerResult);
