@@ -75,7 +75,11 @@ function addCameraPosition(position) {
   `);
 }
 
-positions.find().then(camerabuttons => {
+positions.find({
+                query:{
+                    visibilityMode: 
+                        { $ne: "poly"}}})
+    .then(camerabuttons => {
   _.sortBy(camerabuttons.data, ['sortNumber']).forEach(addCameraPosition);
 });
 positions.on('created', addCameraPosition);
@@ -183,20 +187,7 @@ $(document).on('click', 'button[type=mixeraux]', function() {
 
 // Initialize saved camera position buttons
 $(document).on('click', 'button[type=memory-button]', function() {
-  const callCam = JSON.stringify({
-    command: 'preset',
-    positionID: this.value
-  });
-  $.get(`/movecam/${callCam}`);
-  positions.get(this.value).then( (position) => {
-    cameras.get(position.cameraID).then( (camera) => {
-      const callMixer = JSON.stringify({
-        mixerAUX: false,
-        mixerInput: camera.mixerInput
-      });
-      $.get(`/mixerinputs/${callMixer}`);
-    });
-  });
+  changeCamPos(this.value);
 });
 
 // Initialize media input buttons
@@ -220,10 +211,15 @@ $('select[name="sourcetype"]').change(function() {
   }
 });
 
+const overlaysvg = "overlay";
+const overlaygid = "overlay-g";
+const overlaygcamposid = "cam-pos-id"
+
 function addOverlay(camPosId){
   overlay.find({ query :{ positionId : camPosId } }).then( (overlayElements) => {
     var group = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    group.setAttribute("id", camPosId);
+    group.setAttribute(overlaygcamposid, camPosId);
+    group.setAttribute("class", overlaygid); 
     overlayElements.data.forEach(elementData => {
       var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
       polygon.setAttribute("id", elementData.idName);
@@ -232,23 +228,45 @@ function addOverlay(camPosId){
       polygon.addEventListener('click', function() { changeCamPos(elementData.nextPosition, camPosId) });
       group.appendChild(polygon);
     });
-    document.getElementById("overlay").appendChild(group);
+    document.getElementById(overlaysvg).appendChild(group);
     });
 }
 
 function changeCamPos(targetPos, currentPos){
-  // console.log("AAF!:", targetPos + " " + currentPos);
-  if(targetPos !== 'undefined'){
-    if(currentPos !== 'undefined'){
-      if(document.getElementById(currentPos) && document.getElementById(currentPos).tagName === "g"){
-        document.getElementById(currentPos).style.visibility = "hidden";
-      }
+  //console.log("AAF!:", targetPos + " " + currentPos);
+  if(targetPos !== 'undefined'){  	
+    if(!currentPos){
+        var groups = document.getElementById(overlaysvg).getElementsByClassName(overlaygid);
+        Array.from(groups).forEach(overlayGroup => {
+            overlayGroup.style.visibility = "hidden";
+        });    	
+    }else{
+        $(`g[${overlaygcamposid}='${currentPos}']`)[0].style.visibility = "hidden";
     }
-    if(document.getElementById(targetPos) && document.getElementById(targetPos).tagName === "g"){
-      document.getElementById(targetPos).style.visibility = "visible";
+    
+    var gexisting = $(`g[${overlaygcamposid}='${targetPos}']`);
+    if(gexisting !== 'undefined' && gexisting.length > 0){
+        gexisting[0].style.visibility = "visible";
     }else{
         addOverlay(targetPos);
     }
+    
+    // -- Code moved from Initialize saved camera position buttons
+    const callCam = JSON.stringify({
+      command: 'preset',
+      positionID: targetPos
+    });
+    $.get(`/movecam/${callCam}`);
+    positions.get(targetPos).then( (position) => {
+      cameras.get(position.cameraID).then( (camera) => {
+        const callMixer = JSON.stringify({
+          mixerAUX: false,
+          mixerInput: camera.mixerInput
+        });
+        $.get(`/mixerinputs/${callMixer}`);
+      });
+    });
+    // -- Code moved end
   }
 }
 
@@ -262,14 +280,14 @@ $('#camvideo-start').on('click' , function() {
       console.error("No default camera position defined! (positions.find did not return array, positions will need one entry with sortNumber 0)");
     } else {
       // console.log("ASDF!!:", position.data[0]._id);
-        addOverlay(position.data[0]._id);
+        changeCamPos(position.data[0]._id);
     }
   });
 });
 
 // see polymaker.js
 function polymakerResult(points) {
-	alert("New polygon points: " + points);
+    alert("New polygon points: " + points);
 }
 
 initPolymaker(polymakerResult);

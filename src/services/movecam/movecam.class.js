@@ -53,6 +53,7 @@ async function savePosition(app, cameraID, subjectName, pantilt, zoom) {
     sortNumber: sortNumber.total,
     cameraID: cameraID,
     subjectName: subjectName,
+    visibilityMode: "button",
     pantilt: pantilt.slice(4,20).match(/.{1,2}/g).map(y => { return('0x' + y); }),
     zoom: zoom.slice(4,12).match(/.{1,2}/g).map(y => { return('0x' + y); })
   });
