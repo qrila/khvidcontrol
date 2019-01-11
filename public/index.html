@@ -45,34 +45,7 @@
                 </div>
               </div>
 
-              <div>
-                <div class="position-control row">
-                  <div id="dpad" class="col-xs-8 col-xs-offset-1">
-                    <button type="button" name="up-button" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
-                    </button>
-                    <button type="button" name="left-button" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                    </button>
-                    <button type="button" name="right-button" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-                    </button>
-                    <button type="button" name="down-button" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
-                    </button>
-                  </div>
-                </div>
-                <div class="zoom-control row">
-                  <div id="zpad" class="col-xs-8 col-xs-offset-1">
-                    <button type="zoom-button" name="zoom-tele" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    </button>
-                    <button type="zoom-button" name="zoom-wide" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <div class="dpad"></div>
 
               <div id="camera-selection">
                 <form id="position-mem">
@@ -268,6 +241,8 @@
         </div>
       </div>
     </div>
+
+    <div class="dpad dpad-popup hidden"></div>
 
     <script src="js/feathers.js"></script>
     <script src="/socket.io/socket.io.js"></script>

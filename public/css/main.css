@@ -21,7 +21,7 @@ html, body {
   height: 180px;
 }
 
-#dpad {
+.dpad-area {
   height: 180px;
 }
 
@@ -30,7 +30,7 @@ html, body {
   height: 60px;
 }
 
-#zpad {
+.zpad-area {
   height: 60px;
 }
 

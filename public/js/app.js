@@ -53,6 +53,35 @@ $.each(menuButtons, function(button, action) {
   camMenuButton(button, action);
 });
 
+$('.dpad').html(`
+  <div class="position-control row">
+    <div class="col-xs-8 dpad-area">
+      <button type="button" name="up-button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+      </button>
+      <button type="button" name="left-button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+      </button>
+      <button type="button" name="right-button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+      </button>
+      <button type="button" name="down-button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <div class="zoom-control row">
+    <div class="col-xs-8 zpad-area">
+      <button type="zoom-button" name="zoom-tele" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      </button>
+      <button type="zoom-button" name="zoom-wide" class="btn btn-primary">
+        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>`
+);
+
 const arrowButtons = {
   'up-button'     :   'moveUp',
   'left-button'   :   'moveLeft',
