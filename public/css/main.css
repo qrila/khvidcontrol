@@ -34,7 +34,7 @@ html, body {
   height: 60px;
 }
 
-[name=settings-button],
+.settings-button,
 [name=up-button],
 [name=left-button],
 [name=right-button],
@@ -78,7 +78,8 @@ button {
   width: 60px;
 }
 
-[name=settings-button],
+
+.settings-button,
 .menu-control button,
 #position-mem button,
 #video-mixer button,
@@ -89,6 +90,10 @@ button {
   height: 40px;
   width: 40px;
   background-color: #c8c8c8;
+}
+
+.settings-button .glyphicon {
+  top: 12px;
 }
 
 #videoinput-mem select,
@@ -252,7 +257,6 @@ polygon:hover {
 .main-settings {
   background-color: white;
   border: #c8c8c8 1px solid;
-  box-shadow: 5px 10px #d8d8d8c2;
   border-radius: 10px;
   padding: 20px;
   padding-bottom: 60px;
@@ -268,6 +272,11 @@ polygon:hover {
 .close-popup {
   top: 0;
   right: 0;
-  background-color: white;
+  background: none;
   transform: rotate(45deg);
+}
+
+.close-popup:active {
+  box-shadow: none;
+  color: #c8c8c8;
 }

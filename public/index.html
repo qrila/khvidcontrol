@@ -14,16 +14,13 @@
     <div id="app">
       <main>
         <div class="container">
-          <div class="col-xs-4 hidden-xs">
+          <div class="row">
+            <div class="btn open-popup settings-button">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </div>
+          </div>
+          <div class="col-xs-4 hidden-sm hidden-xs">
             <div id="camera-control">
-              <div class="row">
-                <div class="col-xs-1">
-                  <button type="button" name="settings-button" class="btn open-popup">
-                    <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                  </button>
-                </div>
-              </div>
-
               <!-- Camera menu controllers hidden by default as not typically needed -->
               <div class="menu-control row hidden">
                 <div class="power-button col-xs-2">
@@ -194,9 +191,9 @@
     <div id="main-settings" class="hidden">
       <div class="main-settings">
         <div class="container">
-          <button type="button" name="settings-button" class="btn close-popup">
+          <div class="btn close-popup settings-button">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-          </button>
+          </div>
 
           <div class="add-video-mixer row">
             <form id="video-mixer">

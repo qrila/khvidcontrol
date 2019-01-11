@@ -14,7 +14,7 @@ const overlay = client.service('overlay');
 
 var vidCtx = {};
 
-$(document).on('click', 'button[name=settings-button]', () => {
+$('.settings-button').click(() => {
   $('.body-under-settings').toggleClass('hidden');
   $('#main-settings').toggleClass('hidden');
 });
