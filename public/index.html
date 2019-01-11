@@ -12,13 +12,15 @@
   </head>
   <body>
     <div id="app">
-      <main>
-        <div class="container">
-          <div class="row">
-            <div class="btn open-popup settings-button">
-              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-            </div>
+      <main><nav class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <ul class="nav navbar-nav">
+              <li class="settings-menu active"><a href="#">Asetukset <span class="sr-only">(current)</span></a></li>
+              <li><a href="#">Link</a></li>
+            </ul>
           </div>
+        </nav>
+        <div id="main-controllers" class="container">
           <div class="col-xs-4 hidden-sm hidden-xs">
             <div id="camera-control">
               <!-- Camera menu controllers hidden by default as not typically needed -->
@@ -80,7 +82,7 @@
           </div>
 
 
-          <div class="col-xs-12 col-sm-8">
+          <div class="col-xs-12 col-md-8">
             <div class="row">
               <div id="auxmode" class="col-xs-12 hidden">
                 <div class="col-xs-5">
@@ -162,83 +164,81 @@
     <div class="body-under-settings hidden"></div>
 
     <div id="main-settings" class="hidden">
-      <div class="main-settings">
-        <div class="container">
-          <div class="btn close-popup settings-button">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-          </div>
+        <div class="container main-settings col-xs-10 col-sm-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-4 col-lg-offset-8">
+          
+            <div class="btn close-popup settings-menu pull-right">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </div>
 
-          <div class="add-video-mixer row">
-            <form id="video-mixer">
-              <div class="col-xs-9 col-sm-4">
-                <span><strong>Lisää videomixeri</strong></span>
-                <input type="text" name="videomixer" placeholder="IP osoite 192.168.x.x">
-                <span>Aux ulostulon tilojen nimet</span>
-                <input type="text" name="auxprogram" placeholder="Program">
-                <input type="text" name="auxsource" placeholder="Video 1 input">
-              </div>
-              <div class="col-xs-3">
-                <button type="submit" name="save-video-mixer" class="btn">
-                  <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                </button>
-              </div>
-            </form>
-          </div>
+            <div class="add-video-mixer row">
+              <form id="video-mixer">
+                <div class="col-xs-9">
+                  <span>Lisää videomixeri</span>
+                  <input type="text" name="videomixer" placeholder="IP osoite 192.168.x.x">
+                  <span>Aux ulostulon tilojen nimet</span>
+                  <input type="text" name="auxprogram" placeholder="Program">
+                  <input type="text" name="auxsource" placeholder="Video 1 input">
+                </div>
+                <div class="col-xs-3">
+                  <button type="submit" name="save-video-mixer" class="btn">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </form>
+            </div>
 
-          <div class="add-camera row">
-            <form id="add-camera">
-              <div class="col-xs-9 col-sm-4">
-                <span><strong>Lisää kamera</strong></span>
-                <input type="text" name="name" placeholder="sijainti">
-                <input type="text" name="cameraip" placeholder="192.168.x.x">
-                <input type="text" name="rtspurl" placeholder="rtsp://192.168.x.x/stream1">
-                <span style="color:gray"><small><em>Huom. Vain yhden kameran RTSP-osoite on k&auml;yt&ouml;ss&auml;</em></small></span>
-                <br/>
-                <span>Video sisääntulo</span>
-                <select name="mixerinputcamera" id="mixerinputcamera">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                </select>
-              </div>
-              <div class="col-xs-3 col-sm-2">
-                <button type="submit" name="save-camera" class="btn">
-                  <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                </button>
-              </div>
-            </form>
-          </div>
+            <div class="add-camera row">
+              <form id="add-camera">
+                <div class="col-xs-9">
+                  <span>Lisää kamera</span>
+                  <input type="text" name="name" placeholder="sijainti">
+                  <input type="text" name="cameraip" placeholder="192.168.x.x">
+                  <input type="text" name="rtspurl" placeholder="rtsp://192.168.x.x/stream1">
+                  <span style="color:gray"><small><em>Huom. Vain yhden kameran RTSP-osoite on k&auml;yt&ouml;ss&auml;</em></small></span>
+                  <br/>
+                  <span>Video sisääntulo</span>
+                  <select name="mixerinputcamera" id="mixerinputcamera">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                  </select>
+                </div>
+                <div class="col-xs-3">
+                  <button type="submit" name="save-camera" class="btn">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </form>
+            </div>
 
-          <div class="add-media row">
-            <form id="add-media">
-              <div class="col-xs-9 col-sm-4">
-                <span><strong>Lisää mediasisääntulo</strong></span>
-                <input type="text" name="mediainput" placeholder="Nimi">
-                <span>Video sisääntulo</span>
-                <select name="mixerinputmedia" id="mixerinputmedia">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                </select>
-              </div>
-              <div class="col-xs-3 col-sm-2">
-                <button type="submit" name="save-media" class="btn">
-                  <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+            <div class="add-media row">
+              <form id="add-media">
+                <div class="col-xs-9">
+                  <span>Lisää mediasisääntulo</span>
+                  <input type="text" name="mediainput" placeholder="Nimi">
+                  <span>Video sisääntulo</span>
+                  <select name="mixerinputmedia" id="mixerinputmedia">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                  </select>
+                </div>
+                <div class="col-xs-3">
+                  <button type="submit" name="save-media" class="btn">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </form>
       </div>
     </div>
 
