@@ -12,6 +12,8 @@ const videomixer = client.service('videomixer');
 const cameras = client.service('cameras');
 const overlay = client.service('overlay');
 
+var vidCtx = {}
+
 $(document).on('click', 'button[name=settings-button]', () => {
   $('.body-under-settings').toggleClass('hidden');
   $('#main-settings').toggleClass('hidden');
@@ -66,14 +68,23 @@ $.each(arrowButtons, function(button, action) {
 
 function addCameraPosition(position) {
   const camPos = document.querySelector('.memoutput');
+  const isHidden = position.visibilityMode && position.visibilityMode == "poly";
+  const displayAttr = 'style="display:' + (isHidden ? 'none"' : 'block"');
   camPos.insertAdjacentHTML('beforeend', `
-    <div class="col-xs-6 col-sm-4 col-md-3 col-xl-3">
+    <div type="memory-div" class="col-xs-6 col-sm-4 col-md-3 col-xl-3" ${displayAttr} data-positionid="${position._id}">
       <button type="memory-button" value="${position._id}" class="mem-button btn btn-primary">
         <span aria-hidden="true">${position.subjectName}</span>
       </button>
     </div>
   `);
 }
+
+function modifyCameraPosition(position) {
+  // currently only modification supported is changing visibilityMode:
+  const isHidden = position.visibilityMode && position.visibilityMode == "poly";
+  $(`div[type="memory-div"][data-positionid="${position._id}"]`).css("display", isHidden ? "none" : "block");
+}
+
 
 positions.find({
                 query:{
@@ -83,6 +94,18 @@ positions.find({
   _.sortBy(camerabuttons.data, ['sortNumber']).forEach(addCameraPosition);
 });
 positions.on('created', addCameraPosition);
+positions.on('patched', modifyCameraPosition);
+
+// Test code for changing visibilityMode:
+// setTimeout(function() {
+    // const call = JSON.stringify({
+        // command: 'edit',
+        // positionID: 'ThYbPsVbwj2ct51z',
+        // visibilityMode: 'poly'
+    // });
+    // $.get(`/movecam/${call}`);
+    // console.log("performed call: ", call);
+// }, 2000);
 
 document.getElementById('position-mem').addEventListener('submit', function(ev) {
   ev.preventDefault();
@@ -232,25 +255,48 @@ function addOverlay(camPosId){
     });
 }
 
-function changeCamPos(targetPos, currentPos){
+
+
+function changeCamPos(targetPos, currentPos) {
   //console.log("AAF!:", targetPos + " " + currentPos);
-  if(targetPos !== 'undefined'){  	
-    if(!currentPos){
+  if (targetPos !== 'undefined') {
+    if (!currentPos) {
         var groups = document.getElementById(overlaysvg).getElementsByClassName(overlaygid);
         Array.from(groups).forEach(overlayGroup => {
             overlayGroup.style.visibility = "hidden";
-        });    	
-    }else{
+        });
+    } else {
         $(`g[${overlaygcamposid}='${currentPos}']`)[0].style.visibility = "hidden";
     }
     
     var gexisting = $(`g[${overlaygcamposid}='${targetPos}']`);
-    if(gexisting !== 'undefined' && gexisting.length > 0){
+    if (gexisting !== 'undefined' && gexisting.length > 0) {
         gexisting[0].style.visibility = "visible";
-    }else{
+    } else {
         addOverlay(targetPos);
     }
-    
+
+    //vidCtx.prevPos = vidCtx.currentPos;
+    vidCtx.currentPos = targetPos;
+
+    // fill new current position to polymaker poly owner name
+    positions.find({query:{_id:vidCtx.currentPos}}).then(
+        positions => {
+            if (positions && Array.isArray(positions.data) && positions.data.length > 0)
+            {
+                //console.log(positions.data[0].subjectName);
+                var currentPosName = positions.data[0].subjectName;
+                $('#poly-owner-name').text(currentPosName);
+                var disabled = false;
+                if (positions.data[0].sortNumber == 0)
+                {
+                    $('#poly-cb-hide-button').prop('checked', false);
+                    disabled = true;
+                }
+                $('#poly-cb-hide-button').prop('disabled', disabled);
+            }
+        });
+
     // -- Code moved from Initialize saved camera position buttons
     const callCam = JSON.stringify({
       command: 'preset',
@@ -271,7 +317,7 @@ function changeCamPos(targetPos, currentPos){
 }
 
 // Initialize video overlay buttons
-$('#camvideo-start').on('click' , function() {
+$('#camvideo-start').on('click', function() {
     positions
         .find({  query :{ sortNumber: 0 }  })
             .then((position) => 
@@ -285,9 +331,44 @@ $('#camvideo-start').on('click' , function() {
   });
 });
 
-// see polymaker.js
-function polymakerResult(points) {
-    alert("New polygon points: " + points);
+function createNewPoly() {
+    var createButton = document.getElementById("polymaker-create");
+    createButton.style.display = "none";
+
+    // $('button[type=memory-button]').each(function(index) {
+        // console.log(index + ": " + $(this).attr('value'));
+    // });
+
+    // clear all options first
+    $('#poly-target-name').html('');
+
+    // populate poly target names
+    positions.find( /*{ query: { visibilityMode: { $ne: "poly" }} }*/ )
+        .then(camerabuttons => { _.sortBy(camerabuttons.data, ['sortNumber']).forEach(position => {
+                $('#poly-target-name').append(`<option value="${position._id}">${position.subjectName}</option>`);
+                });
+              });
+
+    startPolymaker();
 }
 
-initPolymaker(polymakerResult);
+// see polymaker.js
+function polymakerCancel() {
+    $("#polymaker-create").show();
+}
+
+// see polymaker.js
+function polymakerFinish(points, pointCount) {
+    var createButton = document.getElementById("polymaker-create");
+    createButton.style.display = "block";
+    alert("" + pointCount + " polygon points: " + points);
+}
+
+$("#polymaker-create").click(function() {
+    $("#polymaker-create").hide();
+    createNewPoly();
+});
+
+initPolymaker(polymakerCancel, polymakerFinish);
+
+

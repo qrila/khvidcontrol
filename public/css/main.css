@@ -185,13 +185,13 @@ video {
 }
 
 polygon {
-	vector-effect: non-scaling-stroke;
-    stroke-width: 2;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-    stroke: #ffd42a;
-    fill-opacity: 0.5;
-    fill: #f2f2f2;
+  vector-effect: non-scaling-stroke;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke: #ffd42a;
+  fill-opacity: 0.5;
+  fill: #f2f2f2;
 }
 
 .polymaker-poly {

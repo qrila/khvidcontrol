@@ -121,21 +121,46 @@
 
                 <div class="row">
                     <div class="memoutput col-xs-12"></div>
+                </div>
+                <div class="row">
                     <div id="camvideo-container">
                         <video id="camvideo" class="camvideo"></video>
                         <div class="video-overlay">
                             <div class="svg-container">
                                 <svg id="overlay" viewBox="0 0 1920 1080">
-                                	<!--  Overlay of buttons generated here -->
+                                    <!--  Overlay of buttons generated here -->
                                 </svg>
                             </div>
-
                         </div>
-                        <button type="button" id="polymaker-create" class="btn btn-warning col-xs-3" style="visibility:hidden">Create Poly</button>
-						<button type="button" id="polymaker-cancel" class="btn btn-danger col-xs-2" style="visibility:hidden">Cancel</button>
-                        <button type="button" id="polymaker-finish" class="btn btn-primary col-xs-3" style="visibility:hidden">Finish Poly</button>
-                        <button type="button" id="camvideo-start"
-                            class="btn btn-warning col-xs-4">Open Camera Video</button>
+                    </div>
+
+                    <div id="cam-ui" class="col-xs-12">
+                        <button type="button" id="polymaker-create" class="btn btn-warning col-xs-3" style="display:none">Tee siirtym&auml;</button>
+                        <div id="createpoly-tools" style="display:none">
+                            <p style="text-align:center">Klikkaile siirtym&auml;n polygonin kulmapisteet kuvan p&auml;&auml;lle</p>
+                            <table class="col-xs-4"">
+                                <tr>
+                                    <td style="text-align:right">N&auml;kym&auml;:</td>
+                                    <td style="padding:5px"><span id="poly-owner-name">---</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right">Kohde:</td>
+                                    <td style="padding:5px">
+                                        <select id="poly-target-name">
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right">Piilota nappi:</td>
+                                    <td style="padding:5px"><input type="checkbox" value="false" id="poly-cb-hide-button" /></td>
+                                </tr>
+                            </table>
+                            <button type="button" id="polymaker-cancel" class="btn btn-danger col-xs-3" style="visibility:hidden">Peruuta</button>
+                            <button type="button" id="polymaker-finish" class="btn btn-primary col-xs-4" style="visibility:hidden">Valmis</button>
+                        </div>
+
+                        <button type="button" id="camvideo-start" class="btn btn-warning col-xs-6">Avaa kameravideo 🐿️</button>
+
                     </div>
                 </div>
 

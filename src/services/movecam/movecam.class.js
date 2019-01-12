@@ -30,6 +30,11 @@ class Service {
           resolve('200');
           reject('save position error');
         });
+      } else if(camData.command === 'edit') {
+        editPosition(app, camData.positionID, camData.visibilityMode).then( () => {
+          resolve('200');
+          reject('edit position error');
+        });
       } else {
         camera(app, camData.cameraID).then( cameraIP => {
           visca.moveCam(camData.action, cameraIP);
@@ -56,6 +61,14 @@ async function savePosition(app, cameraID, subjectName, pantilt, zoom) {
     visibilityMode: "button",
     pantilt: pantilt.slice(4,20).match(/.{1,2}/g).map(y => { return('0x' + y); }),
     zoom: zoom.slice(4,12).match(/.{1,2}/g).map(y => { return('0x' + y); })
+  });
+  return position;
+}
+
+async function editPosition(app, positionID, visibilityMode) {
+  // currently only modification supported is changing visibilityMode
+  const position = await app.service('positions').patch(positionID, {
+    visibilityMode: visibilityMode
   });
   return position;
 }
