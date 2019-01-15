@@ -27,8 +27,7 @@ $(document).ready(function() {
                 _webrtc_enabled = true;
             }, restart_delay_seconds * 1000);
 
-            // hack:
-            document.getElementById("polymaker-create").style.display = "block";
+            enableCamVideoUI(); // defined in app.js
         }
     }
 

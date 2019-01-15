@@ -111,7 +111,7 @@ function initPolymaker(cancelCallback, finishCallback)
     _polymaker.finishCallback = finishCallback;
     _polymaker_addPolySVG('.svg-container');
 
-    var tools = document.getElementById("createpoly-tools");
+    var tools = document.getElementById("polymaker-tools");
     var cancelButton = document.getElementById("polymaker-cancel");
     var finishButton = document.getElementById("polymaker-finish");
     if (tools && cancelButton && finishButton) {
@@ -135,7 +135,7 @@ function initPolymaker(cancelCallback, finishCallback)
 
 function startPolymaker()
 {
-    var tools = document.getElementById("createpoly-tools");
+    var tools = document.getElementById("polymaker-tools");
     var cancelButton = document.getElementById("polymaker-cancel");
     if (tools && cancelButton) {
         tools.style.display = "block";

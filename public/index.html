@@ -98,6 +98,13 @@
                   </div>
                 </form>
               </div>
+
+              <div id="poly-mgmt-toggle" style="display: none">
+                <label>
+                    <input type="checkbox" value="false" id="poly-mgmt-toggle-cb" />
+                    N&auml;yt&auml; siirtymien editointi
+                </label>
+              </div>
             </div>
 
           </div>
@@ -135,8 +142,12 @@
                     </div>
 
                     <div id="cam-ui" class="col-xs-12">
-                        <button type="button" id="polymaker-create" class="btn btn-warning col-xs-3" style="display:none">Tee siirtym&auml;</button>
-                        <div id="createpoly-tools" style="display:none">
+                        <div id="poly-mgmt-tools" style="display:none">
+                            <button type="button" id="poly-create" class="btn btn-warning col-xs-3">Tee siirtym&auml;</button>
+                            <button type="button" id="poly-delete" class="btn btn-danger col-xs-3">Poista siirtym&auml;</button>
+                            <button type="button" id="poly-cancel-delete" class="btn btn-warning col-xs-3" style="display:none">Peruuta poisto</button>
+                        </div>
+                        <div id="polymaker-tools" style="display:none">
                             <p style="text-align:center">Klikkaile siirtym&auml;n polygonin kulmapisteet kuvan p&auml;&auml;lle</p>
                             <table class="col-xs-4"">
                                 <tr>

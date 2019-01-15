@@ -122,7 +122,7 @@ button {
   padding-top: 15px;
 }
 
-input {
+input[type=text] {
   width: 100%;
 }
 
