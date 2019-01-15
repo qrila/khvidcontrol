@@ -201,7 +201,7 @@
           <div class="add-video-mixer row">
             <form id="video-mixer">
               <div class="col-xs-9 col-sm-4">
-                <span>Lisää videomixeri</span>
+                <span><strong>Lisää videomixeri</strong></span>
                 <input type="text" name="videomixer" placeholder="IP osoite 192.168.x.x">
                 <span>Aux ulostulon tilojen nimet</span>
                 <input type="text" name="auxprogram" placeholder="Program">
@@ -218,9 +218,12 @@
           <div class="add-camera row">
             <form id="add-camera">
               <div class="col-xs-9 col-sm-4">
-                <span>Lisää kamera</span>
+                <span><strong>Lisää kamera</strong></span>
                 <input type="text" name="name" placeholder="sijainti">
                 <input type="text" name="cameraip" placeholder="192.168.x.x">
+                <input type="text" name="rtspurl" placeholder="rtsp://192.168.x.x/stream1">
+                <span style="color:gray"><small><em>Huom. Vain yhden kameran RTSP-osoite on k&auml;yt&ouml;ss&auml;</em></small></span>
+                <br/>
                 <span>Video sisääntulo</span>
                 <select name="mixerinputcamera" id="mixerinputcamera">
                   <option value="1">1</option>
@@ -244,7 +247,7 @@
           <div class="add-media row">
             <form id="add-media">
               <div class="col-xs-9 col-sm-4">
-                <span>Lisää mediasisääntulo</span>
+                <span><strong>Lisää mediasisääntulo</strong></span>
                 <input type="text" name="mediainput" placeholder="Nimi">
                 <span>Video sisääntulo</span>
                 <select name="mixerinputmedia" id="mixerinputmedia">
@@ -262,15 +265,6 @@
                 <button type="submit" name="save-media" class="btn">
                   <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                 </button>
-              </div>
-            </form>
-          </div>
-
-          <div class="camvid-settings row">
-            <form id="camvid-settings">
-              <div class="col-xs-9 col-sm-4">
-              </div>
-              <div class="col-xs-3 col-sm-2">
               </div>
             </form>
           </div>

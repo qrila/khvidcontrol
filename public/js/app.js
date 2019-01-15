@@ -166,11 +166,13 @@ document.getElementById('add-camera').addEventListener('submit', function(ev) {
   const cameraName = this.name.value;
   const cameraIP = this.cameraip.value;
   const mixerInput = this.mixerinputcamera.value;
+  const rtspURL = this.rtspurl.value;
 
   cameras.create({
     cameraName: cameraName,
     cameraIP: cameraIP,
-    mixerInput: mixerInput
+    mixerInput: mixerInput,
+    rtspURL: rtspURL
   });
 
   $('#add-camera').find('input[type=text]').val('');
@@ -184,6 +186,9 @@ function populateCameraList() {
     _.forEach(cameras.data, camera => {
       $('#movecamera').append(`<option value=${camera._id}>${camera.cameraName}</option>`);
       $('#cameraid').append(`<option value=${camera._id}>${camera.cameraName}</option>`);
+      if (webRtcCtx.video_url === null && camera.rtspURL !== null && camera.rtspURL.length > 0) {
+          webRtcCtx.video_url = camera.rtspURL; // only first found rtsp url is used
+      }
     });
   });
 }
@@ -315,6 +320,15 @@ function changeCamPos(targetPos, currentPos) {
 // Initialize video overlay buttons
 // (see also camvideo.js)
 $('#camvideo-start').on('click', function() {
+    if (webRtcCtx.video_url === null || webRtcCtx.video_url.length == 0) {
+        alert("Kameravideon RTSP URL puuttuu");
+        return;
+    }
+
+    $('#camvideo-start').hide();
+    startWebRTCVideoConnection();
+    enableCamVideoUI();
+
     positions
         .find({  query :{ sortNumber: 0 }  })
             .then((position) => 

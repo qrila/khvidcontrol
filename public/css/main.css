@@ -13,8 +13,7 @@ html, body {
 .add-video-mixer,
 .add-camera,
 .add-media,
-.position-set-mem,
-.camvid-settings {
+.position-set-mem {
   margin-top: 50px;
 }
 
