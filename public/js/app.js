@@ -234,28 +234,29 @@ $('select[name="sourcetype"]').change(function() {
   }
 });
 
+const svgNS = "http://www.w3.org/2000/svg";
 const overlaysvg = "overlay";
 const overlaygid = "overlay-g";
 const overlaygcamposid = "cam-pos-id"
 
 function addOverlay(camPosId){
   overlay.find({ query :{ positionId : camPosId } }).then( (overlayElements) => {
-    var group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    var group = document.createElementNS(svgNS, "g");
     group.setAttribute(overlaygcamposid, camPosId);
     group.setAttribute("class", overlaygid); 
     overlayElements.data.forEach(elementData => {
-      var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-      polygon.setAttribute("id", elementData.idName);
-      polygon.setAttribute("points", elementData.points);
-      // polygon.setAttribute("campos-next", elementData.nextPosition);
-      polygon.addEventListener('click', function() { changeCamPos(elementData.nextPosition, camPosId) });
-      group.appendChild(polygon);
+      addPolygon(group, elementData);
     });
     document.getElementById(overlaysvg).appendChild(group);
     });
 }
 
-
+function addPolygon(group, elementData){
+  var polygon = document.createElementNS(svgNS, "polygon");
+  polygon.setAttribute("points", elementData.points);
+  polygon.addEventListener('click', function() { changeCamPos(elementData.targetPosition, elementData.positionId) });
+  group.appendChild(polygon);
+}
 
 function changeCamPos(targetPos, currentPos) {
   //console.log("AAF!:", targetPos + " " + currentPos);
@@ -361,6 +362,24 @@ function polymakerCancel() {
 function polymakerFinish(points, pointCount) {
     var createButton = document.getElementById("polymaker-create");
     createButton.style.display = "block";
+    
+    overlay.create({
+        positionId: vidCtx.currentPos,
+        targetPosition: $('#poly-target-name').val(),
+        points: points
+    })
+        .then(createdData => { 
+                //console.log(createdData);
+                var gexisting = $(`g[${overlaygcamposid}='${createdData.positionId}']`);
+            if (gexisting !== 'undefined' && gexisting.length > 0) {
+                addPolygon(gexisting[0], createdData);
+                //console.log("existing g" + gexisting[0]);
+            } else {
+                addOverlay(createdData.positionId);
+                //console.log("not existing g, add " + createdData.positionId);
+            }
+            })
+        .catch(function(err){console.error("Could not create polygon data " + err);});
     alert("" + pointCount + " polygon points: " + points);
 }
 
