@@ -130,7 +130,7 @@
                     <div class="memoutput col-xs-12"></div>
                 </div>
                 <div class="row">
-                    <div id="camvideo-container">
+                    <div id="camvideo-container" style="display: none">
                         <video id="camvideo" class="camvideo"></video>
                         <div class="video-overlay">
                             <div class="svg-container">
@@ -139,6 +139,9 @@
                                 </svg>
                             </div>
                         </div>
+                        <span id="camvideo-reconnect" style="btn btn-xs">
+                            <span class="glyphicon glyphicon-refresh" id="camvideo-reconnect-icon"></span>
+                        </span>
                     </div>
 
                     <div id="cam-ui" class="col-xs-12">
@@ -259,6 +262,15 @@
                 <button type="submit" name="save-media" class="btn">
                   <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                 </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="camvid-settings row">
+            <form id="camvid-settings">
+              <div class="col-xs-9 col-sm-4">
+              </div>
+              <div class="col-xs-3 col-sm-2">
               </div>
             </form>
           </div>

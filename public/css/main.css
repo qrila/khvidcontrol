@@ -13,7 +13,8 @@ html, body {
 .add-video-mixer,
 .add-camera,
 .add-media,
-.position-set-mem  {
+.position-set-mem,
+.camvid-settings {
   margin-top: 50px;
 }
 
@@ -138,14 +139,37 @@ select[disabled] {
 #camvideo-container {
   display: inline-block;
   position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  background-color: #99a;
 }
 
-#camvideo-start{
+#camvideo-start {
   z-index: 3;
 }
 
+#camvideo-reconnect {
+  position: absolute;
+  text-align: right;
+  right: 0;
+  top: 0;
+  z-index: 3;
+  color: #020;
+}
+
+#camvideo-reconnect:hover {
+  color: #6b6;
+}
+#camvideo-reconnect:active {
+  color: #5f5;
+}
+
 video {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
   z-index: 1;
 }
 
@@ -159,6 +183,7 @@ video {
   color: #FFF;
   z-index: 2;
   width: 100%;
+  height: 100%;
   //background-color: rgba(0, 0, 0, 0.3);
 }
 
@@ -215,6 +240,7 @@ polygon:hover {
 
 #main-settings {
   position: absolute;
+  z-index: 4;
   top: 20px;
   left: 20%;
   width: 60%;

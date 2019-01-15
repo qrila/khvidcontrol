@@ -313,6 +313,7 @@ function changeCamPos(targetPos, currentPos) {
 }
 
 // Initialize video overlay buttons
+// (see also camvideo.js)
 $('#camvideo-start').on('click', function() {
     positions
         .find({  query :{ sortNumber: 0 }  })
@@ -343,6 +344,8 @@ function getCSSStyle(className) {
 // this is called in camvideo.js, after opening camera
 function enableCamVideoUI()
 {
+    $("#camvideo-container").css("display", "inline-block");
+    $("#camvideo-container").css("height", $("#camvideo-container").css("width") * 9 / 16);
     $("#poly-mgmt-toggle").show();
     $("#poly-mgmt-toggle-cb").change(function() {
         if (this.checked)
@@ -350,6 +353,7 @@ function enableCamVideoUI()
         else
             $("#poly-mgmt-tools").hide();
     });
+    $("#camvideo-reconnect").click(function() { reconnectWebRTCVideoConnection(); });
 }
 
 $("#poly-delete").click(function() {

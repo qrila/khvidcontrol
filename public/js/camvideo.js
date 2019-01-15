@@ -1,30 +1,41 @@
-// Prepare camera 
-var _webrtc_enabled = false;
+
+var webRtcCtx = {
+    //video_url: "rtsp://srv13.arkasis.nl:80/498/default.stream", // Curaçao test
+    video_url: "rtsp://10.0.0.70/stream1", // TODO: From settings
+    audio_url: null,
+    options: "rtptransport=udp&timeout=9000",
+    enabled: false,
+    port: 3038, // TODO: Port from settings?
+    server: null
+}
+
+function reconnectWebRTCVideoConnection()
+{
+    webRtcCtx.enabled = false;
+    webRtcCtx.server.disconnect();
+    webRtcCtx.server.connect(webRtcCtx.video_url, webRtcCtx.audio_url, webRtcCtx.options);
+    webRtcCtx.enabled = true;
+    console.log("Reconnected WebRTC video...");
+}
+
 $(document).ready(function() {
-    //var video_url = "rtsp://srv13.arkasis.nl:80/498/default.stream"; // Curaçao test
-    var video_url = "rtsp://10.0.0.70/stream1"; // TODO: From settings
-    var audio_url = null;
-    var port = 3038; // TODO: Port from settings?
-    var options = "rtptransport=udp&timeout=9000";
-    var webRtcServer = new WebRtcStreamer("camvideo", location.protocol+"//"+window.location.hostname+":"+port);
     var refreshInterval = 0;
 
-    // //window.onload         = function() { webRtcServer.connect(video_url) }
+    webRtcCtx.server = new WebRtcStreamer("camvideo", location.protocol+"//"+window.location.hostname+":"+webRtcCtx.port);
+
+    // //window.onload         = function() { webRtcCtx.server.connect(webRtcCtx.video_url) }
     // Let's put this behind a separate click for now (Chrome won't autostart without user interaction)
     var vidStartButton = document.getElementById("camvideo-start");
     if (vidStartButton) {
         vidStartButton.onclick = function () {
-            webRtcServer.connect(video_url, audio_url, options);
-            _webrtc_enabled = true;
+            webRtcCtx.server.connect(webRtcCtx.video_url, webRtcCtx.audio_url, webRtcCtx.options);
+            webRtcCtx.enabled = true;
             vidStartButton.style.display = "none";
 
-            // restart video feed every N seconds (it tends to stop updating for some reason)
-            const restart_delay_seconds = 5 * 60;
+            // reconnect video feed every N seconds (sometimes it stops updating for unknown reason)
+            const restart_delay_seconds = 4 * 60;
             refreshInterval = setInterval(function() {
-                _webrtc_enabled = false;
-                webRtcServer.disconnect();
-                webRtcServer.connect(video_url, audio_url, options);
-                _webrtc_enabled = true;
+                reconnectWebRTCVideoConnection();
             }, restart_delay_seconds * 1000);
 
             enableCamVideoUI(); // defined in app.js
@@ -33,7 +44,7 @@ $(document).ready(function() {
 
     window.onbeforeunload = function() {
         clearInterval(refreshInterval);
-        _webrtc_enabled = false;
-        webRtcServer.disconnect();
+        webRtcCtx.enabled = false;
+        webRtcCtx.server.disconnect();
     }
 });
