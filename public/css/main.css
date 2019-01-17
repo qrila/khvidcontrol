@@ -13,20 +13,22 @@ html, body {
   text-align: center;
 }
 
-#camera-control,
-.add-video-mixer,
-.add-camera,
-.add-media,
-.position-set-mem {
-  margin-top: 50px;
-}
-
 .position-control {
   height: 180px;
 }
 
 .dpad-area {
   height: 180px;
+}
+
+.dpad button span {
+  width: 24px;
+  height: 24px;
+}
+
+.dpad button {
+  width: 50px;
+  height: 50px;
 }
 
 .zoom-control {
@@ -44,54 +46,36 @@ html, body {
 [name=down-button],
 [name=zoom-tele],
 [name=zoom-wide] {
-  position: absolute;
+  position: relative;
   margin: 0;
 }
 
 [name=up-button] {
+  top: 0;
   left: 75px;
 }
 
 [name=left-button] {
-  left: 15;
-  top: 60px;
+  left: -25px;
+  top: 50px;
 }
 
 [name=right-button] {
-  left: 135px;
-  top: 60px;
+  left: 25px;
+  top: 50px;
 }
 
 [name=down-button] {
-  left: 75px;
-  top: 120px;
+  left: -75px;
+  top: 100px;
 }
 
 [name=zoom-tele] {
-  left: 15px;
+  left: 25px;
 }
 
 [name=zoom-wide] {
-  left: 136px;
-}
-
-button {
-  margin: 15px;
-  height: 60px;
-  width: 60px;
-}
-
-
-.menu-control button,
-#position-mem button,
-#video-mixer button,
-#add-camera button,
-#add-media button,
-#videoinput-mem button {
-  margin: 15px;
-  height: 40px;
-  width: 40px;
-  background-color: #c8c8c8;
+  left: 75px;
 }
 
 #videoinput-mem select,
@@ -102,32 +86,21 @@ button {
 
 .mem-button {
   width: 100%;
+  height: 50px;
+  margin-bottom: 15px;
 }
 
-.aux-button {
-  width: 100%;
-  margin-top: 30px;
-}
-
-#auxmode,
 .memoutput {
-  padding-bottom: 30px;
-  border-bottom: #646464 1px solid;
+  padding-top: 25px;
 }
 
-#camera-selection,
-#auxmode,
-.memoutput,
 .mediaoutput {
-  padding-top: 15px;
+  padding-bottom: 20px;
+  border-bottom: #b3b3b3 1px solid;
 }
 
 input[type=text] {
   width: 100%;
-}
-
-select[disabled] {
-  color: #DCDAD1;
 }
 
 #cameraid,
@@ -230,43 +203,12 @@ polygon:hover {
   fill: #4499f2;
 }
 
-@media (max-width: 992px) {
-  .hidden-xs {
-    display: none;
-  }
+.navbar form {
+  margin-bottom: 0;
 }
 
-#main-settings {
-  position: absolute;
-  top: 100px;
-  /* left: 20%; */
-  /* width: 450px; */
-}
-
-.body-under-settings {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #64646491;
-}
-
-.main-settings {
-  background-color: white;
-  border: #c8c8c8 1px solid;
-  border-radius: 10px;
-  padding: 20px;
-  padding-bottom: 60px;
-}
-
-.close-popup {
-  top: 0;
-  right: 0;
-  background: none;
-  transform: rotate(45deg);
-}
-
-.close-popup:active {
-  box-shadow: none;
-  color: #c8c8c8;
+.add-video-mixer,
+.add-camera {
+  border-bottom: #b3b3b3 1px solid;
+  margin-bottom: 15px;
 }

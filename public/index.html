@@ -1,70 +1,51 @@
 <html>
   <head>
-    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/jquery-3.3.1.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="js/webrtcstreamer-libs/request.min.js" ></script>
     <script src="js/webrtcstreamer-libs/adapter.min.js" ></script>
     <script src="js/webrtcstreamer.js" ></script>
     <script src="js/camvideo.js"></script>
+    <link rel="stylesheet" type="text/css" href="/fonts/iconfont/material-icons.css">
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <title>khvidcontrol</title>
   </head>
   <body>
     <div id="app">
-      <main><nav class="navbar navbar-default navbar-fixed-top">
-          <div class="container">
-            <ul class="nav navbar-nav">
-              <li class="settings-menu active"><a href="#">Asetukset <span class="sr-only">(current)</span></a></li>
-              <li><a href="#">Link</a></li>
-            </ul>
+      <!-- <main> -->
+        <nav class="navbar navbar-expand navbar-light bg-light">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link material-icons" data-toggle="modal" data-target="#main-settings" href="#">settings</a>
+            <a class="nav-item nav-link material-icons d-none" href="#">control_camera</span></a>
+            <form class="form-inline nav-item nav-link">
+              <button class="btn btn-sm btn-outline-secondary mixeraux d-none" id="auxprogram" type="button" value="program"></button>
+              <button class="btn btn-sm btn-outline-secondary mixeraux d-none" id="auxsource" type="button" value="source"></button>
+            </form>
           </div>
         </nav>
-        <div id="main-controllers" class="container">
-          <div class="col-xs-4 hidden-sm hidden-xs">
+        <div id="main-controllers" class="container-fluid d-flex">
+          <div class="d-none d-md-block">
             <div id="camera-control">
-              <!-- Camera menu controllers hidden by default as not typically needed -->
-              <div class="menu-control row hidden">
-                <div class="power-button col-xs-2">
-                  <button type="button" name="menu" class="btn">
-                    <span class="glyphicon glyphicon-off"></span>
-                  </button>
-                </div>
-                <div class="menu-button col-xs-2 col-xs-offset-1">
-                  <button type="button" name="menu" class="btn">
-                    <span class="glyphicon glyphicon-menu-hamburger"></span>
-                  </button>
-                </div>
-                <div class="menu-ok col-xs-2">
-                  <button type="button" name="menu-ok" class="btn">
-                    <span class="glyphicon glyphicon-ok-circle"></span>
-                  </button>
-                </div>
-                <div class="menu-back col-xs-2">
-                  <button type="button" name="menu-back" class="btn">
-                    <span class="glyphicon glyphicon-step-backward"></span>
-                  </button>
-                </div>
-              </div>
 
               <div class="dpad"></div>
 
               <div id="camera-selection">
                 <form id="position-mem">
                   <div class="row">
-                    <div class="col-xs-9">
+                    <div class="col-9">
                       <span>Valitse hallittava kamera</span>
                       <select name="cameraid" id="cameraid"></select>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-xs-9">
+                    <div class="col-9">
                       <span>Lisää kuvattava kohde</span>
                       <input type="text" name="subjectname" placeholder="Kameran kohde">
                     </div>
-                    <div class="col-xs-3">
-                      <button type="submit" name="save-position" class="btn">
-                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    <div class="col-3 align-self-end">
+                      <button type="submit" name="save-position" class="btn btn-secondary">
+                        <span class="material-icons">save</span>
                       </button>
                     </div>
                   </div>
@@ -78,171 +59,156 @@
                 </label>
               </div>
             </div>
-
           </div>
 
-
-          <div class="col-xs-12 col-md-8">
-            <div class="row">
-              <div id="auxmode" class="col-xs-12 hidden">
-                <div class="col-xs-5">
-                    <button type="mixeraux" value="program" id="auxprogram" class="aux-button btn btn-primary">
-                      <span aria-hidden="true"></span>
-                    </button>
-                  </div>
-                  <div class="col-xs-offset-2 col-xs-5">
-                    <button type="mixeraux" value="source" id="auxsource" class="aux-button btn btn-primary">
-                      <span aria-hidden="true"></span>
-                    </button>
-                  </div>
-              </div>
-            </div>
-
-                <div class="row">
-                    <div class="memoutput col-xs-12"></div>
-                </div>
-                <div class="row">
-                    <div id="camvideo-container" style="display: none">
-                        <video id="camvideo" class="camvideo"></video>
-                        <div class="video-overlay">
-                            <div class="svg-container">
-                                <svg id="overlay" viewBox="0 0 1920 1080">
-                                    <!--  Overlay of buttons generated here -->
-                                </svg>
-                            </div>
-                        </div>
-                        <span id="camvideo-reconnect" class="btn btn-xs">
-                            <span class="glyphicon glyphicon-refresh" id="camvideo-reconnect-icon"></span>
-                        </span>
-                    </div>
-
-                    <div id="cam-ui" class="col-xs-12">
-                        <div id="poly-mgmt-tools" style="display:none">
-                            <button type="button" id="poly-create" class="btn btn-warning col-xs-3">Tee siirtym&auml;</button>
-                            <button type="button" id="poly-delete" class="btn btn-danger col-xs-3">Poista siirtym&auml;</button>
-                            <button type="button" id="poly-cancel-delete" class="btn btn-warning col-xs-3" style="display:none">Peruuta poisto</button>
-                        </div>
-                        <div id="polymaker-tools" style="display:none">
-                            <p style="text-align:center">Klikkaile siirtym&auml;n polygonin kulmapisteet kuvan p&auml;&auml;lle</p>
-                            <table class="col-xs-4"">
-                                <tr>
-                                    <td style="text-align:right">N&auml;kym&auml;:</td>
-                                    <td style="padding:5px"><span id="poly-owner-name">---</span></td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align:right">Kohde:</td>
-                                    <td style="padding:5px">
-                                        <select id="poly-target-name">
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align:right">Piilota nappi:</td>
-                                    <td style="padding:5px"><input type="checkbox" value="false" id="poly-cb-hide-button" /></td>
-                                </tr>
-                            </table>
-                            <button type="button" id="polymaker-cancel" class="btn btn-danger col-xs-3" style="visibility:hidden">Peruuta</button>
-                            <button type="button" id="polymaker-finish" class="btn btn-primary col-xs-4" style="visibility:hidden">Valmis</button>
-                        </div>
-
-                        <button type="button" id="camvideo-start" class="btn btn-warning col-xs-6">Avaa kameravideo 🐿️</button>
-
-                    </div>
-                </div>
-
-                <div class="row">
-              <div class="mediaoutput col-xs-12">
-              </div>
-            </div>
+          <div class="container-fluid">
+            <div class="mediaoutput row"></div>
+            <div class="memoutput row"></div>
           </div>
 
+          <div class="row">
+            <div id="camvideo-container" style="display: none">
+              <video id="camvideo" class="camvideo"></video>
+              <div class="video-overlay">
+                <div class="svg-container">
+                  <svg id="overlay" viewBox="0 0 1920 1080">
+                      <!--  Overlay of buttons generated here -->
+                  </svg>
+                </div>
+              </div>
+              <span id="camvideo-reconnect" class="btn btn-xs">
+                <span class="glyphicon glyphicon-refresh" id="camvideo-reconnect-icon"></span>
+              </span>
+            </div>
+
+            <div id="cam-ui" class="col-xs-12">
+              <div id="poly-mgmt-tools" style="display:none">
+                <button type="button" id="poly-create" class="btn btn-warning col-xs-3">Tee siirtym&auml;</button>
+                <button type="button" id="poly-delete" class="btn btn-danger col-xs-3">Poista siirtym&auml;</button>
+                <button type="button" id="poly-cancel-delete" class="btn btn-warning col-xs-3" style="display:none">Peruuta poisto</button>
+              </div>
+              <div id="polymaker-tools" style="display:none">
+                <p style="text-align:center">Klikkaile siirtym&auml;n polygonin kulmapisteet kuvan p&auml;&auml;lle</p>
+                <table class="col-xs-4"">
+                  <tr>
+                    <td style="text-align:right">N&auml;kym&auml;:</td>
+                    <td style="padding:5px"><span id="poly-owner-name">---</span></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:right">Kohde:</td>
+                    <td style="padding:5px">
+                      <select id="poly-target-name">
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:right">Piilota nappi:</td>
+                    <td style="padding:5px"><input type="checkbox" value="false" id="poly-cb-hide-button" /></td>
+                  </tr>
+                </table>
+                <button type="button" id="polymaker-cancel" class="btn btn-danger col-xs-3" style="visibility:hidden">Peruuta</button>
+                <button type="button" id="polymaker-finish" class="btn btn-primary col-xs-4" style="visibility:hidden">Valmis</button>
+              </div>
+
+              <button type="button" id="camvideo-start" class="btn btn-warning col-xs-6">Avaa kameravideo 🐿️</button>
+
+            </div>
+          </div>
 
         </div>
-      </main>
+
+        <div id="main-settings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="main-settings">
+          <div class="modal-dialog main-settings" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="main-settings-title">Asetukset</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Sulje">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="container">
+                  
+                  <div class="add-video-mixer">
+                    <form id="video-mixer">
+                      <div class="row">
+                        <div class="col-9">
+                          <h6>Lisää videomixeri</h6>
+                          <input type="text" name="videomixer" placeholder="IP osoite 192.168.x.x">
+                          <span>Aux ulostulon tilojen nimet</span>
+                          <input type="text" name="auxprogram" placeholder="Program">
+                          <input type="text" name="auxsource" placeholder="Video 1 input">
+                        </div>
+                        <div class="col-2 align-self-end">
+                          <button type="submit" name="save-video-mixer" class="btn btn-secondary">
+                            <span class="material-icons">save</span>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div class="add-camera">
+                    <form id="add-camera">
+                      <div class="row">
+                        <div class="col-9">
+                          <h6>Lisää kamera</h6>
+                          <input type="text" name="name" placeholder="sijainti">
+                          <input type="text" name="cameraip" placeholder="192.168.x.x">
+                          <span>Video sisääntulo</span>
+                          <select name="mixerinputcamera" id="mixerinputcamera">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                          </select>
+                        </div>
+                        <div class="col-2 align-self-end">
+                          <button type="submit" name="save-camera" class="btn btn-secondary">
+                            <span class="material-icons">save</span>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div class="add-media">
+                    <form id="add-media">
+                      <div class="row">
+                        <div class="col-9">
+                          <h6>Lisää mediasisääntulo</h6>
+                          <input type="text" name="mediainput" placeholder="Nimi">
+                          <span>Video sisääntulo</span>
+                          <select name="mixerinputmedia" id="mixerinputmedia">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                          </select>
+                        </div>
+                        <div class="col-2 align-self-end">
+                          <button type="submit" name="save-media" class="btn btn-secondary">
+                            <span class="material-icons">save</span>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- </main> -->
     </div>
-
-    <div class="body-under-settings hidden"></div>
-
-    <div id="main-settings" class="hidden">
-        <div class="container main-settings col-xs-10 col-sm-8 col-xs-offset-1 col-sm-offset-2 col-md-offset-4 col-lg-offset-8">
-          
-            <div class="btn close-popup settings-menu pull-right">
-              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            </div>
-
-            <div class="add-video-mixer row">
-              <form id="video-mixer">
-                <div class="col-xs-9">
-                  <span>Lisää videomixeri</span>
-                  <input type="text" name="videomixer" placeholder="IP osoite 192.168.x.x">
-                  <span>Aux ulostulon tilojen nimet</span>
-                  <input type="text" name="auxprogram" placeholder="Program">
-                  <input type="text" name="auxsource" placeholder="Video 1 input">
-                </div>
-                <div class="col-xs-3">
-                  <button type="submit" name="save-video-mixer" class="btn">
-                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                  </button>
-                </div>
-              </form>
-            </div>
-
-            <div class="add-camera row">
-              <form id="add-camera">
-                <div class="col-xs-9">
-                  <span>Lisää kamera</span>
-                  <input type="text" name="name" placeholder="sijainti">
-                  <input type="text" name="cameraip" placeholder="192.168.x.x">
-                  <input type="text" name="rtspurl" placeholder="rtsp://192.168.x.x/stream1">
-                  <span style="color:gray"><small><em>Huom. Vain yhden kameran RTSP-osoite on k&auml;yt&ouml;ss&auml;</em></small></span>
-                  <br/>
-                  <span>Video sisääntulo</span>
-                  <select name="mixerinputcamera" id="mixerinputcamera">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                  </select>
-                </div>
-                <div class="col-xs-3">
-                  <button type="submit" name="save-camera" class="btn">
-                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                  </button>
-                </div>
-              </form>
-            </div>
-
-            <div class="add-media row">
-              <form id="add-media">
-                <div class="col-xs-9">
-                  <span>Lisää mediasisääntulo</span>
-                  <input type="text" name="mediainput" placeholder="Nimi">
-                  <span>Video sisääntulo</span>
-                  <select name="mixerinputmedia" id="mixerinputmedia">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                  </select>
-                </div>
-                <div class="col-xs-3">
-                  <button type="submit" name="save-media" class="btn">
-                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                  </button>
-                </div>
-              </form>
-      </div>
-    </div>
-
-    <div class="dpad dpad-popup hidden"></div>
 
     <script src="js/feathers.js"></script>
     <script src="/socket.io/socket.io.js"></script>

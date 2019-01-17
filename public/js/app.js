@@ -14,11 +14,6 @@ const overlay = client.service('overlay');
 
 var vidCtx = {};
 
-$('.settings-menu').click(() => {
-  $('.body-under-settings').toggleClass('hidden');
-  $('#main-settings').toggleClass('hidden');
-});
-
 const camButton = (data) => {
   const call = JSON.stringify({
     command: 'cmd',
@@ -54,29 +49,29 @@ $.each(menuButtons, function(button, action) {
 });
 
 $('.dpad').html(`
-  <div class="position-control row">
-    <div class="col-xs-8 dpad-area">
+  <div class="position-control container">
+    <div class="dpad-area row">
       <button type="button" name="up-button" class="btn btn-primary">
-        <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+        <span class="material-icons">arrow_upwards</span>
       </button>
       <button type="button" name="left-button" class="btn btn-primary">
-        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+        <span class="material-icons">arrow_back</span>
       </button>
       <button type="button" name="right-button" class="btn btn-primary">
-        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+        <span class="material-icons">arrow_forward</span>
       </button>
       <button type="button" name="down-button" class="btn btn-primary">
-        <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+        <span class="material-icons">arrow_downwards</span>
       </button>
     </div>
   </div>
-  <div class="zoom-control row">
-    <div class="col-xs-8 zpad-area">
+  <div class="zoom-control container">
+    <div class="zpad-area row">
       <button type="zoom-button" name="zoom-tele" class="btn btn-primary">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        <span class="material-icons">zoom_in</span>
       </button>
       <button type="zoom-button" name="zoom-wide" class="btn btn-primary">
-        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+        <span class="material-icons">zoom_out</span>
       </button>
     </div>
   </div>`
@@ -100,7 +95,7 @@ function addCameraPosition(position) {
   const isHidden = position.visibilityMode && position.visibilityMode == 'poly';
   const displayAttr = 'style="display:' + (isHidden ? 'none"' : 'block"');
   camPos.insertAdjacentHTML('beforeend', `
-    <div type="memory-div" class="col-xs-6 col-sm-4 col-md-3 col-xl-3" ${displayAttr} data-positionid="${position._id}">
+    <div type="memory-div" class="col-6 col-sm-4 col-lg-3 col-xl-2" ${displayAttr} data-positionid="${position._id}">
       <button type="memory-button" value="${position._id}" class="mem-button btn btn-primary">
         <span aria-hidden="true">${position.subjectName}</span>
       </button>
@@ -140,7 +135,7 @@ document.getElementById('position-mem').addEventListener('submit', function(ev) 
 function addMediaSources(media) {
   const mediaSource = document.querySelector('.mediaoutput');
   mediaSource.insertAdjacentHTML('beforeend',`
-    <div class="col-sm-4 col-md-4 col-xl-3">
+    <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
       <button type="media-button" value="${media._id}" class="mem-button btn btn-primary">
         <span aria-hidden="true">${media.sourceName}</span>
       </button>
@@ -166,10 +161,10 @@ document.getElementById('add-media').addEventListener('submit', function(ev) {
 
 videomixer.find().then( mixer => {
   if(mixer.total > 0) {
-    $('.add-video-mixer').addClass('hidden');
-    $('#auxmode').removeClass('hidden');
-    $('#auxprogram span').text(mixer.data[0].auxProgram);
-    $('#auxsource span').text(mixer.data[0].auxSource);  }
+    $('.add-video-mixer').addClass('d-none');
+    $('#auxprogram, #auxsource').removeClass('d-none');
+    $('#auxprogram').text(mixer.data[0].auxProgram);
+    $('#auxsource').text(mixer.data[0].auxSource);  }
 });
 
 document.getElementById('video-mixer').addEventListener('submit', function(ev) {
@@ -184,10 +179,10 @@ document.getElementById('video-mixer').addEventListener('submit', function(ev) {
   });
 
   $('#video-mixer').find('input[type=text]').val('');
-  $('.add-video-mixer').addClass('hidden');
-  $('#auxmode').removeClass('hidden');
-  $('#auxprogram span').text(auxProgram);
-  $('#auxsource span').text(auxSource);
+  $('.add-video-mixer').addClass('d-none');
+  $('#auxprogram, #auxsource').removeClass('d-none');
+  $('#auxprogram').text(auxProgram);
+  $('#auxsource').text(auxSource);
 });
 
 document.getElementById('add-camera').addEventListener('submit', function(ev) {
@@ -224,7 +219,7 @@ function populateCameraList() {
 populateCameraList();
 
 // Initialize aux source selection buttons
-$(document).on('click', 'button[type=mixeraux]', function() {
+$(document).on('click', 'button.mixeraux', function() {
   const call = JSON.stringify({
     mixerAUX: this.value
   });
