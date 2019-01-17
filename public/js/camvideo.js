@@ -2,7 +2,7 @@
 var webRtcCtx = {
   auto_reconnect_delay_seconds: 4 * 60,
   //video_url: "rtsp://srv13.arkasis.nl:80/498/default.stream", // Curaçao test
-  video_url: null, //"rtsp://10.0.0.70/stream1", // TODO: From settings
+  video_url: null,
   audio_url: null,
   options: 'rtptransport=udp&timeout=9000',
   enabled: false,

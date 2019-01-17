@@ -13,14 +13,14 @@ if (fs.existsSync(webrtc_path))
 {
   const webrtc_silent = true; // set to false if you want to see webrtc-streamer stdout,err
 
-  // const webrtc_port = 3038; // TODO: take from settings
+  const webrtc_port = 3038; // TODO: take from settings
   const opts = {};
   // Not sure if this worked properly:
   //if (webrtc_silent) {
   //    opts.stdio = 'ignore';
   //}
 
-  const webrtc_host_port = `${app.get('host')}:3038`;
+  const webrtc_host_port = `${app.get('host')}:${webrtc_port}`;
   logger.info(`Starting webrtc-streamer on ${webrtc_host_port}`);
   const webrtc = spawn(webrtc_path, ['-H', webrtc_host_port], opts);
 

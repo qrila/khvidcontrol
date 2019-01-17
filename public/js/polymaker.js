@@ -16,8 +16,9 @@ function _polymaker_onClick(evt)
   if (evt === null || evt.target === null)
     return;
   var svg = evt.target;
-  if (!(svg instanceof SVGSVGElement))
-    return;
+  // uncomment to disallow concave polygons:
+  //if (!(svg instanceof SVGSVGElement))
+  //  return;
   if (_polymaker.svgPt === null)
     _polymaker.svgPt = svg.createSVGPoint();
   var svgPt = _polymaker.svgPt;
@@ -128,9 +129,6 @@ function initPolymaker(cancelCallback, finishCallback)
       _polymaker_finish();
     };
   }
-
-  //test
-  //$('#polymaker-poly').attr("points", "1e2,1e2 1.4e2,0.298e3 1.90e2,278 210,178");
 }
 
 function startPolymaker()
