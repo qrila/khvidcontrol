@@ -24,6 +24,9 @@
     "semi": [
       "error",
       "always"
+    ],
+    "no-console": [
+      "error", { "allow": ["warn", "error"] }
     ]
   },
   "overrides": [
@@ -35,8 +38,15 @@
     "ecmaVersion": 8
   },
   "globals": {
+    "console": true,
     "_": true,
     "feathers": true,
-    "io": true
+    "io": true,
+    "webRtcCtx": true,
+    "reconnectWebRTCVideoConnection": true,
+    "startWebRTCVideoConnection": true,
+    "WebRtcStreamer": true,
+    "startPolymaker": true,
+    "initPolymaker": true
   }
 }

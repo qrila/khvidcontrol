@@ -12,7 +12,7 @@ const videomixer = client.service('videomixer');
 const cameras = client.service('cameras');
 const overlay = client.service('overlay');
 
-var vidCtx = {}
+var vidCtx = {};
 
 $(document).on('click', 'button[name=settings-button]', () => {
   $('.body-under-settings').toggleClass('hidden');
@@ -68,7 +68,7 @@ $.each(arrowButtons, function(button, action) {
 
 function addCameraPosition(position) {
   const camPos = document.querySelector('.memoutput');
-  const isHidden = position.visibilityMode && position.visibilityMode == "poly";
+  const isHidden = position.visibilityMode && position.visibilityMode == 'poly';
   const displayAttr = 'style="display:' + (isHidden ? 'none"' : 'block"');
   camPos.insertAdjacentHTML('beforeend', `
     <div type="memory-div" class="col-xs-6 col-sm-4 col-md-3 col-xl-3" ${displayAttr} data-positionid="${position._id}">
@@ -81,18 +81,18 @@ function addCameraPosition(position) {
 
 function modifyCameraPosition(position) {
   // currently only modification supported is changing visibilityMode:
-  const isHidden = position.visibilityMode && position.visibilityMode == "poly";
-  $(`div[type="memory-div"][data-positionid="${position._id}"]`).css("display", isHidden ? "none" : "block");
+  const isHidden = position.visibilityMode && position.visibilityMode == 'poly';
+  $(`div[type="memory-div"][data-positionid="${position._id}"]`).css('display', isHidden ? 'none' : 'block');
 }
 
 
 positions.find({
-                query:{
-                    visibilityMode: 
-                        { $ne: "poly"}}})
-    .then(camerabuttons => {
-  _.sortBy(camerabuttons.data, ['sortNumber']).forEach(addCameraPosition);
-});
+  query:{
+    visibilityMode: 
+                        { $ne: 'poly'}}})
+  .then(camerabuttons => {
+    _.sortBy(camerabuttons.data, ['sortNumber']).forEach(addCameraPosition);
+  });
 positions.on('created', addCameraPosition);
 positions.on('patched', modifyCameraPosition);
 
@@ -187,7 +187,7 @@ function populateCameraList() {
       $('#movecamera').append(`<option value=${camera._id}>${camera.cameraName}</option>`);
       $('#cameraid').append(`<option value=${camera._id}>${camera.cameraName}</option>`);
       if (webRtcCtx.video_url === null && camera.rtspURL !== null && camera.rtspURL.length > 0) {
-          webRtcCtx.video_url = camera.rtspURL; // only first found rtsp url is used
+        webRtcCtx.video_url = camera.rtspURL; // only first found rtsp url is used
       }
     });
   });
@@ -228,40 +228,40 @@ $('select[name="sourcetype"]').change(function() {
   }
 });
 
-const svgNS = "http://www.w3.org/2000/svg";
-const overlaysvg = "overlay";
-const overlaygid = "overlay-g";
-const overlaygcamposid = "cam-pos-id"
+const svgNS = 'http://www.w3.org/2000/svg';
+const overlaysvg = 'overlay';
+const overlaygid = 'overlay-g';
+const overlaygcamposid = 'cam-pos-id';
 
 function addOverlay(camPosId)
 {
-    overlay.find({ query :{ positionId : camPosId } }).then( (overlayElements) => {
-        var group = document.createElementNS(svgNS, "g");
-        group.setAttribute(overlaygcamposid, camPosId);
-        group.setAttribute("class", overlaygid);
-        overlayElements.data.forEach(elementData => {
-            addPolygon(group, elementData);
-        });
-        document.getElementById(overlaysvg).appendChild(group);
+  overlay.find({ query :{ positionId : camPosId } }).then( (overlayElements) => {
+    var group = document.createElementNS(svgNS, 'g');
+    group.setAttribute(overlaygcamposid, camPosId);
+    group.setAttribute('class', overlaygid);
+    overlayElements.data.forEach(elementData => {
+      addPolygon(group, elementData);
     });
+    document.getElementById(overlaysvg).appendChild(group);
+  });
 }
 
 function clickPolygon(overlayId, targetPosition, positionId)
 {
-    if (vidCtx.inDeletePolygonMode)
-    {
-        deletePolygon(overlayId, targetPosition);
-        exitPolyDeleteMode();
-        return;
-    }
-    changeCamPos(targetPosition, positionId);
+  if (vidCtx.inDeletePolygonMode)
+  {
+    deletePolygon(overlayId, targetPosition);
+    exitPolyDeleteMode();
+    return;
+  }
+  changeCamPos(targetPosition, positionId);
 }
 
 function addPolygon(group, elementData){
-  var polygon = document.createElementNS(svgNS, "polygon");
-  polygon.setAttribute("points", elementData.points);
-  polygon.setAttribute("data-overlayid", elementData._id);
-  polygon.addEventListener('click', function() { clickPolygon(elementData._id, elementData.targetPosition, elementData.positionId) });
+  var polygon = document.createElementNS(svgNS, 'polygon');
+  polygon.setAttribute('points', elementData.points);
+  polygon.setAttribute('data-overlayid', elementData._id);
+  polygon.addEventListener('click', function() { clickPolygon(elementData._id, elementData.targetPosition, elementData.positionId); });
   group.appendChild(polygon);
 }
 
@@ -269,19 +269,19 @@ function changeCamPos(targetPos, currentPos) {
   //console.log("changeCamPos:", targetPos + " " + currentPos);
   if (targetPos !== 'undefined') {
     if (!currentPos) {
-        var groups = document.getElementById(overlaysvg).getElementsByClassName(overlaygid);
-        Array.from(groups).forEach(overlayGroup => {
-            overlayGroup.style.visibility = "hidden";
-        });
+      var groups = document.getElementById(overlaysvg).getElementsByClassName(overlaygid);
+      Array.from(groups).forEach(overlayGroup => {
+        overlayGroup.style.visibility = 'hidden';
+      });
     } else {
-        $(`g[${overlaygcamposid}='${currentPos}']`)[0].style.visibility = "hidden";
+      $(`g[${overlaygcamposid}='${currentPos}']`)[0].style.visibility = 'hidden';
     }
     
     var gexisting = $(`g[${overlaygcamposid}='${targetPos}']`);
     if (gexisting !== 'undefined' && gexisting.length > 0) {
-        gexisting[0].style.visibility = "visible";
+      gexisting[0].style.visibility = 'visible';
     } else {
-        addOverlay(targetPos);
+      addOverlay(targetPos);
     }
 
     //vidCtx.prevPos = vidCtx.currentPos;
@@ -289,14 +289,14 @@ function changeCamPos(targetPos, currentPos) {
 
     // fill new current position to the owner name of new polygon in polymaker create state
     positions.find({query:{_id:vidCtx.currentPos}}).then(
-        positions => {
-            if (positions && Array.isArray(positions.data) && positions.data.length > 0)
-            {
-                //console.log(positions.data[0].subjectName);
-                var currentPosName = positions.data[0].subjectName;
-                $('#poly-owner-name').text(currentPosName);
-            }
-        });
+      positions => {
+        if (positions && Array.isArray(positions.data) && positions.data.length > 0)
+        {
+          //console.log(positions.data[0].subjectName);
+          var currentPosName = positions.data[0].subjectName;
+          $('#poly-owner-name').text(currentPosName);
+        }
+      });
 
     // -- Code moved from Initialize saved camera position buttons
     const callCam = JSON.stringify({
@@ -320,198 +320,196 @@ function changeCamPos(targetPos, currentPos) {
 // Initialize video overlay buttons
 // (see also camvideo.js)
 $('#camvideo-start').on('click', function() {
-    if (webRtcCtx.video_url === null || webRtcCtx.video_url.length == 0) {
-        alert("Kameravideon RTSP URL puuttuu");
-        return;
-    }
+  if (webRtcCtx.video_url === null || webRtcCtx.video_url.length == 0) {
+    alert('Kameravideon RTSP URL puuttuu');
+    return;
+  }
 
-    $('#camvideo-start').hide();
-    startWebRTCVideoConnection();
-    enableCamVideoUI();
+  $('#camvideo-start').hide();
+  startWebRTCVideoConnection();
+  enableCamVideoUI();
 
-    positions
-        .find({  query :{ sortNumber: 0 }  })
-            .then((position) => 
+  positions
+    .find({  query :{ sortNumber: 0 }  })
+    .then((position) => 
     {
-    if (!Array.isArray(position.data)) {
-        console.error("No default camera position defined! (positions.find did not return array, positions will need one entry with sortNumber 0)");
-    } else {
+      if (!Array.isArray(position.data)) {
+        console.error('No default camera position defined! (positions.find did not return array, positions will need one entry with sortNumber 0)');
+      } else {
         //console.log("#camvideo-start, initializing to position 0: ", position.data[0]._id);
         changeCamPos(position.data[0]._id);
-    }
-  });
+      }
+    });
 });
 
 function getCSSStyle(className) {
-    var x, sheets, classes;
-    for (sheets = document.styleSheets.length - 1; sheets >= 0; --sheets) {
-        classes = document.styleSheets[sheets].rules || document.styleSheets[sheets].cssRules;
-        for (x = 0; x < classes.length; ++x) {
-            if (classes[x].selectorText === className) {
-                return (classes[x].cssText ? classes[x] : classes[x].style);
-            }
-        }
+  var x, sheets, classes;
+  for (sheets = document.styleSheets.length - 1; sheets >= 0; --sheets) {
+    classes = document.styleSheets[sheets].rules || document.styleSheets[sheets].cssRules;
+    for (x = 0; x < classes.length; ++x) {
+      if (classes[x].selectorText === className) {
+        return (classes[x].cssText ? classes[x] : classes[x].style);
+      }
     }
-    return false;
-};
+  }
+  return false;
+}
 
 // this is called in camvideo.js, after opening camera
 function enableCamVideoUI()
 {
-    $("#camvideo-container").css("display", "inline-block");
-    $("#camvideo-container").css("height", $("#camvideo-container").css("width") * 9 / 16);
-    $("#poly-mgmt-toggle").show();
-    $("#poly-mgmt-toggle-cb").change(function() {
-        if (this.checked)
-            $("#poly-mgmt-tools").show();
-        else
-            $("#poly-mgmt-tools").hide();
-    });
-    $("#camvideo-reconnect").click(function() { reconnectWebRTCVideoConnection(); });
+  $('#camvideo-container').css('display', 'inline-block');
+  $('#camvideo-container').css('height', $('#camvideo-container').css('width') * 9 / 16);
+  $('#poly-mgmt-toggle').show();
+  $('#poly-mgmt-toggle-cb').change(function() {
+    if (this.checked)
+      $('#poly-mgmt-tools').show();
+    else
+      $('#poly-mgmt-tools').hide();
+  });
+  $('#camvideo-reconnect').click(function() { reconnectWebRTCVideoConnection(); });
 }
 
-$("#poly-delete").click(function() {
-    $("#poly-create").css("visibility", "hidden");
-    $("#poly-delete").hide();
-    $("#poly-cancel-delete").show();
+$('#poly-delete').click(function() {
+  $('#poly-create').css('visibility', 'hidden');
+  $('#poly-delete').hide();
+  $('#poly-cancel-delete').show();
 
-    var polygonStyle = getCSSStyle("polygon").style;
-    polygonStyle.stroke = "#ff2200"; // hardcoded, should be in css?
-    polygonStyle.fill = "#ee8844"; // hardcoded, should be in css?
-    vidCtx.inDeletePolygonMode = true;
+  var polygonStyle = getCSSStyle('polygon').style;
+  polygonStyle.stroke = '#ff2200'; // hardcoded, should be in css?
+  polygonStyle.fill = '#ee8844'; // hardcoded, should be in css?
+  vidCtx.inDeletePolygonMode = true;
 });
 
 function initOriginalPolygonStyle()
 {
-    var polygonStyle = getCSSStyle("polygon").style;
-    if (vidCtx.orgPolygonStyle === undefined)
-    {
-        vidCtx.orgPolygonStyle = {
-            stroke: polygonStyle.stroke,
-            fill: polygonStyle.fill
-        }
-    }
+  var polygonStyle = getCSSStyle('polygon').style;
+  if (vidCtx.orgPolygonStyle === undefined)
+  {
+    vidCtx.orgPolygonStyle = {
+      stroke: polygonStyle.stroke,
+      fill: polygonStyle.fill
+    };
+  }
 }
 initOriginalPolygonStyle();
 
 function restoreOriginalPolygonStyle()
 {
-    var polygonStyle = getCSSStyle("polygon").style;
-    polygonStyle.stroke = vidCtx.orgPolygonStyle.stroke;
-    polygonStyle.fill = vidCtx.orgPolygonStyle.fill;
+  var polygonStyle = getCSSStyle('polygon').style;
+  polygonStyle.stroke = vidCtx.orgPolygonStyle.stroke;
+  polygonStyle.fill = vidCtx.orgPolygonStyle.fill;
 }
 
 function exitPolyDeleteMode() {
-    $("#poly-create").css("visibility", "visible");
-    $("#poly-delete").show();
-    $("#poly-cancel-delete").hide();
-    restoreOriginalPolygonStyle();
-    vidCtx.inDeletePolygonMode = false;
+  $('#poly-create').css('visibility', 'visible');
+  $('#poly-delete').show();
+  $('#poly-cancel-delete').hide();
+  restoreOriginalPolygonStyle();
+  vidCtx.inDeletePolygonMode = false;
 }
 
-$("#poly-cancel-delete").click(function() {
-    exitPolyDeleteMode();
+$('#poly-cancel-delete').click(function() {
+  exitPolyDeleteMode();
 });
 
 function setPositionButtonVisibilityMode(positionId, visibilityMode)
 {
-    const call = JSON.stringify({
-        command: 'edit',
-        positionID: positionId,
-        visibilityMode: visibilityMode
-    });
-    $.get(`/movecam/${call}`);
-    //console.log("setPositionButtonVisibilityMode performed call: ", call);
+  const call = JSON.stringify({
+    command: 'edit',
+    positionID: positionId,
+    visibilityMode: visibilityMode
+  });
+  $.get(`/movecam/${call}`);
+  //console.log("setPositionButtonVisibilityMode performed call: ", call);
 }
 
 function deletePolygon(overlayId, targetPositionId)
 {
-    setPositionButtonVisibilityMode(targetPositionId, 'button');
-    overlay.remove(overlayId);
-    $(`polygon[data-overlayid='${overlayId}']`).remove();
+  setPositionButtonVisibilityMode(targetPositionId, 'button');
+  overlay.remove(overlayId);
+  $(`polygon[data-overlayid='${overlayId}']`).remove();
 }
 
 // switches to polymaker state, for creating a new polygon button for a camera target position
 function createNewPoly()
 {
-    $("#poly-mgmt-tools").hide();
+  $('#poly-mgmt-tools').hide();
 
-    // first clear all options in polymaker list of targets
-    $('#poly-target-name').html('');
+  // first clear all options in polymaker list of targets
+  $('#poly-target-name').html('');
 
-    // populate target position names in polymaker list of targets
-    positions.find( /*{ query: { visibilityMode: { $ne: "poly" }} }*/ )
-        .then(camerabuttons => { _.sortBy(camerabuttons.data, ['sortNumber']).forEach(position => {
-                $('#poly-target-name').append(`<option value="${position._id}">${position.subjectName}</option>`);
-                });
-                $('#poly-cb-hide-button').prop('checked', true);
-                $('#poly-target-name option:last').attr('selected', 'selected');
-            });
+  // populate target position names in polymaker list of targets
+  positions.find( /*{ query: { visibilityMode: { $ne: "poly" }} }*/ )
+    .then(camerabuttons => { _.sortBy(camerabuttons.data, ['sortNumber']).forEach(position => {
+      $('#poly-target-name').append(`<option value="${position._id}">${position.subjectName}</option>`);
+    });
+    $('#poly-cb-hide-button').prop('checked', true);
+    $('#poly-target-name option:last').attr('selected', 'selected');
+    });
 
-    startPolymaker(); // polymaker.js
+  startPolymaker(); // polymaker.js
 }
 
-$("#poly-target-name").change(function() {
-    var positionId = this.value;
-    //console.log("selected option: " + positionId);
-    positions.find({query:{_id:positionId}}).then(
-        position => {
-            if (position && Array.isArray(position.data) && position.data.length > 0)
-            {
-                // disallow hiding first position button
-                // (it's assumed that first button is the "overall view", and has sortNumber=0)
-                var disabled = false;
-                if (position.data[0].sortNumber == 0)
-                {
-                    $('#poly-cb-hide-button').prop('checked', false);
-                    disabled = true;
-                }
-                $('#poly-cb-hide-button').prop('disabled', disabled);
-            }
-        });
+$('#poly-target-name').change(function() {
+  var positionId = this.value;
+  //console.log("selected option: " + positionId);
+  positions.find({query:{_id:positionId}}).then(
+    position => {
+      if (position && Array.isArray(position.data) && position.data.length > 0)
+      {
+        // disallow hiding first position button
+        // (it's assumed that first button is the "overall view", and has sortNumber=0)
+        var disabled = false;
+        if (position.data[0].sortNumber == 0)
+        {
+          $('#poly-cb-hide-button').prop('checked', false);
+          disabled = true;
+        }
+        $('#poly-cb-hide-button').prop('disabled', disabled);
+      }
+    });
 });
 
-$("#poly-create").click(function() {
-    createNewPoly();
+$('#poly-create').click(function() {
+  createNewPoly();
 });
 
 // callback, see polymaker.js
 function polymakerCancel()
 {
-    $("#poly-mgmt-tools").show();
+  $('#poly-mgmt-tools').show();
 }
 
 // callback, see polymaker.js
-function polymakerFinish(points, pointCount, )
+function polymakerFinish(points)
 {
-    var hideNormalTargetButton = $('#poly-cb-hide-button').prop('checked');
+  var hideNormalTargetButton = $('#poly-cb-hide-button').prop('checked');
 
-    $("#poly-mgmt-tools").show();
+  $('#poly-mgmt-tools').show();
 
-    var targetPositionId = $('#poly-target-name').val();
-    overlay.create({
-        positionId: vidCtx.currentPos,
-        targetPosition: targetPositionId,
-        points: points
-    }).then(createdData => {
-        //console.log(createdData);
-        var gexisting = $(`g[${overlaygcamposid}='${createdData.positionId}']`);
-        if (gexisting !== 'undefined' && gexisting.length > 0) {
-            addPolygon(gexisting[0], createdData);
-            //console.log("existing g " + gexisting[0]);
-        } else {
-            addOverlay(createdData.positionId);
-            //console.log("not existing g, add " + createdData.positionId);
-        }
-        if (hideNormalTargetButton)
-        {
-            setPositionButtonVisibilityMode(targetPositionId, 'poly');
-        }
-    }).catch( function(err) {
-        console.error("Could not create polygon data " + err);
-    });
-
-    //alert("" + pointCount + " polygon points: " + points);
+  var targetPositionId = $('#poly-target-name').val();
+  overlay.create({
+    positionId: vidCtx.currentPos,
+    targetPosition: targetPositionId,
+    points: points
+  }).then(createdData => {
+    //console.log(createdData);
+    var gexisting = $(`g[${overlaygcamposid}='${createdData.positionId}']`);
+    if (gexisting !== 'undefined' && gexisting.length > 0) {
+      addPolygon(gexisting[0], createdData);
+      //console.log("existing g " + gexisting[0]);
+    } else {
+      addOverlay(createdData.positionId);
+      //console.log("not existing g, add " + createdData.positionId);
+    }
+    if (hideNormalTargetButton)
+    {
+      setPositionButtonVisibilityMode(targetPositionId, 'poly');
+    }
+  }).catch( function(err) {
+    console.error('Could not create polygon data ' + err);
+  });
 }
 
 initPolymaker(polymakerCancel, polymakerFinish); // in polymaker.js; need to initialize only once
