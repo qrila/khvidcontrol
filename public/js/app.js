@@ -204,11 +204,9 @@ document.getElementById('add-camera').addEventListener('submit', function(ev) {
 });
 
 function populateCameraList() {
-  $('#movecamera option').remove();
   $('#cameraid option').remove();
   cameras.find().then( cameras => {
     _.forEach(cameras.data, camera => {
-      $('#movecamera').append(`<option value=${camera._id}>${camera.cameraName}</option>`);
       $('#cameraid').append(`<option value=${camera._id}>${camera.cameraName}</option>`);
       if (webRtcCtx.video_url === null && camera.rtspURL !== null && camera.rtspURL.length > 0) {
         webRtcCtx.video_url = camera.rtspURL; // only first found rtsp url is used

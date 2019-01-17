@@ -17,7 +17,7 @@
         <nav class="navbar navbar-expand navbar-light bg-light">
           <div class="navbar-nav">
             <a class="nav-item nav-link material-icons" data-toggle="modal" data-target="#main-settings" href="#">settings</a>
-            <a class="nav-item nav-link material-icons d-none" href="#">control_camera</span></a>
+            <a class="nav-item nav-link material-icons d-md-none" data-toggle="modal" data-target="#dpad-modal" href="#">control_camera</span></a>
             <form class="form-inline nav-item nav-link">
               <button class="btn btn-sm btn-outline-secondary mixeraux d-none" id="auxprogram" type="button" value="program"></button>
               <button class="btn btn-sm btn-outline-secondary mixeraux d-none" id="auxsource" type="button" value="source"></button>
@@ -115,6 +115,26 @@
             </div>
           </div>
 
+        </div>
+
+        <div id="dpad-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="dpad-modal">
+          <div class="modal-dialog dpad-modal" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Kameran ohjaus</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Sulje">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="container">
+                  <div class="row">
+                    <div class="dpad col offset-2 offset-sm-3"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div id="main-settings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="main-settings">

@@ -99,12 +99,8 @@ html, body {
   border-bottom: #b3b3b3 1px solid;
 }
 
-input[type=text] {
-  width: 100%;
-}
-
-#cameraid,
-#movecamera {
+input,
+#cameraid {
   width: 100%;
 }
 
