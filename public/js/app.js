@@ -227,9 +227,9 @@ $(document).on('click', 'button.mixeraux', function() {
 // Initialize cut button
 $(document).on('click', 'button.mixercut', function() {
   const call = JSON.stringify({
-      mixerAUX: false,
-	  cut: true
-    });
+    mixerAUX: false,
+    cut: true
+  });
   $.get(`/mixerinputs/${call}`);
 });
 

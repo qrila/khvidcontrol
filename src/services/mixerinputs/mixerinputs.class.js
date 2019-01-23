@@ -39,11 +39,10 @@ async function atemCmd(input, atem) {
     // set aux to program output or input number 1
     const auxMode = input.mixerAUX === 'program' ? 10010 : 1;
     return atem.changeAuxInput(0, auxMode);
-  } 
-  else if (input.cut == true) {
-	return atem.cutTransition(0);
-  }
-  else {
+  } else if(input.cut) {
+    // execute video cut transition
+    return atem.cutTransition(0);
+  } else {
     // set program output to given input number
     return atem.changePreviewInput(input.mixerInput);
   }
