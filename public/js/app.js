@@ -224,6 +224,15 @@ $(document).on('click', 'button.mixeraux', function() {
   $.get(`/mixerinputs/${call}`);
 });
 
+// Initialize cut button
+$(document).on('click', 'button.mixercut', function() {
+  const call = JSON.stringify({
+      mixerAUX: false,
+	  cut: true
+    });
+  $.get(`/mixerinputs/${call}`);
+});
+
 // Initialize saved camera position buttons
 $(document).on('click', 'button[type=memory-button]', function() {
   changeCamPos(this.value);
