@@ -219,7 +219,9 @@ populateCameraList();
 // Initialize aux source selection buttons
 $(document).on('click', 'button.mixeraux', function() {
   const call = JSON.stringify({
-    mixerAUX: this.value
+    mixerAUX: this.value,
+    cut: false,
+    fadeToBlack: false
   });
   $.get(`/mixerinputs/${call}`);
 });
@@ -228,7 +230,18 @@ $(document).on('click', 'button.mixeraux', function() {
 $(document).on('click', 'button.mixercut', function() {
   const call = JSON.stringify({
     mixerAUX: false,
-    cut: true
+    cut: true,
+    fadeToBlack: false
+  });
+  $.get(`/mixerinputs/${call}`);
+});
+
+// Initialize cut button
+$(document).on('click', 'button.fadetoblack', function() {
+  const call = JSON.stringify({
+    mixerAUX: false,
+    cut: false,
+    fadeToBlack: true
   });
   $.get(`/mixerinputs/${call}`);
 });
@@ -243,7 +256,9 @@ $(document).on('click', 'button[type=media-button]', function() {
   videoinputs.get(this.value).then( (media) => {
     const callMixer = JSON.stringify({
       mixerAUX: false,
-      mixerInput: media.mixerInput
+      mixerInput: media.mixerInput,
+      cut: false,
+      fadeToBlack: false
     });
     $.get(`/mixerinputs/${callMixer}`);
   });

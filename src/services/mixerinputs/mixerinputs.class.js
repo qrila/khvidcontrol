@@ -42,6 +42,9 @@ async function atemCmd(input, atem) {
   } else if(input.cut) {
     // execute video cut transition
     return atem.cutTransition(0);
+  } else if(input.fadeToBlack) {
+    // execute fade to black
+    return atem.fadeToBlack(0);
   } else {
     // set program output to given input number
     return atem.changePreviewInput(input.mixerInput);
