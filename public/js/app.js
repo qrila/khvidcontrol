@@ -24,15 +24,15 @@ const camButton = (data) => {
 };
 
 const camMenuButton = (button, data) => {
-  $(`.${button} button`).click(function(){
+  $(`.${button} button`).click(function() {
     camButton(data);
   });
 };
 
 const camArrowButton = (button, data) => {
-  $(`[name=${button}]`).bind('mousedown touchstart', function(){
+  $(`[name=${button}]`).bind('mousedown touchstart', function() {
     camButton(data);
-  }).bind('mouseup touchend', function(){
+  }).bind('mouseup touchend', function() {
     camButton(data.startsWith('zoom') ? 'zoomStop' : 'moveStop');
   });
 };
@@ -111,12 +111,12 @@ function modifyCameraPosition(position) {
 
 
 positions.find({
-  query:{
-    visibilityMode: 
-                        { $ne: 'poly'}}})
-  .then(camerabuttons => {
-    _.sortBy(camerabuttons.data, ['sortNumber']).forEach(addCameraPosition);
-  });
+  query: {
+    visibilityMode: { $ne: 'poly'}
+  }
+}).then(camerabuttons => {
+  _.sortBy(camerabuttons.data, ['sortNumber']).forEach(addCameraPosition);
+});
 positions.on('created', addCameraPosition);
 positions.on('patched', modifyCameraPosition);
 
@@ -264,23 +264,12 @@ $(document).on('click', 'button[type=media-button]', function() {
   });
 });
 
-$('select[name="cameranumber"]').prop('disabled', true);
-$('select[name="sourcetype"]').change(function() {
-  if($('select[name="sourcetype"]').val() === 'camera') {
-    $('select[name="cameranumber"]').prop('disabled', false);
-  } else {
-    $('select[name="cameranumber"]').val('');
-    $('select[name="cameranumber"]').prop('disabled', true);
-  }
-});
-
 const svgNS = 'http://www.w3.org/2000/svg';
 const overlaysvg = 'overlay';
 const overlaygid = 'overlay-g';
 const overlaygcamposid = 'cam-pos-id';
 
-function addOverlay(camPosId)
-{
+function addOverlay(camPosId) {
   overlay.find({ query :{ positionId : camPosId } }).then( (overlayElements) => {
     var group = document.createElementNS(svgNS, 'g');
     group.setAttribute(overlaygcamposid, camPosId);
@@ -292,10 +281,8 @@ function addOverlay(camPosId)
   });
 }
 
-function clickPolygon(overlayId, targetPosition, positionId)
-{
-  if (vidCtx.inDeletePolygonMode)
-  {
+function clickPolygon(overlayId, targetPosition, positionId) {
+  if (vidCtx.inDeletePolygonMode) {
     deletePolygon(overlayId, targetPosition);
     exitPolyDeleteMode();
     return;
@@ -303,16 +290,17 @@ function clickPolygon(overlayId, targetPosition, positionId)
   changeCamPos(targetPosition, positionId);
 }
 
-function addPolygon(group, elementData){
+function addPolygon(group, elementData) {
   var polygon = document.createElementNS(svgNS, 'polygon');
   polygon.setAttribute('points', elementData.points);
   polygon.setAttribute('data-overlayid', elementData._id);
-  polygon.addEventListener('click', function() { clickPolygon(elementData._id, elementData.targetPosition, elementData.positionId); });
+  polygon.addEventListener('click', function() {
+    clickPolygon(elementData._id, elementData.targetPosition, elementData.positionId);
+  });
   group.appendChild(polygon);
 }
 
 function changeCamPos(targetPos, currentPos) {
-  //console.log("changeCamPos:", targetPos + " " + currentPos);
   if (targetPos !== 'undefined') {
     if (!currentPos) {
       var groups = document.getElementById(overlaysvg).getElementsByClassName(overlaygid);
@@ -334,15 +322,16 @@ function changeCamPos(targetPos, currentPos) {
     vidCtx.currentPos = targetPos;
 
     // fill new current position to the owner name of new polygon in polymaker create state
-    positions.find({query:{_id:vidCtx.currentPos}}).then(
-      positions => {
-        if (positions && Array.isArray(positions.data) && positions.data.length > 0)
-        {
-          //console.log(positions.data[0].subjectName);
-          var currentPosName = positions.data[0].subjectName;
-          $('#poly-owner-name').text(currentPosName);
-        }
-      });
+    positions.find({
+      query: {
+        _id:vidCtx.currentPos
+      }
+    }).then(positions => {
+      if (positions && Array.isArray(positions.data) && positions.data.length > 0) {
+        var currentPosName = positions.data[0].subjectName;
+        $('#poly-owner-name').text(currentPosName);
+      }
+    });
 
     // -- Code moved from Initialize saved camera position buttons
     const callCam = JSON.stringify({
@@ -377,12 +366,10 @@ $('#camvideo-start').on('click', function() {
 
   positions
     .find({  query :{ sortNumber: 0 }  })
-    .then((position) => 
-    {
+    .then((position) => {
       if (!Array.isArray(position.data)) {
         console.error('No default camera position defined! (positions.find did not return array, positions will need one entry with sortNumber 0)');
       } else {
-        //console.log("#camvideo-start, initializing to position 0: ", position.data[0]._id);
         changeCamPos(position.data[0]._id);
       }
     });
@@ -402,8 +389,7 @@ function getCSSStyle(className) {
 }
 
 // this is called in camvideo.js, after opening camera
-function enableCamVideoUI()
-{
+function enableCamVideoUI() {
   $('#camvideo-container').css('display', 'inline-block');
   $('#camvideo-container').css('height', $('#camvideo-container').css('width') * 9 / 16);
   $('#poly-mgmt-toggle').show();
@@ -427,11 +413,9 @@ $('#poly-delete').click(function() {
   vidCtx.inDeletePolygonMode = true;
 });
 
-function initOriginalPolygonStyle()
-{
+function initOriginalPolygonStyle() {
   var polygonStyle = getCSSStyle('polygon').style;
-  if (vidCtx.orgPolygonStyle === undefined)
-  {
+  if (vidCtx.orgPolygonStyle === undefined) {
     vidCtx.orgPolygonStyle = {
       stroke: polygonStyle.stroke,
       fill: polygonStyle.fill
@@ -440,8 +424,7 @@ function initOriginalPolygonStyle()
 }
 initOriginalPolygonStyle();
 
-function restoreOriginalPolygonStyle()
-{
+function restoreOriginalPolygonStyle() {
   var polygonStyle = getCSSStyle('polygon').style;
   polygonStyle.stroke = vidCtx.orgPolygonStyle.stroke;
   polygonStyle.fill = vidCtx.orgPolygonStyle.fill;
@@ -459,8 +442,7 @@ $('#poly-cancel-delete').click(function() {
   exitPolyDeleteMode();
 });
 
-function setPositionButtonVisibilityMode(positionId, visibilityMode)
-{
+function setPositionButtonVisibilityMode(positionId, visibilityMode) {
   const call = JSON.stringify({
     command: 'edit',
     positionID: positionId,
@@ -470,36 +452,33 @@ function setPositionButtonVisibilityMode(positionId, visibilityMode)
   //console.log("setPositionButtonVisibilityMode performed call: ", call);
 }
 
-function deletePolygon(overlayId, targetPositionId)
-{
+function deletePolygon(overlayId, targetPositionId) {
   setPositionButtonVisibilityMode(targetPositionId, 'button');
   overlay.remove(overlayId);
   $(`polygon[data-overlayid='${overlayId}']`).remove();
 }
 
 // switches to polymaker state, for creating a new polygon button for a camera target position
-function createNewPoly()
-{
+function createNewPoly() {
   $('#poly-mgmt-tools').hide();
 
   // first clear all options in polymaker list of targets
   $('#poly-target-name').html('');
 
   // populate target position names in polymaker list of targets
-  positions.find( /*{ query: { visibilityMode: { $ne: "poly" }} }*/ )
-    .then(camerabuttons => { _.sortBy(camerabuttons.data, ['sortNumber']).forEach(position => {
+  positions.find( /*{ query: { visibilityMode: { $ne: "poly" }} }*/ ).then(camerabuttons => {
+    _.sortBy(camerabuttons.data, ['sortNumber']).forEach(position => {
       $('#poly-target-name').append(`<option value="${position._id}">${position.subjectName}</option>`);
     });
     $('#poly-cb-hide-button').prop('checked', true);
     $('#poly-target-name option:last').attr('selected', 'selected');
-    });
+  });
 
   startPolymaker(); // polymaker.js
 }
 
 $('#poly-target-name').change(function() {
   var positionId = this.value;
-  //console.log("selected option: " + positionId);
   positions.find({query:{_id:positionId}}).then(
     position => {
       if (position && Array.isArray(position.data) && position.data.length > 0)
@@ -522,14 +501,12 @@ $('#poly-create').click(function() {
 });
 
 // callback, see polymaker.js
-function polymakerCancel()
-{
+function polymakerCancel() {
   $('#poly-mgmt-tools').show();
 }
 
 // callback, see polymaker.js
-function polymakerFinish(points)
-{
+function polymakerFinish(points) {
   var hideNormalTargetButton = $('#poly-cb-hide-button').prop('checked');
 
   $('#poly-mgmt-tools').show();
@@ -540,17 +517,13 @@ function polymakerFinish(points)
     targetPosition: targetPositionId,
     points: points
   }).then(createdData => {
-    //console.log(createdData);
     var gexisting = $(`g[${overlaygcamposid}='${createdData.positionId}']`);
     if (gexisting !== 'undefined' && gexisting.length > 0) {
       addPolygon(gexisting[0], createdData);
-      //console.log("existing g " + gexisting[0]);
     } else {
       addOverlay(createdData.positionId);
-      //console.log("not existing g, add " + createdData.positionId);
     }
-    if (hideNormalTargetButton)
-    {
+    if (hideNormalTargetButton) {
       setPositionButtonVisibilityMode(targetPositionId, 'poly');
     }
   }).catch( function(err) {
