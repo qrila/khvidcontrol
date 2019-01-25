@@ -55,7 +55,7 @@
               <div id="poly-mgmt-toggle" style="display: none">
                 <label>
                     <input type="checkbox" value="false" id="poly-mgmt-toggle-cb" />
-                    N&auml;yt&auml; siirtymien editointi
+                    Näytä siirtymien editointi
                 </label>
               </div>
             </div>
@@ -90,15 +90,15 @@
     
                 <div id="cam-ui" class="col-12">
                   <div id="poly-mgmt-tools" style="display:none">
-                    <button type="button" id="poly-create" class="btn btn-warning col-3">Tee siirtym&auml;</button>
-                    <button type="button" id="poly-delete" class="btn btn-danger col-3">Poista siirtym&auml;</button>
+                    <button type="button" id="poly-create" class="btn btn-warning col-3">Tee siirtymä</button>
+                    <button type="button" id="poly-delete" class="btn btn-danger col-3">Poista siirtymä</button>
                     <button type="button" id="poly-cancel-delete" class="btn btn-warning col-3" style="display:none">Peruuta poisto</button>
                   </div>
                   <div id="polymaker-tools" style="display:none">
-                    <p style="text-align:center">Klikkaile siirtym&auml;n polygonin kulmapisteet kuvan p&auml;&auml;lle</p>
+                    <p style="text-align:center">Klikkaile siirtymän polygonin kulmapisteet kuvan päälle</p>
                     <table class="col-4"">
                       <tr>
-                        <td style="text-align:right">N&auml;kym&auml;:</td>
+                        <td style="text-align:right">Näkymä:</td>
                         <td style="padding:5px"><span id="poly-owner-name">---</span></td>
                       </tr>
                       <tr>
@@ -189,7 +189,7 @@
                           <input type="text" name="name" placeholder="sijainti">
                           <input type="text" name="cameraip" placeholder="192.168.x.x">
                           <input type="text" name="rtspurl" placeholder="rtsp://192.168.x.x/stream1">
-                          <span style="color:gray"><small><em>Huom. Vain yhden kameran RTSP-osoite on k&auml;yt&ouml;ss&auml;</em></small></span>
+                          <span style="color:gray"><small><em>Huom. Vain yhden kameran RTSP-osoite on käytössä</em></small></span>
                           <br/>
                           <span>Video sisääntulo</span>
                           <select name="mixerinputcamera" id="mixerinputcamera">
@@ -248,7 +248,6 @@
 
     <script src="js/feathers.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="js/lodash.min.js"></script>
     <script src="js/polymaker.js"></script>
     <script src="js/app.js"></script>
   </body>

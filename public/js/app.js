@@ -112,10 +112,15 @@ function modifyCameraPosition(position) {
 
 positions.find({
   query: {
-    visibilityMode: { $ne: 'poly'}
+    visibilityMode: {
+      $ne: 'poly'
+    },
+    $sort: {
+      sortNumber: 1
+    }
   }
 }).then(camerabuttons => {
-  _.sortBy(camerabuttons.data, ['sortNumber']).forEach(addCameraPosition);
+  (camerabuttons.data).forEach(addCameraPosition);
 });
 positions.on('created', addCameraPosition);
 positions.on('patched', modifyCameraPosition);
@@ -143,7 +148,13 @@ function addMediaSources(media) {
   `);
 }
 
-videoinputs.find().then(mediabuttons => {
+videoinputs.find({
+  query: {
+    $sort: {
+      mixerInput: 1
+    }
+  }
+}).then(mediabuttons => {
   mediabuttons.data.forEach(addMediaSources);
 });
 videoinputs.on('created', addMediaSources);
@@ -191,12 +202,14 @@ document.getElementById('add-camera').addEventListener('submit', function(ev) {
   const cameraIP = this.cameraip.value;
   const mixerInput = this.mixerinputcamera.value;
   const rtspURL = this.rtspurl.value;
-
-  cameras.create({
-    cameraName: cameraName,
-    cameraIP: cameraIP,
-    mixerInput: mixerInput,
-    rtspURL: rtspURL
+  cameras.find().then( allCameras => {
+    cameras.create({
+      cameraName: cameraName,
+      cameraIP: cameraIP,
+      mixerInput: mixerInput,
+      rtspURL: rtspURL,
+      cameraNumber: allCameras.total
+    });
   });
 
   $('#add-camera').find('input[type=text]').val('');
@@ -205,8 +218,8 @@ document.getElementById('add-camera').addEventListener('submit', function(ev) {
 
 function populateCameraList() {
   $('#cameraid option').remove();
-  cameras.find().then( cameras => {
-    _.forEach(cameras.data, camera => {
+  cameras.find().then( allCameras => {
+    allCameras.data.forEach( camera => {
       $('#cameraid').append(`<option value=${camera._id}>${camera.cameraName}</option>`);
       if (webRtcCtx.video_url === null && camera.rtspURL !== null && camera.rtspURL.length > 0) {
         webRtcCtx.video_url = camera.rtspURL; // only first found rtsp url is used
@@ -466,8 +479,15 @@ function createNewPoly() {
   $('#poly-target-name').html('');
 
   // populate target position names in polymaker list of targets
-  positions.find( /*{ query: { visibilityMode: { $ne: "poly" }} }*/ ).then(camerabuttons => {
-    _.sortBy(camerabuttons.data, ['sortNumber']).forEach(position => {
+  positions.find( {
+    /*{ query: { visibilityMode: { $ne: "poly" }} }*/
+    query: {
+      $sort: {
+        sortNumber: 1
+      }
+    }
+  }).then(camerabuttons => {
+    (camerabuttons.data).forEach(position => {
       $('#poly-target-name').append(`<option value="${position._id}">${position.subjectName}</option>`);
     });
     $('#poly-cb-hide-button').prop('checked', true);
