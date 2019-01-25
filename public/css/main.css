@@ -5,20 +5,8 @@ html, body {
   color: #333;
 }
 
-#main-controllers {
-  margin-top: 30px;
-}
-
 .center-text {
   text-align: center;
-}
-
-.position-control {
-  height: 180px;
-}
-
-.dpad-area {
-  height: 180px;
 }
 
 .dpad button span {
@@ -31,51 +19,14 @@ html, body {
   height: 50px;
 }
 
-.zoom-control {
-  margin-top: 20px;
-  height: 60px;
-}
-
 .zpad-area {
-  height: 60px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
-[name=up-button],
 [name=left-button],
-[name=right-button],
-[name=down-button],
-[name=zoom-tele],
-[name=zoom-wide] {
-  position: relative;
-  margin: 0;
-}
-
-[name=up-button] {
-  top: 0;
-  left: 75px;
-}
-
-[name=left-button] {
-  left: -25px;
-  top: 50px;
-}
-
-[name=right-button] {
-  left: 25px;
-  top: 50px;
-}
-
-[name=down-button] {
-  left: -75px;
-  top: 100px;
-}
-
 [name=zoom-tele] {
-  left: 25px;
-}
-
-[name=zoom-wide] {
-  left: 75px;
+  margin-right: 50px;
 }
 
 #videoinput-mem select,
@@ -87,16 +38,14 @@ html, body {
 .mem-button {
   width: 100%;
   height: 50px;
-  margin-bottom: 15px;
-}
-
-.memoutput {
-  padding-top: 25px;
+  margin: 5px 0;
 }
 
 .mediaoutput {
-  padding-bottom: 20px;
-  border-bottom: #b3b3b3 1px solid;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #e6e6e6;
+  border-radius: 3px;
 }
 
 input,
@@ -158,13 +107,13 @@ video {
   position: relative;
   width: 100%;
   height: 100%;
+}
 
-  > svg {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    display: block;
-  }
+.svg-container svg {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: block;
 }
 
 #svg-polymaker {

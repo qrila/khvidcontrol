@@ -28,49 +28,52 @@
           <div class="d-none d-md-block">
             <div id="camera-control">
 
-              <div class="dpad"></div>
-
-              <div id="camera-selection">
-                <form id="position-mem">
-                  <div class="row">
-                    <div class="col-9">
-                      <span>Valitse hallittava kamera</span>
-                      <select name="cameraid" id="cameraid"></select>
-                    </div>
+              <div class="container">
+                <div class="mediaoutput row">
+                  <div type="memory-div" class="col-6">
+                    <button class="mem-button btn btn-secondary mixercut" type="button">Cut</button>
                   </div>
-                  <div class="row">
-                    <div class="col-9">
-                      <span>Lisää kuvattava kohde</span>
-                      <input type="text" name="subjectname" placeholder="Kameran kohde">
-                    </div>
-                    <div class="col-3 align-self-end">
-                      <button type="submit" name="save-position" class="btn btn-secondary">
-                        <span class="material-icons">save</span>
-                      </button>
-                    </div>
+                  <div type="memory-div" class="col-6">
+                    <button class="mem-button btn btn-secondary fadetoblack" type="button">FTB</button>
                   </div>
-                </form>
-              </div>
+                </div>
 
-              <div id="poly-mgmt-toggle" style="display: none">
-                <label>
-                    <input type="checkbox" value="false" id="poly-mgmt-toggle-cb" />
-                    Näytä siirtymien editointi
-                </label>
+                <div class="dpad row"></div>
+
+                <div id="camera-selection">
+                  <form id="position-mem">
+                    <div class="row">
+                      <div class="col-9">
+                        <span>Valitse hallittava kamera</span>
+                        <select name="cameraid" id="cameraid"></select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-9">
+                        <span>Lisää kuvattava kohde</span>
+                        <input type="text" name="subjectname" placeholder="Kameran kohde">
+                      </div>
+                      <div class="col-3 align-self-end">
+                        <button type="submit" name="save-position" class="btn btn-secondary">
+                          <span class="material-icons">save</span>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div id="poly-mgmt-toggle" style="display: none">
+                  <label>
+                      <input type="checkbox" value="false" id="poly-mgmt-toggle-cb" />
+                      Näytä siirtymien editointi
+                  </label>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="container-fluid">
-            <div class="mediaoutput row">
-              <div type="memory-div" class="col-6 col-sm-4 col-lg-3 col-xl-2">
-                <button class="mem-button btn btn-secondary mixercut" type="button">Cut</button>
-              </div>
-              <div type="memory-div" class="col-6 col-sm-4 col-lg-3 col-xl-2">
-                <button class="mem-button btn btn-secondary fadetoblack" type="button">Fade To Black</button>
-              </div>
-            </div>
-            <div class="memoutput row"></div>
+              <div class="memoutput row"></div>
 
 
             <div class="row">
@@ -121,13 +124,7 @@
     
                 </div>
               </div>
-
-
-              
           </div>
-
-          
-
         </div>
 
         <div id="dpad-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="dpad-modal">
@@ -141,9 +138,7 @@
               </div>
               <div class="modal-body">
                 <div class="container">
-                  <div class="row">
-                    <div class="dpad col offset-2 offset-sm-3"></div>
-                  </div>
+                  <div class="dpad row"></div>
                 </div>
               </div>
             </div>

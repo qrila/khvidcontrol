@@ -50,30 +50,34 @@ $.each(menuButtons, function(button, action) {
 
 $('.dpad').html(`
   <div class="position-control container">
-    <div class="dpad-area row">
-      <button type="button" name="up-button" class="btn btn-primary">
-        <span class="material-icons">arrow_upwards</span>
-      </button>
-      <button type="button" name="left-button" class="btn btn-primary">
-        <span class="material-icons">arrow_back</span>
-      </button>
-      <button type="button" name="right-button" class="btn btn-primary">
-        <span class="material-icons">arrow_forward</span>
-      </button>
-      <button type="button" name="down-button" class="btn btn-primary">
-        <span class="material-icons">arrow_downwards</span>
-      </button>
-    </div>
-  </div>
-  <div class="zoom-control container">
-    <div class="zpad-area row">
-      <button type="zoom-button" name="zoom-tele" class="btn btn-primary">
-        <span class="material-icons">zoom_in</span>
-      </button>
-      <button type="zoom-button" name="zoom-wide" class="btn btn-primary">
-        <span class="material-icons">zoom_out</span>
-      </button>
-    </div>
+    <div class="dpad-area">
+      <div class="row justify-content-center">
+        <button type="button" name="up-button" class="btn btn-primary">
+          <span class="material-icons">arrow_upwards</span>
+        </button>
+        </div>
+        <div class="row justify-content-center">
+        <button type="button" name="left-button" class="btn btn-primary">
+          <span class="material-icons">arrow_back</span>
+        </button>
+        <button type="button" name="right-button" class="btn btn-primary">
+          <span class="material-icons">arrow_forward</span>
+        </button>
+        </div>
+        <div class="row justify-content-center">
+        <button type="button" name="down-button" class="btn btn-primary">
+          <span class="material-icons">arrow_downwards</span>
+        </button>
+        </div>
+      </div>
+      <div class="zpad-area row justify-content-center">
+        <button type="zoom-button" name="zoom-tele" class="btn btn-primary">
+          <span class="material-icons">zoom_in</span>
+        </button>
+        <button type="zoom-button" name="zoom-wide" class="btn btn-primary">
+          <span class="material-icons">zoom_out</span>
+        </button>
+      </div>
   </div>`
 );
 
@@ -140,8 +144,8 @@ document.getElementById('position-mem').addEventListener('submit', function(ev) 
 function addMediaSources(media) {
   const mediaSource = document.querySelector('.mediaoutput');
   mediaSource.insertAdjacentHTML('beforeend',`
-    <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-      <button type="media-button" value="${media._id}" class="mem-button btn btn-primary">
+    <div class="col-6">
+      <button type="media-button" value="${media._id}" class="mem-button btn btn-info">
         <span aria-hidden="true">${media.sourceName}</span>
       </button>
     </div>
