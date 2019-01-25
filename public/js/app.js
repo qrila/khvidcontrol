@@ -141,12 +141,12 @@ document.getElementById('position-mem').addEventListener('submit', function(ev) 
   $('#position-mem').find('input[type=text]').val('');
 });
 
-function addMediaSources(media) {
+function addMediaSources(input) {
   const mediaSource = document.querySelector('.mediaoutput');
   mediaSource.insertAdjacentHTML('beforeend',`
     <div class="col-6">
-      <button type="media-button" value="${media._id}" class="mem-button btn btn-info">
-        <span aria-hidden="true">${media.sourceName}</span>
+      <button type="${'sourceName' in input ? 'media' : 'camera'}-input-button" value="${input._id}" class="mem-button btn btn-info">
+        <span aria-hidden="true">${'sourceName' in input ? input.sourceName : input.cameraName}</span>
       </button>
     </div>
   `);
@@ -161,6 +161,17 @@ videoinputs.find({
 }).then(mediabuttons => {
   mediabuttons.data.forEach(addMediaSources);
 });
+
+cameras.find({
+  query: {
+    $sort: {
+      cameraNumber: 1
+    }
+  }
+}).then(mediabuttons => {
+  mediabuttons.data.forEach(addMediaSources);
+});
+
 videoinputs.on('created', addMediaSources);
 
 document.getElementById('add-media').addEventListener('submit', function(ev) {
@@ -269,11 +280,23 @@ $(document).on('click', 'button[type=memory-button]', function() {
 });
 
 // Initialize media input buttons
-$(document).on('click', 'button[type=media-button]', function() {
+$(document).on('click', 'button[type=media-input-button]', function() {
   videoinputs.get(this.value).then( (media) => {
     const callMixer = JSON.stringify({
       mixerAUX: false,
       mixerInput: media.mixerInput,
+      cut: false,
+      fadeToBlack: false
+    });
+    $.get(`/mixerinputs/${callMixer}`);
+  });
+});
+
+$(document).on('click', 'button[type=camera-input-button]', function() {
+  cameras.get(this.value).then( (camera) => {
+    const callMixer = JSON.stringify({
+      mixerAUX: false,
+      mixerInput: camera.mixerInput,
       cut: false,
       fadeToBlack: false
     });
