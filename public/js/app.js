@@ -162,17 +162,38 @@ videoinputs.find({
   mediabuttons.data.forEach(addMediaSources);
 });
 
+function addCameraSources(camera, first) {
+  const cameraTab = document.querySelector('#camera-tabs');
+  cameraTab.insertAdjacentHTML('beforeend',`
+    <li class="nav-item">
+      <a class="nav-link${first ? ' active' : ''}" id="${camera._id}-tab" data-toggle="tab" href="#${camera._id}" aria-selected="${first ? 'true' : 'false'}">${camera.cameraName}</a>
+    </li>
+  `);
+  const cameraTabContent = document.querySelector('#camera-tab-content');
+  cameraTabContent.insertAdjacentHTML('beforeend',`
+    <div class="tab-pane${first ? ' show active' : ''}" id="${camera._id}" role="tabpanel" aria-labelledby="${camera._id}-tab">${camera.cameraName}</div>
+  `);
+}
+
 cameras.find({
   query: {
     $sort: {
       cameraNumber: 1
     }
   }
-}).then(mediabuttons => {
-  mediabuttons.data.forEach(addMediaSources);
+}).then(cameras => {
+  let first = true;
+  cameras.data.forEach( camera => {
+    addMediaSources(camera);
+    addCameraSources(camera, first);
+    first = false;
+  });
 });
 
-videoinputs.on('created', addMediaSources);
+videoinputs.on('created', createdInput => {
+  addMediaSources(createdInput);
+  location.reload();
+});
 
 document.getElementById('add-media').addEventListener('submit', function(ev) {
   ev.preventDefault();

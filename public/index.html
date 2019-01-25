@@ -1,7 +1,5 @@
 <html>
   <head>
-    <script src="/js/jquery-3.3.1.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
     <script src="js/webrtcstreamer-libs/request.min.js" ></script>
     <script src="js/webrtcstreamer-libs/adapter.min.js" ></script>
     <script src="js/webrtcstreamer.js" ></script>
@@ -25,7 +23,7 @@
           </div>
         </nav>
         <div id="main-controllers" class="container-fluid d-flex">
-          <div class="d-none d-md-block">
+          <div class="d-none d-md-block col-md-4">
             <div id="camera-control">
 
               <div class="container">
@@ -72,56 +70,60 @@
             </div>
           </div>
 
-          <div class="container-fluid">
-              <div class="memoutput row"></div>
+          <div class="col-12 col-md-8">
+            <ul class="nav nav-tabs" id="camera-tabs" role="tablist"></ul>
 
+            <div class="tab-content" id="camera-tab-content"></div>
 
-            <div class="row">
-                <div id="camvideo-container" style="display: none">
-                  <video id="camvideo" class="camvideo"></video>
-                  <div class="video-overlay">
-                    <div class="svg-container">
-                      <svg id="overlay" viewBox="0 0 1920 1080">
-                          <!--  Overlay of buttons generated here -->
-                      </svg>
+                <div class="memoutput row"></div>
+
+                <div class="row">
+                  <div id="camvideo-container" style="display: none">
+                    <video id="camvideo" class="camvideo"></video>
+                    <div class="video-overlay">
+                      <div class="svg-container">
+                        <svg id="overlay" viewBox="0 0 1920 1080">
+                            <!--  Overlay of buttons generated here -->
+                        </svg>
+                      </div>
                     </div>
+                    <span id="camvideo-reconnect" class="btn btn-xs">
+                      <span class="material-icons" id="camvideo-reconnect-icon">refresh</span>
+                    </span>
                   </div>
-                  <span id="camvideo-reconnect" class="btn btn-xs">
-                    <span class="material-icons" id="camvideo-reconnect-icon">refresh</span>
-                  </span>
-                </div>
-    
-                <div id="cam-ui" class="col-12">
-                  <div id="poly-mgmt-tools" style="display:none">
-                    <button type="button" id="poly-create" class="btn btn-warning col-3">Tee siirtymä</button>
-                    <button type="button" id="poly-delete" class="btn btn-danger col-3">Poista siirtymä</button>
-                    <button type="button" id="poly-cancel-delete" class="btn btn-warning col-3" style="display:none">Peruuta poisto</button>
+
+                  <div id="cam-ui" class="col-12">
+                    <div id="poly-mgmt-tools" style="display:none">
+                      <button type="button" id="poly-create" class="btn btn-warning col-3">Tee siirtymä</button>
+                      <button type="button" id="poly-delete" class="btn btn-danger col-3">Poista siirtymä</button>
+                      <button type="button" id="poly-cancel-delete" class="btn btn-warning col-3" style="display:none">Peruuta poisto</button>
+                    </div>
+                    <div id="polymaker-tools" style="display:none">
+                      <p style="text-align:center">Klikkaile siirtymän polygonin kulmapisteet kuvan päälle</p>
+                      <table class="col-4"">
+                        <tr>
+                          <td style="text-align:right">Näkymä:</td>
+                          <td style="padding:5px"><span id="poly-owner-name">---</span></td>
+                        </tr>
+                        <tr>
+                          <td style="text-align:right">Kohde:</td>
+                          <td style="padding:5px">
+                            <select id="poly-target-name">
+                            </select>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="text-align:right">Piilota nappi:</td>
+                          <td style="padding:5px"><input type="checkbox" value="false" id="poly-cb-hide-button" /></td>
+                        </tr>
+                      </table>
+                      <button type="button" id="polymaker-cancel" class="btn btn-danger col-3" style="visibility:hidden">Peruuta</button>
+                      <button type="button" id="polymaker-finish" class="btn btn-primary col-4" style="visibility:hidden">Valmis</button>
+                    </div>
+
+                    <button type="button" id="camvideo-start" class="btn btn-warning col-6">Avaa kameravideo</button>
+
                   </div>
-                  <div id="polymaker-tools" style="display:none">
-                    <p style="text-align:center">Klikkaile siirtymän polygonin kulmapisteet kuvan päälle</p>
-                    <table class="col-4"">
-                      <tr>
-                        <td style="text-align:right">Näkymä:</td>
-                        <td style="padding:5px"><span id="poly-owner-name">---</span></td>
-                      </tr>
-                      <tr>
-                        <td style="text-align:right">Kohde:</td>
-                        <td style="padding:5px">
-                          <select id="poly-target-name">
-                          </select>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="text-align:right">Piilota nappi:</td>
-                        <td style="padding:5px"><input type="checkbox" value="false" id="poly-cb-hide-button" /></td>
-                      </tr>
-                    </table>
-                    <button type="button" id="polymaker-cancel" class="btn btn-danger col-3" style="visibility:hidden">Peruuta</button>
-                    <button type="button" id="polymaker-finish" class="btn btn-primary col-4" style="visibility:hidden">Valmis</button>
-                  </div>
-    
-                  <button type="button" id="camvideo-start" class="btn btn-warning col-6">Avaa kameravideo</button>
-    
                 </div>
               </div>
           </div>
@@ -241,6 +243,8 @@
       <!-- </main> -->
     </div>
 
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <script src="js/feathers.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/polymaker.js"></script>
