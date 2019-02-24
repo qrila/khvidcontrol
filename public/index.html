@@ -60,12 +60,11 @@
                   </form>
                 </div>
 
-                <div id="poly-mgmt-toggle" style="display: none">
-                  <label>
-                      <input type="checkbox" value="false" id="poly-mgmt-toggle-cb" />
-                      Näytä siirtymien editointi
-                  </label>
+                <div id="poly-mgmt-toggle" class="row" style="display: none">
+                  <div class="col-1"><input type="checkbox" value="false" id="poly-mgmt-toggle-cb"></div>
+                  <div class="col-10">Näytä siirtymien editointi</div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -75,56 +74,52 @@
 
             <div class="tab-content" id="camera-tab-content"></div>
 
-                <div class="memoutput row"></div>
-
-                <div class="row">
-                  <div id="camvideo-container" style="display: none">
-                    <video id="camvideo" class="camvideo"></video>
-                    <div class="video-overlay">
-                      <div class="svg-container">
-                        <svg id="overlay" viewBox="0 0 1920 1080">
-                            <!--  Overlay of buttons generated here -->
-                        </svg>
-                      </div>
-                    </div>
-                    <span id="camvideo-reconnect" class="btn btn-xs">
-                      <span class="material-icons" id="camvideo-reconnect-icon">refresh</span>
-                    </span>
-                  </div>
-
-                  <div id="cam-ui" class="col-12">
-                    <div id="poly-mgmt-tools" style="display:none">
-                      <button type="button" id="poly-create" class="btn btn-warning col-3">Tee siirtymä</button>
-                      <button type="button" id="poly-delete" class="btn btn-danger col-3">Poista siirtymä</button>
-                      <button type="button" id="poly-cancel-delete" class="btn btn-warning col-3" style="display:none">Peruuta poisto</button>
-                    </div>
-                    <div id="polymaker-tools" style="display:none">
-                      <p style="text-align:center">Klikkaile siirtymän polygonin kulmapisteet kuvan päälle</p>
-                      <table class="col-4"">
-                        <tr>
-                          <td style="text-align:right">Näkymä:</td>
-                          <td style="padding:5px"><span id="poly-owner-name">---</span></td>
-                        </tr>
-                        <tr>
-                          <td style="text-align:right">Kohde:</td>
-                          <td style="padding:5px">
-                            <select id="poly-target-name">
-                            </select>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style="text-align:right">Piilota nappi:</td>
-                          <td style="padding:5px"><input type="checkbox" value="false" id="poly-cb-hide-button" /></td>
-                        </tr>
-                      </table>
-                      <button type="button" id="polymaker-cancel" class="btn btn-danger col-3" style="visibility:hidden">Peruuta</button>
-                      <button type="button" id="polymaker-finish" class="btn btn-primary col-4" style="visibility:hidden">Valmis</button>
-                    </div>
-
-                    <button type="button" id="camvideo-start" class="btn btn-warning col-6">Avaa kameravideo</button>
-
+            <div class="row">
+              <div id="camvideo-container" style="display: none">
+                <video id="camvideo" class="camvideo"></video>
+                <div class="video-overlay">
+                  <div class="svg-container">
+                    <svg id="overlay" viewBox="0 0 1920 1080">
+                        <!--  Overlay of buttons generated here -->
+                    </svg>
                   </div>
                 </div>
+                <span id="camvideo-reconnect" class="btn btn-xs">
+                  <span class="material-icons" id="camvideo-reconnect-icon">refresh</span>
+                </span>
+              </div>
+
+              <div id="cam-ui" class="col-12">
+                <div id="poly-mgmt-tools" style="display:none">
+                  <button type="button" id="poly-create" class="btn btn-warning col-3">Tee siirtymä</button>
+                  <button type="button" id="poly-delete" class="btn btn-danger col-3">Poista siirtymä</button>
+                  <button type="button" id="poly-cancel-delete" class="btn btn-warning col-3" style="display:none">Peruuta poisto</button>
+                </div>
+                <div id="polymaker-tools" style="display:none">
+                  <p style="text-align:center">Klikkaile siirtymän polygonin kulmapisteet kuvan päälle</p>
+                  <table class="col-4"">
+                    <tr>
+                      <td style="text-align:right">Näkymä:</td>
+                      <td style="padding:5px"><span id="poly-owner-name">---</span></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:right">Kohde:</td>
+                      <td style="padding:5px">
+                        <select id="poly-target-name">
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="text-align:right">Piilota nappi:</td>
+                      <td style="padding:5px"><input type="checkbox" value="false" id="poly-cb-hide-button" /></td>
+                    </tr>
+                  </table>
+                  <button type="button" id="polymaker-cancel" class="btn btn-danger col-3" style="visibility:hidden">Peruuta</button>
+                  <button type="button" id="polymaker-finish" class="btn btn-primary col-4" style="visibility:hidden">Valmis</button>
+                </div>
+
+                <button type="button" id="camvideo-start" class="btn btn-warning col-6">Avaa kameravideo</button>
+
               </div>
           </div>
         </div>

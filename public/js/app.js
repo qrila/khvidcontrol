@@ -94,41 +94,6 @@ $.each(arrowButtons, function(button, action) {
   camArrowButton(button, action);
 });
 
-function addCameraPosition(position) {
-  const camPos = document.querySelector('.memoutput');
-  const isHidden = position.visibilityMode && position.visibilityMode == 'poly';
-  const displayAttr = 'style="display:' + (isHidden ? 'none"' : 'block"');
-  camPos.insertAdjacentHTML('beforeend', `
-    <div type="memory-div" class="col-6 col-sm-4 col-lg-3 col-xl-2" ${displayAttr} data-positionid="${position._id}">
-      <button type="memory-button" value="${position._id}" class="mem-button btn btn-primary">
-        <span aria-hidden="true">${position.subjectName}</span>
-      </button>
-    </div>
-  `);
-}
-
-function modifyCameraPosition(position) {
-  // currently only modification supported is changing visibilityMode:
-  const isHidden = position.visibilityMode && position.visibilityMode == 'poly';
-  $(`div[type="memory-div"][data-positionid="${position._id}"]`).css('display', isHidden ? 'none' : 'block');
-}
-
-
-positions.find({
-  query: {
-    visibilityMode: {
-      $ne: 'poly'
-    },
-    $sort: {
-      sortNumber: 1
-    }
-  }
-}).then(camerabuttons => {
-  (camerabuttons.data).forEach(addCameraPosition);
-});
-positions.on('created', addCameraPosition);
-positions.on('patched', modifyCameraPosition);
-
 document.getElementById('position-mem').addEventListener('submit', function(ev) {
   ev.preventDefault();
   const call = JSON.stringify({
@@ -166,12 +131,14 @@ function addCameraSources(camera, first) {
   const cameraTab = document.querySelector('#camera-tabs');
   cameraTab.insertAdjacentHTML('beforeend',`
     <li class="nav-item">
-      <a class="nav-link${first ? ' active' : ''}" id="${camera._id}-tab" data-toggle="tab" href="#${camera._id}" aria-selected="${first ? 'true' : 'false'}">${camera.cameraName}</a>
+      <a class="camera-tab-nav nav-link${first ? ' active' : ''}" id="${camera._id}-tab" data-toggle="tab" href="#${camera._id}-tab-content" aria-selected="${first ? 'true' : 'false'}">${camera.cameraName}</a>
     </li>
   `);
   const cameraTabContent = document.querySelector('#camera-tab-content');
   cameraTabContent.insertAdjacentHTML('beforeend',`
-    <div class="tab-pane${first ? ' show active' : ''}" id="${camera._id}" role="tabpanel" aria-labelledby="${camera._id}-tab">${camera.cameraName}</div>
+    <div class="tab-pane${first ? ' show active' : ''}" id="${camera._id}-tab-content" role="tabpanel" aria-labelledby="${camera._id}-tab">
+      <div class="${camera._id}-positions row"></div>
+    </div>
   `);
 }
 
@@ -251,6 +218,40 @@ document.getElementById('add-camera').addEventListener('submit', function(ev) {
   $('#add-camera').find('input[type=text]').val('');
   populateCameraList();
 });
+
+function addCameraPosition(position) {
+  const camPos = document.querySelector(`.${position.cameraID}-positions`);
+  const isHidden = position.visibilityMode && position.visibilityMode == 'poly';
+  const displayAttr = 'style="display:' + (isHidden ? 'none"' : 'block"');
+  camPos.insertAdjacentHTML('beforeend', `
+    <div type="memory-div" class="col-6 col-sm-4 col-lg-3 col-xl-2" ${displayAttr} data-positionid="${position._id}">
+      <button type="memory-button" value="${position._id}" class="mem-button btn btn-primary">
+        <span aria-hidden="true">${position.subjectName}</span>
+      </button>
+    </div>
+  `);
+}
+
+function modifyCameraPosition(position) {
+  // currently only modification supported is changing visibilityMode:
+  const isHidden = position.visibilityMode && position.visibilityMode == 'poly';
+  $(`div[type="memory-div"][data-positionid="${position._id}"]`).css('display', isHidden ? 'none' : 'block');
+}
+
+positions.find({
+  query: {
+    visibilityMode: {
+      $ne: 'poly'
+    },
+    $sort: {
+      sortNumber: 1
+    }
+  }
+}).then(camerabuttons => {
+  (camerabuttons.data).forEach(addCameraPosition);
+});
+positions.on('created', addCameraPosition);
+positions.on('patched', modifyCameraPosition);
 
 function populateCameraList() {
   $('#cameraid option').remove();
