@@ -21,14 +21,13 @@ html, body {
   height: 180px;
 }
 
+.dpad {
+  margin-bottom: 30px;
+}
+
 .dpad button span {
   width: 24px;
   height: 24px;
-}
-
-.dpad button {
-  width: 50px;
-  height: 50px;
 }
 
 .zoom-control {
@@ -40,42 +39,103 @@ html, body {
   height: 60px;
 }
 
-[name=up-button],
-[name=left-button],
-[name=right-button],
-[name=down-button],
 [name=zoom-tele],
-[name=zoom-wide] {
+[name=zoom-wide],
+.up-button,
+.left-button,
+.right-button,
+.down-button {
   position: relative;
   margin: 0;
 }
 
-[name=up-button] {
-  top: 0;
-  left: 75px;
-}
-
-[name=left-button] {
-  left: -25px;
-  top: 50px;
-}
-
-[name=right-button] {
-  left: 25px;
-  top: 50px;
-}
-
+[name=up-button],
 [name=down-button] {
-  left: -75px;
-  top: 100px;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 60px;
+  height: 35px;
+}
+
+
+[name=up-button-slow],
+[name=down-button-slow] {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 60px;
+  height: 25px;
+}
+
+
+[name=left-button],
+[name=right-button-slow] {
+  position: relative;
+  margin-left: -3.5px;
+  padding: 0;
+  width: 25px;
+  height: 600px;
+}
+
+
+[name=right-button],
+[name=left-button-slow] {
+  position: relative;
+  margin-right: -3.5px;
+  padding: 0;
+}
+
+[name=right-button],
+[name=left-button] {
+  width: 35px;
+  height: 60px;
+}
+
+[name=right-button-slow],
+[name=left-button-slow] {
+  width: 25px;
+  height: 60px;
+}
+
+.up-button {
+  top: 0;
+  left: 90px;
+  width: 60px;
+  height: 60px;
+}
+
+.left-button {
+  left: -28px;
+  top: 60px;
+  width: 60px;
+  height: 60px;
+}
+
+.right-button {
+  left: 30px;
+  top: 60px;
+  width: 60px;
+  height: 60px;
+}
+
+.down-button {
+  left: -90px;
+  top: 120px;
+  width: 60px;
+  height: 60px;
 }
 
 [name=zoom-tele] {
-  left: 25px;
+  left: 40px;
+  width: 50px;
+  height: 50px;
 }
 
 [name=zoom-wide] {
-  left: 75px;
+  left: 100px;
+  width: 50px;
+  height: 50px;
 }
 
 #videoinput-mem select,

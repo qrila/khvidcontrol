@@ -51,18 +51,38 @@ $.each(menuButtons, function(button, action) {
 $('.dpad').html(`
   <div class="position-control container">
     <div class="dpad-area row">
-      <button type="button" name="up-button" class="btn btn-primary">
-        <span class="material-icons">arrow_upwards</span>
-      </button>
-      <button type="button" name="left-button" class="btn btn-primary">
-        <span class="material-icons">arrow_back</span>
-      </button>
-      <button type="button" name="right-button" class="btn btn-primary">
-        <span class="material-icons">arrow_forward</span>
-      </button>
-      <button type="button" name="down-button" class="btn btn-primary">
-        <span class="material-icons">arrow_downwards</span>
-      </button>
+      <div class="up-button">
+        <button type="button" name="up-button-slow" class="btn btn-secondary">
+          <span class="material-icons">keyboard_arrow_up</span>
+        </button>
+        <button type="button" name="up-button" class="btn btn-primary">
+          <span class="material-icons">arrow_upwards</span>
+        </button>
+      </div>
+      <div class="left-button">
+        <button type="button" name="left-button-slow" class="btn btn-secondary">
+          <span class="material-icons">keyboard_arrow_left</span>
+        </button>
+        <button type="button" name="left-button" class="btn btn-primary">
+          <span class="material-icons">arrow_back</span>
+        </button>
+      </div>
+      <div class="right-button">
+        <button type="button" name="right-button" class="btn btn-primary">
+          <span class="material-icons">arrow_forward</span>
+        </button>
+        <button type="button" name="right-button-slow" class="btn btn-secondary">
+          <span class="material-icons">keyboard_arrow_right</span>
+        </button>
+      </div>
+      <div class="down-button">
+        <button type="button" name="down-button" class="btn btn-primary">
+          <span class="material-icons">arrow_downwards</span>
+        </button>
+        <button type="button" name="down-button-slow" class="btn btn-secondary">
+          <span class="material-icons">keyboard_arrow_down</span>
+        </button>
+      </div>
     </div>
   </div>
   <div class="zoom-control container">
@@ -78,12 +98,16 @@ $('.dpad').html(`
 );
 
 const arrowButtons = {
-  'up-button'     :   'moveUp',
-  'left-button'   :   'moveLeft',
-  'right-button'  :   'moveRight',
-  'down-button'   :   'moveDown',
-  'zoom-tele'     :   'zoomTeleStd',
-  'zoom-wide'     :   'zoomWideStd'
+  'up-button'         :   'moveUp',
+  'left-button'       :   'moveLeft',
+  'right-button'      :   'moveRight',
+  'down-button'       :   'moveDown',
+  'up-button-slow'    :   'moveUpSlow',
+  'left-button-slow'  :   'moveLeftSlow',
+  'right-button-slow' :   'moveRightSlow',
+  'down-button-slow'  :   'moveDownSlow',
+  'zoom-tele'         :   'zoomTeleStd',
+  'zoom-wide'         :   'zoomWideStd'
 };
 
 $.each(arrowButtons, function(button, action) {
