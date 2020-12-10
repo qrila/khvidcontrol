@@ -96,7 +96,7 @@
                   </div>
                   <div id="polymaker-tools" style="display:none">
                     <p style="text-align:center">Klikkaile siirtym&auml;n polygonin kulmapisteet kuvan p&auml;&auml;lle</p>
-                    <table class="col-4"">
+                    <table class="col-4">
                       <tr>
                         <td style="text-align:right">N&auml;kym&auml;:</td>
                         <td style="padding:5px"><span id="poly-owner-name">---</span></td>
@@ -151,7 +151,7 @@
         </div>
 
         <div id="main-settings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="main-settings">
-          <div class="modal-dialog main-settings" role="document">
+          <div class="modal-dialog main-settings modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="main-settings-title">Asetukset</h5>
@@ -161,83 +161,119 @@
               </div>
               <div class="modal-body">
                 <div class="container">
+
+                  <div class="accordion" id="settings-accordion">
+                    <div class="card">
+                      <div class="card-header" id="headingOne">
+                        <h2 class="mb-0">
+                          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Videoasetukset
+                          </button>
+                        </h2>
+                      </div>
+
+                      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#settings-accordion">
+                        <div class="card-body">
+                          <div class="add-video-mixer">
+                            <form id="video-mixer">
+                              <div class="row">
+                                <div class="col-9">
+                                  <h6>Lisää videomixeri</h6>
+                                  <input type="text" name="videomixer" placeholder="IP osoite 192.168.x.x">
+                                  <span>Aux ulostulon tilojen nimet</span>
+                                  <input type="text" name="auxprogram" placeholder="Program">
+                                  <input type="text" name="auxsource" placeholder="Video 1 input">
+                                </div>
+                                <div class="col-2 align-self-end">
+                                  <button type="submit" name="save-video-mixer" class="btn btn-secondary">
+                                    <span class="material-icons">save</span>
+                                  </button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+        
+                          <div class="add-camera">
+                            <form id="add-camera">
+                              <div class="row">
+                                <div class="col-9">
+                                  <h6>Lisää kamera</h6>
+                                  <input type="text" name="name" placeholder="sijainti">
+                                  <input type="text" name="cameraip" placeholder="192.168.x.x">
+                                  <input type="text" name="rtspurl" placeholder="rtsp://192.168.x.x/stream1">
+                                  <span style="color:gray"><small><em>Huom. Vain yhden kameran RTSP-osoite on k&auml;yt&ouml;ss&auml;</em></small></span>
+                                  <br/>
+                                  <span>Video sisääntulo</span>
+                                  <select name="mixerinputcamera" id="mixerinputcamera">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                  </select>
+                                </div>
+                                <div class="col-2 align-self-end">
+                                  <button type="submit" name="save-camera" class="btn btn-secondary">
+                                    <span class="material-icons">save</span>
+                                  </button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+        
+                          <div class="add-media">
+                            <form id="add-media">
+                              <div class="row">
+                                <div class="col-9">
+                                  <h6>Lisää mediasisääntulo</h6>
+                                  <input type="text" name="mediainput" placeholder="Nimi">
+                                  <span>Video sisääntulo</span>
+                                  <select name="mixerinputmedia" id="mixerinputmedia">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                  </select>
+                                </div>
+                                <div class="col-2 align-self-end">
+                                  <button type="submit" name="save-media" class="btn btn-secondary">
+                                    <span class="material-icons">save</span>
+                                  </button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-header" id="headingTwo">
+                        <h2 class="mb-0">
+                          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Kuvauskohteet
+                          </button>
+                        </h2>
+                      </div>
+                      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#settings-accordion">
+                        <div class="card-body" id="saved-positions">
+                          <ul class="list-group"></ul>
+                        </div>
+                      </div>
+                    </div>
+                    
+
+                  </div>
                   
-                  <div class="add-video-mixer">
-                    <form id="video-mixer">
-                      <div class="row">
-                        <div class="col-9">
-                          <h6>Lisää videomixeri</h6>
-                          <input type="text" name="videomixer" placeholder="IP osoite 192.168.x.x">
-                          <span>Aux ulostulon tilojen nimet</span>
-                          <input type="text" name="auxprogram" placeholder="Program">
-                          <input type="text" name="auxsource" placeholder="Video 1 input">
-                        </div>
-                        <div class="col-2 align-self-end">
-                          <button type="submit" name="save-video-mixer" class="btn btn-secondary">
-                            <span class="material-icons">save</span>
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-
-                  <div class="add-camera">
-                    <form id="add-camera">
-                      <div class="row">
-                        <div class="col-9">
-                          <h6>Lisää kamera</h6>
-                          <input type="text" name="name" placeholder="sijainti">
-                          <input type="text" name="cameraip" placeholder="192.168.x.x">
-                          <input type="text" name="rtspurl" placeholder="rtsp://192.168.x.x/stream1">
-                          <span style="color:gray"><small><em>Huom. Vain yhden kameran RTSP-osoite on k&auml;yt&ouml;ss&auml;</em></small></span>
-                          <br/>
-                          <span>Video sisääntulo</span>
-                          <select name="mixerinputcamera" id="mixerinputcamera">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                          </select>
-                        </div>
-                        <div class="col-2 align-self-end">
-                          <button type="submit" name="save-camera" class="btn btn-secondary">
-                            <span class="material-icons">save</span>
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-
-                  <div class="add-media">
-                    <form id="add-media">
-                      <div class="row">
-                        <div class="col-9">
-                          <h6>Lisää mediasisääntulo</h6>
-                          <input type="text" name="mediainput" placeholder="Nimi">
-                          <span>Video sisääntulo</span>
-                          <select name="mixerinputmedia" id="mixerinputmedia">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                          </select>
-                        </div>
-                        <div class="col-2 align-self-end">
-                          <button type="submit" name="save-media" class="btn btn-secondary">
-                            <span class="material-icons">save</span>
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
+                  
                 </div>
               </div>
             </div>

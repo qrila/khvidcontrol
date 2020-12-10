@@ -125,6 +125,21 @@ function addCameraPosition(position) {
       </button>
     </div>
   `);
+
+  const editPos = document.querySelector('#saved-positions > .list-group');
+  editPos.insertAdjacentHTML('beforeend', `
+    <li class="list-group-item">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div>${position.subjectName}</div>
+          <div class="button-group btn-group-sm" role="group">
+            <button type="button" class="btn btn-secondary"><span class="material-icons">edit</span></button>
+            <button type="button" class="btn btn-secondary"><span class="material-icons">crop_free</span></button>
+            <button type="button" class="btn btn-secondary"><span class="material-icons">delete_forever</span></button>
+          </div>
+        </div>
+      </div>
+    </li>`);
 }
 
 function modifyCameraPosition(position) {
