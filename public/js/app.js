@@ -24,27 +24,27 @@ const camButton = (data) => {
 };
 
 const camMenuButton = (button, data) => {
-  $(`.${button} button`).click(function() {
+  $(`.${button} button`).click(function () {
     camButton(data);
   });
 };
 
 const camArrowButton = (button, data) => {
-  $(`[name=${button}]`).bind('mousedown touchstart', function() {
+  $(`[name=${button}]`).bind('mousedown touchstart', function () {
     camButton(data);
-  }).bind('mouseup touchend', function() {
+  }).bind('mouseup touchend', function () {
     camButton(data.startsWith('zoom') ? 'zoomStop' : 'moveStop');
   });
 };
 
 const menuButtons = {
-  'power-button'  :   'power',
-  'menu-button'   :   'menuToggle',
-  'menu-ok'       :   'menuOK',
-  'menu-back'     :   'menuBack'
+  'power-button': 'power',
+  'menu-button': 'menuToggle',
+  'menu-ok': 'menuOK',
+  'menu-back': 'menuBack'
 };
 
-$.each(menuButtons, function(button, action) {
+$.each(menuButtons, function (button, action) {
   camMenuButton(button, action);
 });
 
@@ -98,19 +98,19 @@ $('.dpad').html(`
 );
 
 const arrowButtons = {
-  'up-button'         :   'moveUp',
-  'left-button'       :   'moveLeft',
-  'right-button'      :   'moveRight',
-  'down-button'       :   'moveDown',
-  'up-button-slow'    :   'moveUpSlow',
-  'left-button-slow'  :   'moveLeftSlow',
-  'right-button-slow' :   'moveRightSlow',
-  'down-button-slow'  :   'moveDownSlow',
-  'zoom-tele'         :   'zoomTeleStd',
-  'zoom-wide'         :   'zoomWideStd'
+  'up-button': 'moveUp',
+  'left-button': 'moveLeft',
+  'right-button': 'moveRight',
+  'down-button': 'moveDown',
+  'up-button-slow': 'moveUpSlow',
+  'left-button-slow': 'moveLeftSlow',
+  'right-button-slow': 'moveRightSlow',
+  'down-button-slow': 'moveDownSlow',
+  'zoom-tele': 'zoomTeleStd',
+  'zoom-wide': 'zoomWideStd'
 };
 
-$.each(arrowButtons, function(button, action) {
+$.each(arrowButtons, function (button, action) {
   camArrowButton(button, action);
 });
 
@@ -131,27 +131,63 @@ function addCameraPosition(position) {
     <li class="list-group-item">
       <div class="container">
         <div class="row justify-content-between">
-          <div>${position.subjectName}</div>
-          <div class="button-group btn-group-sm" role="group">
-            <button type="button" class="btn btn-secondary"><span class="material-icons">edit</span></button>
-            <button type="button" class="btn btn-secondary"><span class="material-icons">crop_free</span></button>
-            <button type="button" class="btn btn-secondary"><span class="material-icons">delete_forever</span></button>
+          <div id="${position._id}-name">${position.subjectName}</div>
+          <div id="${position._id}-input" class="hide"><input id="${position._id}-input-value" value=${position.subjectName}></input></div>
+          <div id="${position._id}-edit" class="button-group btn-group-sm" role="group">
+            <button type="position-edit-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">edit</span></button>
+            <button type="position-reframe-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">crop_free</span></button>
+            <button type="position-delete-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">delete_forever</span></button>
+          </div>
+          <div id="${position._id}-save" class="button-group btn-group-sm hide" role="group">
+            <button type="position-save-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">save</span></button>
           </div>
         </div>
       </div>
     </li>`);
 }
 
+$(document).on('click', 'button[type=position-edit-button]', function () {
+  document.getElementById(`${this.value}-name`).classList.add('hide');
+  document.getElementById(`${this.value}-edit`).classList.add('hide');
+  document.getElementById(`${this.value}-input`).classList.remove('hide');
+  document.getElementById(`${this.value}-save`).classList.remove('hide');
+});
+
+$(document).on('click', 'button[type=position-reframe-button]', function () {
+  console.log('reframe position: ' + this.value);
+});
+
+$(document).on('click', 'button[type=position-delete-button]', function () {
+  console.log('delete position: ' + this.value);
+});
+
+$(document).on('click', 'button[type=position-save-button]', function () {
+  document.getElementById(`${this.value}-name`).classList.remove('hide');
+  document.getElementById(`${this.value}-edit`).classList.remove('hide');
+  document.getElementById(`${this.value}-input`).classList.add('hide');
+  document.getElementById(`${this.value}-save`).classList.add('hide');
+  const newName = document.getElementById(`${this.value}-input-value`).value;
+
+  const call = JSON.stringify({
+    command: 'edit',
+    positionID: this.value,
+    subjectName: newName
+  });
+  $.get(`/movecam/${call}`);
+});
+
 function modifyCameraPosition(position) {
-  // currently only modification supported is changing visibilityMode:
   const isHidden = position.visibilityMode && position.visibilityMode == 'poly';
   $(`div[type="memory-div"][data-positionid="${position._id}"]`).css('display', isHidden ? 'none' : 'block');
+
+  $(`div[type="memory-div"][data-positionid="${position._id}"] > button > span`).text(position.subjectName);
+  $(`#${position._id}-name`).text(position.subjectName);
 }
 
 
 positions.find({
   query: {
-    visibilityMode: { $ne: 'poly'}
+    visibilityMode: { $ne: 'poly' }
   }
 }).then(camerabuttons => {
   _.sortBy(camerabuttons.data, ['sortNumber']).forEach(addCameraPosition);
@@ -159,7 +195,7 @@ positions.find({
 positions.on('created', addCameraPosition);
 positions.on('patched', modifyCameraPosition);
 
-document.getElementById('position-mem').addEventListener('submit', function(ev) {
+document.getElementById('position-mem').addEventListener('submit', function (ev) {
   ev.preventDefault();
   const call = JSON.stringify({
     command: 'save',
@@ -173,7 +209,7 @@ document.getElementById('position-mem').addEventListener('submit', function(ev) 
 
 function addMediaSources(media) {
   const mediaSource = document.querySelector('.mediaoutput');
-  mediaSource.insertAdjacentHTML('beforeend',`
+  mediaSource.insertAdjacentHTML('beforeend', `
     <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
       <button type="media-button" value="${media._id}" class="mem-button btn btn-primary">
         <span aria-hidden="true">${media.sourceName}</span>
@@ -187,7 +223,7 @@ videoinputs.find().then(mediabuttons => {
 });
 videoinputs.on('created', addMediaSources);
 
-document.getElementById('add-media').addEventListener('submit', function(ev) {
+document.getElementById('add-media').addEventListener('submit', function (ev) {
   ev.preventDefault();
 
   videoinputs.create({
@@ -198,15 +234,16 @@ document.getElementById('add-media').addEventListener('submit', function(ev) {
   $('#add-media').find('input[type=text]').val('');
 });
 
-videomixer.find().then( mixer => {
-  if(mixer.total > 0) {
+videomixer.find().then(mixer => {
+  if (mixer.total > 0) {
     $('.add-video-mixer').addClass('d-none');
     $('#auxprogram, #auxsource').removeClass('d-none');
     $('#auxprogram').text(mixer.data[0].auxProgram);
-    $('#auxsource').text(mixer.data[0].auxSource);  }
+    $('#auxsource').text(mixer.data[0].auxSource);
+  }
 });
 
-document.getElementById('video-mixer').addEventListener('submit', function(ev) {
+document.getElementById('video-mixer').addEventListener('submit', function (ev) {
   ev.preventDefault();
   const auxProgram = this.auxprogram.value;
   const auxSource = this.auxsource.value;
@@ -224,7 +261,7 @@ document.getElementById('video-mixer').addEventListener('submit', function(ev) {
   $('#auxsource').text(auxSource);
 });
 
-document.getElementById('add-camera').addEventListener('submit', function(ev) {
+document.getElementById('add-camera').addEventListener('submit', function (ev) {
   ev.preventDefault();
   const cameraName = this.name.value;
   const cameraIP = this.cameraip.value;
@@ -244,7 +281,7 @@ document.getElementById('add-camera').addEventListener('submit', function(ev) {
 
 function populateCameraList() {
   $('#cameraid option').remove();
-  cameras.find().then( cameras => {
+  cameras.find().then(cameras => {
     _.forEach(cameras.data, camera => {
       $('#cameraid').append(`<option value=${camera._id}>${camera.cameraName}</option>`);
       if (webRtcCtx.video_url === null && camera.rtspURL !== null && camera.rtspURL.length > 0) {
@@ -256,7 +293,7 @@ function populateCameraList() {
 populateCameraList();
 
 // Initialize aux source selection buttons
-$(document).on('click', 'button.mixeraux', function() {
+$(document).on('click', 'button.mixeraux', function () {
   const call = JSON.stringify({
     mixerAUX: this.value,
     cut: false,
@@ -266,7 +303,7 @@ $(document).on('click', 'button.mixeraux', function() {
 });
 
 // Initialize cut button
-$(document).on('click', 'button.mixercut', function() {
+$(document).on('click', 'button.mixercut', function () {
   const call = JSON.stringify({
     mixerAUX: false,
     cut: true,
@@ -276,7 +313,7 @@ $(document).on('click', 'button.mixercut', function() {
 });
 
 // Initialize cut button
-$(document).on('click', 'button.fadetoblack', function() {
+$(document).on('click', 'button.fadetoblack', function () {
   const call = JSON.stringify({
     mixerAUX: false,
     cut: false,
@@ -286,13 +323,13 @@ $(document).on('click', 'button.fadetoblack', function() {
 });
 
 // Initialize saved camera position buttons
-$(document).on('click', 'button[type=memory-button]', function() {
+$(document).on('click', 'button[type=memory-button]', function () {
   changeCamPos(this.value);
 });
 
 // Initialize media input buttons
-$(document).on('click', 'button[type=media-button]', function() {
-  videoinputs.get(this.value).then( (media) => {
+$(document).on('click', 'button[type=media-button]', function () {
+  videoinputs.get(this.value).then((media) => {
     const callMixer = JSON.stringify({
       mixerAUX: false,
       mixerInput: media.mixerInput,
@@ -309,7 +346,7 @@ const overlaygid = 'overlay-g';
 const overlaygcamposid = 'cam-pos-id';
 
 function addOverlay(camPosId) {
-  overlay.find({ query :{ positionId : camPosId } }).then( (overlayElements) => {
+  overlay.find({ query: { positionId: camPosId } }).then((overlayElements) => {
     var group = document.createElementNS(svgNS, 'g');
     group.setAttribute(overlaygcamposid, camPosId);
     group.setAttribute('class', overlaygid);
@@ -333,7 +370,7 @@ function addPolygon(group, elementData) {
   var polygon = document.createElementNS(svgNS, 'polygon');
   polygon.setAttribute('points', elementData.points);
   polygon.setAttribute('data-overlayid', elementData._id);
-  polygon.addEventListener('click', function() {
+  polygon.addEventListener('click', function () {
     clickPolygon(elementData._id, elementData.targetPosition, elementData.positionId);
   });
   group.appendChild(polygon);
@@ -349,7 +386,7 @@ function changeCamPos(targetPos, currentPos) {
     } else {
       $(`g[${overlaygcamposid}='${currentPos}']`)[0].style.visibility = 'hidden';
     }
-    
+
     var gexisting = $(`g[${overlaygcamposid}='${targetPos}']`);
     if (gexisting !== 'undefined' && gexisting.length > 0) {
       gexisting[0].style.visibility = 'visible';
@@ -363,7 +400,7 @@ function changeCamPos(targetPos, currentPos) {
     // fill new current position to the owner name of new polygon in polymaker create state
     positions.find({
       query: {
-        _id:vidCtx.currentPos
+        _id: vidCtx.currentPos
       }
     }).then(positions => {
       if (positions && Array.isArray(positions.data) && positions.data.length > 0) {
@@ -378,8 +415,8 @@ function changeCamPos(targetPos, currentPos) {
       positionID: targetPos
     });
     $.get(`/movecam/${callCam}`);
-    positions.get(targetPos).then( (position) => {
-      cameras.get(position.cameraID).then( (camera) => {
+    positions.get(targetPos).then((position) => {
+      cameras.get(position.cameraID).then((camera) => {
         const callMixer = JSON.stringify({
           mixerAUX: false,
           mixerInput: camera.mixerInput
@@ -393,7 +430,7 @@ function changeCamPos(targetPos, currentPos) {
 
 // Initialize video overlay buttons
 // (see also camvideo.js)
-$('#camvideo-start').on('click', function() {
+$('#camvideo-start').on('click', function () {
   if (webRtcCtx.video_url === null || webRtcCtx.video_url.length == 0) {
     alert('Kameravideon RTSP URL puuttuu');
     return;
@@ -404,7 +441,7 @@ $('#camvideo-start').on('click', function() {
   enableCamVideoUI();
 
   positions
-    .find({  query :{ sortNumber: 0 }  })
+    .find({ query: { sortNumber: 0 } })
     .then((position) => {
       if (!Array.isArray(position.data)) {
         console.error('No default camera position defined! (positions.find did not return array, positions will need one entry with sortNumber 0)');
@@ -432,16 +469,16 @@ function enableCamVideoUI() {
   $('#camvideo-container').css('display', 'inline-block');
   $('#camvideo-container').css('height', $('#camvideo-container').css('width') * 9 / 16);
   $('#poly-mgmt-toggle').show();
-  $('#poly-mgmt-toggle-cb').change(function() {
+  $('#poly-mgmt-toggle-cb').change(function () {
     if (this.checked)
       $('#poly-mgmt-tools').show();
     else
       $('#poly-mgmt-tools').hide();
   });
-  $('#camvideo-reconnect').click(function() { reconnectWebRTCVideoConnection(); });
+  $('#camvideo-reconnect').click(function () { reconnectWebRTCVideoConnection(); });
 }
 
-$('#poly-delete').click(function() {
+$('#poly-delete').click(function () {
   $('#poly-create').css('visibility', 'hidden');
   $('#poly-delete').hide();
   $('#poly-cancel-delete').show();
@@ -477,7 +514,7 @@ function exitPolyDeleteMode() {
   vidCtx.inDeletePolygonMode = false;
 }
 
-$('#poly-cancel-delete').click(function() {
+$('#poly-cancel-delete').click(function () {
   exitPolyDeleteMode();
 });
 
@@ -505,7 +542,7 @@ function createNewPoly() {
   $('#poly-target-name').html('');
 
   // populate target position names in polymaker list of targets
-  positions.find( /*{ query: { visibilityMode: { $ne: "poly" }} }*/ ).then(camerabuttons => {
+  positions.find( /*{ query: { visibilityMode: { $ne: "poly" }} }*/).then(camerabuttons => {
     _.sortBy(camerabuttons.data, ['sortNumber']).forEach(position => {
       $('#poly-target-name').append(`<option value="${position._id}">${position.subjectName}</option>`);
     });
@@ -516,17 +553,15 @@ function createNewPoly() {
   startPolymaker(); // polymaker.js
 }
 
-$('#poly-target-name').change(function() {
+$('#poly-target-name').change(function () {
   var positionId = this.value;
-  positions.find({query:{_id:positionId}}).then(
+  positions.find({ query: { _id: positionId } }).then(
     position => {
-      if (position && Array.isArray(position.data) && position.data.length > 0)
-      {
+      if (position && Array.isArray(position.data) && position.data.length > 0) {
         // disallow hiding first position button
         // (it's assumed that first button is the "overall view", and has sortNumber=0)
         var disabled = false;
-        if (position.data[0].sortNumber == 0)
-        {
+        if (position.data[0].sortNumber == 0) {
           $('#poly-cb-hide-button').prop('checked', false);
           disabled = true;
         }
@@ -535,7 +570,7 @@ $('#poly-target-name').change(function() {
     });
 });
 
-$('#poly-create').click(function() {
+$('#poly-create').click(function () {
   createNewPoly();
 });
 
@@ -565,7 +600,7 @@ function polymakerFinish(points) {
     if (hideNormalTargetButton) {
       setPositionButtonVisibilityMode(targetPositionId, 'poly');
     }
-  }).catch( function(err) {
+  }).catch(function (err) {
     console.error('Could not create polygon data ' + err);
   });
 }

@@ -3,42 +3,42 @@ const visca = require('../../camctrl/visca');
 
 /* eslint-disable no-unused-vars */
 class Service {
-  constructor (options) {
+  constructor(options) {
     this.options = options || {};
   }
 
-  get (data) {
+  get(data) {
     return new Promise((resolve, reject) => {
       const app = this.options.app;
       const camData = JSON.parse(data);
 
-      if(camData.command === 'preset') {
-        setPosition(app, camData.positionID).then( (presetPosition) => {
-          camera(app, presetPosition.cameraID).then( (cameraIP) => {
+      if (camData.command === 'preset') {
+        setPosition(app, camData.positionID).then((presetPosition) => {
+          camera(app, presetPosition.cameraID).then((cameraIP) => {
             visca.preset(cameraIP, presetPosition.pantilt, presetPosition.zoom);
           });
-        }).then( () => {
+        }).then(() => {
           resolve('200');
           reject('preset error');
         });
-      } else if(camData.command === 'save') {
-        camera(app, camData.cameraID).then( cameraIP => {
-          visca.queryPosition(cameraIP).then( (result) => {
+      } else if (camData.command === 'save') {
+        camera(app, camData.cameraID).then(cameraIP => {
+          visca.queryPosition(cameraIP).then((result) => {
             savePosition(app, camData.cameraID, camData.subjectName, result.pantilt, result.zoom);
           });
-        }).then( () => {
+        }).then(() => {
           resolve('200');
           reject('save position error');
         });
-      } else if(camData.command === 'edit') {
-        editPosition(app, camData.positionID, camData.visibilityMode).then( () => {
+      } else if (camData.command === 'edit') {
+        editPosition(app, camData.positionID, camData.visibilityMode, camData.subjectName).then(() => {
           resolve('200');
           reject('edit position error');
         });
       } else {
-        camera(app, camData.cameraID).then( cameraIP => {
+        camera(app, camData.cameraID).then(cameraIP => {
           visca.moveCam(camData.action, cameraIP);
-        }).then( () => {
+        }).then(() => {
           resolve('200');
           reject('move error');
         });
@@ -59,23 +59,27 @@ async function savePosition(app, cameraID, subjectName, pantilt, zoom) {
     cameraID: cameraID,
     subjectName: subjectName,
     visibilityMode: 'button',
-    pantilt: pantilt.slice(4,20).match(/.{1,2}/g).map(y => { return('0x' + y); }),
-    zoom: zoom.slice(4,12).match(/.{1,2}/g).map(y => { return('0x' + y); })
+    pantilt: pantilt.slice(4, 20).match(/.{1,2}/g).map(y => { return ('0x' + y); }),
+    zoom: zoom.slice(4, 12).match(/.{1,2}/g).map(y => { return ('0x' + y); })
   });
   return position;
 }
 
-async function editPosition(app, positionID, visibilityMode) {
-  // currently only modification supported is changing visibilityMode
-  const position = await app.service('positions').patch(positionID, {
-    visibilityMode: visibilityMode
-  });
-  return position;
+async function editPosition(app, positionID, visibilityMode, subjectName, pantilt, zoom) {
+  if (visibilityMode !== undefined) {
+    return await app.service('positions').patch(positionID, {
+      visibilityMode: visibilityMode
+    });
+  } else if (subjectName !== undefined) {
+    return await app.service('positions').patch(positionID, {
+      subjectName: subjectName
+    });
+  }
 }
 
 async function setPosition(app, id) {
   const position = await app.service('positions').get(id);
-  return ({cameraID: position.cameraID, pantilt: position.pantilt, zoom: position.zoom});
+  return ({ cameraID: position.cameraID, pantilt: position.pantilt, zoom: position.zoom });
 }
 
 module.exports = function (options) {
