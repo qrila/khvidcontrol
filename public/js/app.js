@@ -140,6 +140,7 @@ function addCameraPosition(position) {
           </div>
           <div id="${position._id}-save" class="button-group btn-group-sm hide" role="group">
             <button type="position-save-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">save</span></button>
+            <button type="position-cancel-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">cancel</span></button>
           </div>
         </div>
       </div>
@@ -159,6 +160,13 @@ $(document).on('click', 'button[type=position-reframe-button]', function () {
 
 $(document).on('click', 'button[type=position-delete-button]', function () {
   console.log('delete position: ' + this.value);
+});
+
+$(document).on('click', 'button[type=position-cancel-button]', function () {
+  document.getElementById(`${this.value}-name`).classList.remove('hide');
+  document.getElementById(`${this.value}-edit`).classList.remove('hide');
+  document.getElementById(`${this.value}-input`).classList.add('hide');
+  document.getElementById(`${this.value}-save`).classList.add('hide');
 });
 
 $(document).on('click', 'button[type=position-save-button]', function () {
