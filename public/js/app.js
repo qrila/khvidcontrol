@@ -114,38 +114,60 @@ $.each(arrowButtons, function (button, action) {
   camArrowButton(button, action);
 });
 
-function addCameraPosition(position) {
-  const camPos = document.querySelector('.memoutput');
-  const isHidden = position.visibilityMode && position.visibilityMode == 'poly';
-  const displayAttr = 'style="display:' + (isHidden ? 'none"' : 'block"');
-  camPos.insertAdjacentHTML('beforeend', `
-    <div type="memory-div" class="col-6 col-sm-4 col-lg-3 col-xl-2" ${displayAttr} data-positionid="${position._id}">
-      <button type="memory-button" value="${position._id}" class="mem-button btn btn-primary">
-        <span aria-hidden="true">${position.subjectName}</span>
-      </button>
-    </div>
-  `);
+function cameraPositionsButtons(positions) {
+  let listString = '';
+  positions.forEach(position => listString = listString.concat(
+    `<div type="memory-div" class="col-6 col-sm-4 col-lg-3 col-xl-2" style="display:${position.visibilityMode && position.visibilityMode == 'poly' ? 'none' : 'block'} data-positionid="${position._id}">
+    <button type="memory-button" value="${position._id}" class="mem-button btn btn-primary">
+      <span aria-hidden="true">${position.subjectName}</span>
+    </button>
+  </div>`));
+  document.querySelector('.memoutput').innerHTML = listString;
+}
 
-  const editPos = document.querySelector('#saved-positions > .list-group');
-  editPos.insertAdjacentHTML('beforeend', `
-    <li class="list-group-item">
-      <div class="container">
-        <div class="row justify-content-between">
-          <div id="${position._id}-name">${position.subjectName}</div>
-          <div id="${position._id}-input" class="hide"><input id="${position._id}-input-value" value="${position.subjectName}"></input></div>
-          <div id="${position._id}-edit" class="button-group btn-group-sm" role="group">
-            <button type="position-edit-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">edit</span></button>
-            <button type="position-reframe-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">control_camera</span></button>
-            <button type="position-delete-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">delete_forever</span></button>
-          </div>
-          <div id="${position._id}-save" class="button-group btn-group-sm hide" role="group">
-            <button type="position-save-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">save</span></button>
-            <button type="position-cancel-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">cancel</span></button>
-          </div>
+function positionsEditList(positions) {
+  let listString = '';
+  positions.forEach((position, idx) => listString = listString.concat(
+    `<li class="list-group-item">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div id="${position._id}-name">${position.subjectName}</div>
+        <div id="${position._id}-input" class="hide"><input id="${position._id}-input-value" value="${position.subjectName}"></input></div>
+        <div id="${position._id}-edit" class="button-group btn-group-sm" role="group">
+          <button type="position-orderup-button" value="${position._id}" class="btn btn-secondary ${idx < 2 ? 'disabled' : ''}"><span class="material-icons">keyboard_arrow_up</span></button>
+          <button type="position-orderdown-button" value="${position._id}" class="btn btn-secondary ${idx === 0 || idx === positions.length - 1 ? 'disabled' : ''}"><span class="material-icons">keyboard_arrow_down</span></button>
+          <button type="position-edit-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">edit</span></button>
+          <button type="position-reframe-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">control_camera</span></button>
+          <button type="position-delete-button" value="${position._id}" class="btn btn-secondary ${idx === 0 ? 'disabled' : ''}"><span class="material-icons">delete_forever</span></button>
+        </div>
+        <div id="${position._id}-save" class="button-group btn-group-sm hide" role="group">
+          <button type="position-save-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">save</span></button>
+          <button type="position-cancel-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">cancel</span></button>
         </div>
       </div>
-    </li>`);
+    </div>
+  </li>`
+  ));
+  document.querySelector('#saved-positions > .list-group').innerHTML = listString;
 }
+
+$(document).on('click', 'button[type=position-orderup-button]', function () {
+  const call = JSON.stringify({
+    command: 'edit',
+    positionID: this.value,
+    sortdir: 'up'
+  });
+  $.get(`/movecam/${call}`);
+});
+
+$(document).on('click', 'button[type=position-orderdown-button]', function () {
+  const call = JSON.stringify({
+    command: 'edit',
+    positionID: this.value,
+    sortdir: 'down'
+  });
+  $.get(`/movecam/${call}`);
+});
 
 $(document).on('click', 'button[type=position-edit-button]', function () {
   document.getElementById(`${this.value}-name`).classList.add('hide');
@@ -185,24 +207,22 @@ $(document).on('click', 'button[type=position-save-button]', function () {
   $.get(`/movecam/${call}`);
 });
 
-function modifyCameraPosition(position) {
-  const isHidden = position.visibilityMode && position.visibilityMode == 'poly';
-  $(`div[type="memory-div"][data-positionid="${position._id}"]`).css('display', isHidden ? 'none' : 'block');
-
-  $(`div[type="memory-div"][data-positionid="${position._id}"] > button > span`).text(position.subjectName);
-  $(`#${position._id}-name`).text(position.subjectName);
+async function drawPositions() {
+  document.getElementById('memoutput').innerHTML = '';
+  positions.find({
+    query: {
+      visibilityMode: 'button'
+    }
+  }).then(camerabuttons => {
+    camerabuttons.data.sort((a, b) => a.sortNumber - b.sortNumber);
+    positionsEditList(camerabuttons.data);
+    cameraPositionsButtons(camerabuttons.data);
+  });
 }
+positions.on('created', drawPositions);
+positions.on('patched', drawPositions);
 
-
-positions.find({
-  query: {
-    visibilityMode: { $ne: 'poly' }
-  }
-}).then(camerabuttons => {
-  _.sortBy(camerabuttons.data, ['sortNumber']).forEach(addCameraPosition);
-});
-positions.on('created', addCameraPosition);
-positions.on('patched', modifyCameraPosition);
+drawPositions();
 
 document.getElementById('position-mem').addEventListener('submit', function (ev) {
   ev.preventDefault();
@@ -216,21 +236,32 @@ document.getElementById('position-mem').addEventListener('submit', function (ev)
   $('#position-mem').find('input[type=text]').val('');
 });
 
-function addMediaSources(media) {
-  const mediaSource = document.querySelector('.mediaoutput');
-  mediaSource.insertAdjacentHTML('beforeend', `
+function inputsButtons(mediabuttons) {
+  let listString = `
+    <div type="memory-div" class="col-6 col-sm-4 col-lg-3 col-xl-2">
+      <button class="mem-button btn btn-secondary mixercut" type="button">Cut</button>
+    </div>
+    <div type="memory-div" class="col-6 col-sm-4 col-lg-3 col-xl-2">
+      <button class="mem-button btn btn-secondary fadetoblack" type="button">Fade To Black</button>
+    </div>`;
+
+  mediabuttons.forEach(media => listString = listString.concat(`
     <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
       <button type="media-button" value="${media._id}" class="mem-button btn btn-primary">
         <span aria-hidden="true">${media.sourceName}</span>
       </button>
-    </div>
-  `);
+    </div>`));
+  document.querySelector('.mediaoutput').innerHTML = listString;
 }
 
-videoinputs.find().then(mediabuttons => {
-  mediabuttons.data.forEach(addMediaSources);
-});
-videoinputs.on('created', addMediaSources);
+async function drawInputs() {
+  videoinputs.find().then(mediabuttons => {
+    inputsButtons(mediabuttons.data);
+  });
+}
+drawInputs();
+
+videoinputs.on('created', drawInputs);
 
 document.getElementById('add-media').addEventListener('submit', function (ev) {
   ev.preventDefault();
@@ -321,7 +352,7 @@ $(document).on('click', 'button.mixercut', function () {
   $.get(`/mixerinputs/${call}`);
 });
 
-// Initialize cut button
+// Initialize fade to black button
 $(document).on('click', 'button.fadetoblack', function () {
   const call = JSON.stringify({
     mixerAUX: false,
