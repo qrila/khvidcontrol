@@ -132,10 +132,10 @@ function addCameraPosition(position) {
       <div class="container">
         <div class="row justify-content-between">
           <div id="${position._id}-name">${position.subjectName}</div>
-          <div id="${position._id}-input" class="hide"><input id="${position._id}-input-value" value=${position.subjectName}></input></div>
+          <div id="${position._id}-input" class="hide"><input id="${position._id}-input-value" value="${position.subjectName}"></input></div>
           <div id="${position._id}-edit" class="button-group btn-group-sm" role="group">
             <button type="position-edit-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">edit</span></button>
-            <button type="position-reframe-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">crop_free</span></button>
+            <button type="position-reframe-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">control_camera</span></button>
             <button type="position-delete-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">delete_forever</span></button>
           </div>
           <div id="${position._id}-save" class="button-group btn-group-sm hide" role="group">
@@ -156,6 +156,7 @@ $(document).on('click', 'button[type=position-edit-button]', function () {
 
 $(document).on('click', 'button[type=position-reframe-button]', function () {
   console.log('reframe position: ' + this.value);
+
 });
 
 $(document).on('click', 'button[type=position-delete-button]', function () {
