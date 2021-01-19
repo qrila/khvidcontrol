@@ -182,7 +182,14 @@ $(document).on('click', 'button[type=position-reframe-button]', function () {
 });
 
 $(document).on('click', 'button[type=position-delete-button]', function () {
-  console.log('delete position: ' + this.value);
+  let confirmation = confirm('oletko ihan varma?');
+  if (confirmation) {
+    const call = JSON.stringify({
+      command: 'remove',
+      positionID: this.value
+    });
+    $.get(`/movecam/${call}`);
+  }
 });
 
 $(document).on('click', 'button[type=position-cancel-button]', function () {
@@ -221,6 +228,7 @@ async function drawPositions() {
 }
 positions.on('created', drawPositions);
 positions.on('patched', drawPositions);
+positions.on('removed', drawPositions);
 
 drawPositions();
 
