@@ -72,13 +72,14 @@ async function camera(app, id) {
 }
 
 async function savePosition(app, cameraID, subjectName, pantilt, zoom) {
-  const sortNumber = await app.service('positions').find({
+  const buttons = await app.service('positions').find({
     query: {
       visibilityMode: 'button'
     }
   });
+  const biggest = Math.max(...buttons.data.map(button => button.sortNumber));
   const position = await app.service('positions').create({
-    sortNumber: sortNumber.total,
+    sortNumber: biggest + 1,
     cameraID: cameraID,
     subjectName: subjectName,
     visibilityMode: 'button',
@@ -100,7 +101,7 @@ async function editPositionArguments(app, positionID, visibilityMode, subjectNam
         visibilityMode: visibilityMode
       }
     });
-    const biggest = Math.max(...buttons.map(button => button.sortNumber));
+    const biggest = Math.max(...buttons.data.map(button => button.sortNumber));
     app.service('positions').patch(positionID, {
       visibilityMode: visibilityMode,
       sortNumber: biggest + 1
