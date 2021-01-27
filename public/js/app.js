@@ -13,6 +13,7 @@ const cameras = client.service('cameras');
 const overlay = client.service('overlay');
 
 var vidCtx = {};
+var selectedCameraID = '';
 
 const camButton = (data) => {
   const call = JSON.stringify({
@@ -177,8 +178,13 @@ $(document).on('click', 'button[type=position-edit-button]', function () {
 });
 
 $(document).on('click', 'button[type=position-reframe-button]', function () {
-  console.log('reframe position: ' + this.value);
+  $('.postion-edit').toggle();
+  $('button[type=position-reframe-save]').attr('value', this.value);
+});
 
+$(document).on('click', 'button[type=position-reframe-save]', function () {
+  console.log('save this reframe position: ' + this.value);
+  $('.postion-edit').toggle();
 });
 
 $(document).on('click', 'button[type=position-delete-button]', function () {
