@@ -16,12 +16,14 @@ var vidCtx = {};
 var selectedCameraID = '';
 
 const camButton = (data) => {
-  const call = JSON.stringify({
-    command: 'cmd',
-    action: data,
-    cameraID: document.getElementById('cameraid').value
-  });
-  $.get(`/movecam/${call}`);
+  if (selectedCameraID !== '') {
+    const call = JSON.stringify({
+      command: 'cmd',
+      action: data,
+      cameraID: selectedCameraID
+    });
+    $.get(`/movecam/${call}`);
+  }
 };
 
 const camMenuButton = (button, data) => {
@@ -242,7 +244,7 @@ document.getElementById('position-mem').addEventListener('submit', function (ev)
   ev.preventDefault();
   const call = JSON.stringify({
     command: 'save',
-    cameraID: this.cameraid.value,
+    cameraID: selectedCameraID,
     subjectName: this.subjectname.value
   });
   $.get(`/movecam/${call}`);
@@ -333,15 +335,29 @@ document.getElementById('add-camera').addEventListener('submit', function (ev) {
   populateCameraList();
 });
 
-function populateCameraList() {
+async function populateCameraList() {
   $('#cameraid option').remove();
-  cameras.find().then(cameras => {
-    _.forEach(cameras.data, camera => {
-      $('#cameraid').append(`<option value=${camera._id}>${camera.cameraName}</option>`);
-      if (webRtcCtx.video_url === null && camera.rtspURL !== null && camera.rtspURL.length > 0) {
-        webRtcCtx.video_url = camera.rtspURL; // only first found rtsp url is used
-      }
-    });
+  const cameraInputs = await cameras.find();
+  const sorted = cameraInputs.data.sort((a, b) => parseInt(a.mixerInput) - parseInt(b.mixerInput));
+
+  sorted.forEach((camera, idx) => {
+    $('#cameraid').append(`
+      <input style="display:none" type="radio" id="camera-in-${camera._id}" name="camera-toggle" value="${camera._id}" ${idx === 0 ? 'checked' : ''}></input>
+      <label class="btn btn-secondary" for="camera-in-${camera._id}">${camera.mixerInput}</label>
+    `);
+    if (webRtcCtx.video_url === null &&
+      camera.rtspURL !== null &&
+      camera.rtspURL !== undefined &&
+      camera.rtspURL.length > 0) {
+      webRtcCtx.video_url = camera.rtspURL; // only first found rtsp url is used
+    }
+    if (idx === 0) {
+      selectedCameraID = camera._id;
+    }
+  });
+
+  $('#cameraid > input:radio').on('click', function (e) {
+    selectedCameraID = e.currentTarget.value;
   });
 }
 populateCameraList();
