@@ -140,7 +140,7 @@ function positionsEditList(positions) {
           <button type="position-orderup-button" value="${position._id}" class="btn btn-secondary ${idx < 2 ? 'disabled' : ''}"><span class="material-icons">keyboard_arrow_up</span></button>
           <button type="position-orderdown-button" value="${position._id}" class="btn btn-secondary ${idx === 0 || idx === positions.length - 1 ? 'disabled' : ''}"><span class="material-icons">keyboard_arrow_down</span></button>
           <button type="position-edit-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">edit</span></button>
-          <button type="position-reframe-button" value="${position._id}" class="btn btn-secondary"><span class="material-icons">control_camera</span></button>
+          <button type="position-reframe-button" value="${position._id}::${position.cameraID}" class="btn btn-secondary"><span class="material-icons">control_camera</span></button>
           <button type="position-delete-button" value="${position._id}" class="btn btn-secondary ${idx === 0 ? 'disabled' : ''}"><span class="material-icons">delete_forever</span></button>
         </div>
         <div id="${position._id}-save" class="button-group btn-group-sm hide" role="group">
@@ -180,14 +180,36 @@ $(document).on('click', 'button[type=position-edit-button]', function () {
 });
 
 $(document).on('click', 'button[type=position-reframe-button]', function () {
+  const positionInfo = this.value.split('::');
+
+  if (positionInfo != '') {
+    selectedCameraID = positionInfo[1];
+    $('button[type=position-reframe-save]').attr('value', this.value);
+  }
+  else { setCameraSelection(); }
+
   $('.postion-edit').toggle();
-  $('button[type=position-reframe-save]').attr('value', this.value);
 });
 
 $(document).on('click', 'button[type=position-reframe-save]', function () {
-  console.log('save this reframe position: ' + this.value);
+  const positionInfo = this.value.split('::');
+  setCameraSelection();
+
+  const call = JSON.stringify({
+    command: 'edit',
+    positionID: positionInfo[0],
+    cameraID: positionInfo[1]
+  });
+  $.get(`/movecam/${call}`);
+
   $('.postion-edit').toggle();
 });
+
+function setCameraSelection() {
+  document.getElementsByName('camera-toggle').forEach((c) => {
+    if (c.checked) { selectedCameraID = c.value; }
+  });
+}
 
 $(document).on('click', 'button[type=position-delete-button]', function () {
   let confirmation = confirm('oletko ihan varma?');

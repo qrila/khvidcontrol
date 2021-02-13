@@ -94,7 +94,7 @@ async function setPosition(app, id) {
   return ({ cameraID: position.cameraID, pantilt: position.pantilt, zoom: position.zoom });
 }
 
-async function editPositionArguments(app, positionID, visibilityMode, subjectName, sortdir) {
+async function editPositionArguments(app, positionID, visibilityMode, subjectName, sortdir, cameraID) {
   if (visibilityMode !== undefined) {
     const buttons = await app.service('positions').find({
       query: {
@@ -127,6 +127,15 @@ async function editPositionArguments(app, positionID, visibilityMode, subjectNam
           sortNumber: position.sortNumber
         });
       }
+    });
+  } else if (cameraID !== undefined) {
+    camera(app, cameraID).then(cameraIP => {
+      visca.queryPosition(cameraIP).then((result) => {
+        app.service('positions').patch(positionID, {
+          pantilt: result.pantilt.slice(4, 20).match(/.{1,2}/g).map(y => { return ('0x' + y); }),
+          zoom: result.zoom.slice(4, 12).match(/.{1,2}/g).map(y => { return ('0x' + y); })
+        });
+      });
     });
   }
 }
