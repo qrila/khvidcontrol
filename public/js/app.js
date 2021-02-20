@@ -188,7 +188,7 @@ $(document).on('click', 'button[type=position-reframe-button]', function () {
   }
   else { setCameraSelection(); }
 
-  $('.postion-edit').toggle();
+  $('.position-edit').toggle();
 });
 
 $(document).on('click', 'button[type=position-reframe-save]', function () {
@@ -202,7 +202,7 @@ $(document).on('click', 'button[type=position-reframe-save]', function () {
   });
   $.get(`/movecam/${call}`);
 
-  $('.postion-edit').toggle();
+  $('.position-edit').toggle();
 });
 
 function setCameraSelection() {
