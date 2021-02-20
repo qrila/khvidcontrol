@@ -42,7 +42,8 @@ class Service {
           camData.positionID,
           camData.visibilityMode,
           camData.subjectName,
-          camData.sortdir
+          camData.sortdir,
+          camData.cameraID
         ).then(
           () => {
             resolve('200');
