@@ -6,9 +6,9 @@ module.exports = {
     find: [],
     get: [],
     create: [
-      function(hook) {
-        logger.info(hook.data);
-      }
+      // function(hook) {
+      //   logger.info(hook.data);
+      // }
     ],
     update: [],
     patch: [],
