@@ -1,5 +1,5 @@
-<!doctyme html>
-<html lang="fi">
+<!doctype html>
+<html lang="en">
   <head>
     <script src="/js/jquery-3.5.1.min.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
@@ -35,14 +35,14 @@
                 <form id="position-mem">
                   <div class="row">
                     <div class="col-9">
-                      <span>Kamera</span>
+                      <span>Camera</span>
                       <div name="cameraid" id="cameraid"></div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-9">
-                      <span>Uusi kohde</span>
-                      <input type="text" name="subjectname" placeholder="Kameran kohde">
+                      <span>New preset</span>
+                      <input type="text" name="subjectname" placeholder="Camera subject">
                     </div>
                     <div class="col-3 align-self-end">
                       <button type="submit" name="save-position" class="btn btn-secondary">
@@ -56,7 +56,7 @@
               <div id="poly-mgmt-toggle" style="display: none">
                 <label>
                     <input type="checkbox" value="false" id="poly-mgmt-toggle-cb" />
-                    N&auml;yt&auml; siirtymien editointi
+                    Show transition editor
                 </label>
               </div>
             </div>
@@ -84,34 +84,34 @@
     
                 <div id="cam-ui" class="col-12">
                   <div id="poly-mgmt-tools" style="display:none">
-                    <button type="button" id="poly-create" class="btn btn-warning col-3">Tee siirtym&auml;</button>
-                    <button type="button" id="poly-delete" class="btn btn-danger col-3">Poista siirtym&auml;</button>
-                    <button type="button" id="poly-cancel-delete" class="btn btn-warning col-3" style="display:none">Peruuta poisto</button>
+                    <button type="button" id="poly-create" class="btn btn-warning col-3">Add transition</button>
+                    <button type="button" id="poly-delete" class="btn btn-danger col-3">Delete transition</button>
+                    <button type="button" id="poly-cancel-delete" class="btn btn-warning col-3" style="display:none">Cancel deletion</button>
                   </div>
                   <div id="polymaker-tools" style="display:none">
-                    <p style="text-align:center">Klikkaile siirtym&auml;n polygonin kulmapisteet kuvan p&auml;&auml;lle</p>
+                    <p style="text-align:center">Click corners for area to add transition button</p>
                     <table class="col-4">
                       <tr>
-                        <td style="text-align:right">N&auml;kym&auml;:</td>
+                        <td style="text-align:right">Preset</td>
                         <td style="padding:5px"><span id="poly-owner-name">---</span></td>
                       </tr>
                       <tr>
-                        <td style="text-align:right">Kohde:</td>
+                        <td style="text-align:right">Transition</td>
                         <td style="padding:5px">
                           <select id="poly-target-name">
                           </select>
                         </td>
                       </tr>
                       <tr>
-                        <td style="text-align:right">Piilota nappi:</td>
+                        <td style="text-align:right">Hide transition button</td>
                         <td style="padding:5px"><input type="checkbox" value="false" id="poly-cb-hide-button" /></td>
                       </tr>
                     </table>
-                    <button type="button" id="polymaker-cancel" class="btn btn-danger col-3" style="visibility:hidden">Peruuta</button>
-                    <button type="button" id="polymaker-finish" class="btn btn-primary col-4" style="visibility:hidden">Valmis</button>
+                    <button type="button" id="polymaker-cancel" class="btn btn-danger col-3" style="visibility:hidden">Cancel</button>
+                    <button type="button" id="polymaker-finish" class="btn btn-primary col-4" style="visibility:hidden">Done</button>
                   </div>
     
-                  <button type="button" id="camvideo-start" class="btn btn-warning col-6">Avaa kameravideo</button>
+                  <button type="button" id="camvideo-start" class="btn btn-warning col-6">Open camera feed</button>
     
                 </div>
               </div>
@@ -128,7 +128,7 @@
           <div class="modal-dialog dpad-modal" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">Kameran ohjaus</h5>
+                <h5 class="modal-title">Camera control</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Sulje">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -148,7 +148,7 @@
           <div class="modal-dialog main-settings modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="main-settings-title">Asetukset</h5>
+                <h5 class="modal-title" id="main-settings-title">Settings</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Sulje">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -161,7 +161,7 @@
                       <div class="card-header" id="headingOne">
                         <h2 class="mb-0">
                           <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Videoasetukset
+                            Video settings
                           </button>
                         </h2>
                       </div>
@@ -172,9 +172,9 @@
                             <form id="video-mixer">
                               <div class="row">
                                 <div class="col-9">
-                                  <h6>Lisää videomixeri</h6>
-                                  <input type="text" name="videomixer" placeholder="IP osoite 192.168.x.x">
-                                  <span>Aux ulostulon tilojen nimet</span>
+                                  <h6>Add videomixer</h6>
+                                  <input type="text" name="videomixer" placeholder="IP address 192.168.x.x">
+                                  <span>Aux output names</span>
                                   <input type="text" name="auxprogram" placeholder="Program">
                                   <input type="text" name="auxsource" placeholder="Video 1 input">
                                 </div>
@@ -191,13 +191,13 @@
                             <form id="add-camera">
                               <div class="row">
                                 <div class="col-9">
-                                  <h6>Lisää kamera</h6>
+                                  <h6>Add camera</h6>
                                   <input type="text" name="name" placeholder="sijainti">
                                   <input type="text" name="cameraip" placeholder="192.168.x.x">
                                   <input type="text" name="rtspurl" placeholder="rtsp://192.168.x.x/stream1">
-                                  <span style="color:gray"><small><em>Huom. Vain yhden kameran RTSP-osoite on k&auml;yt&ouml;ss&auml;</em></small></span>
+                                  <span style="color:gray"><small><em>RTSP address can be used only for one camera</em></small></span>
                                   <br/>
-                                  <span>Video sisääntulo</span>
+                                  <span>Video input</span>
                                   <select name="mixerinputcamera" id="mixerinputcamera">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -222,9 +222,9 @@
                             <form id="add-media">
                               <div class="row">
                                 <div class="col-9">
-                                  <h6>Lisää mediasisääntulo</h6>
+                                  <h6>Add media input</h6>
                                   <input type="text" name="mediainput" placeholder="Nimi">
-                                  <span>Video sisääntulo</span>
+                                  <span>Video input</span>
                                   <select name="mixerinputmedia" id="mixerinputmedia">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -253,7 +253,7 @@
                       <div class="card-header" id="headingTwo">
                         <h2 class="mb-0">
                           <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Kuvauskohteet
+                            Subjects
                           </button>
                         </h2>
                       </div>
